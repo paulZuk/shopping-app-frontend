@@ -1,5 +1,17 @@
+import { Action } from 'redux';
+
 export enum LoginActions {
 	LOGIN_TRY_LOGIN = 'LOGIN_TRY_LOGIN',
 }
 
-const tryLogin = () => {};
+export interface ITryLogin extends Action<LoginActions.LOGIN_TRY_LOGIN> {
+	name: string;
+	pass: string;
+}
+export const tryLogin = (name: string, pass: string): ITryLogin => ({
+	type: LoginActions.LOGIN_TRY_LOGIN,
+	name,
+	pass,
+});
+
+export default tryLogin;
