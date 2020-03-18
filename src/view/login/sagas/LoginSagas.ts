@@ -1,22 +1,33 @@
-import { call, put, fork, takeEvery } from 'redux-saga/effects';
+import axios from 'axios';
+import { call, fork, takeEvery } from 'redux-saga/effects';
+import { ITryLogin, LoginActions } from '../actions/LoginActions';
 
-export function* tryLogin(action: ILoadDataAction) {
-	const { key, endpointServiceFn, args } = action;
+type LoginRequestType = (...args: any[]) => any;
+
+const loginRequest: LoginRequestType = data =>
+	axios({
+		method: 'post',
+		url: '/login',
+		data: {
+			name: data.name,
+			pass: data.pass,
+		},
+	});
+
+export function* tryLogin(action: ITryLogin) {
+	const { name, pass } = action;
 	try {
-		yield put(setResponseAction(key, new ApiResponse()));
-		const response = yield call(endpointServiceFn, ...args);
-		yield put(setResponseAction(key, new ApiResponse(response)));
+		const response = yield call(loginRequest, { name, pass });
+		console.log(response);
 	} catch (e) {
-		yield put(
-			setResponseAction(key, new ApiResponse(e.response ? e.response : e))
-		);
+		console.log(e);
 	}
 }
 
-export function* watchLoadData() {
-	yield takeEvery(Actions.Data_LoadData, loadData);
+export function* watchTryLogin() {
+	yield takeEvery(LoginActions.LOGIN_TRY_LOGIN, tryLogin);
 }
 
 export default function* rootData() {
-	yield fork(watchLoadData);
+	yield fork(watchTryLogin);
 }

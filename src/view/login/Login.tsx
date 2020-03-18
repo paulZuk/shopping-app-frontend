@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link, LinkProps, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
 	makeStyles,
 	createStyles,
@@ -11,6 +12,7 @@ import {
 	Link as MaterialUILink,
 	Typography,
 } from '@material-ui/core';
+import LoginActions from './actions/LoginActions';
 
 import logo from '../../images/Logo.png';
 
@@ -76,12 +78,20 @@ const Login = () => {
 	const [pass, setPass] = useState('');
 	const [error, setError] = useState(false);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const handleChangeLogin = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			setLogin(event.target.value);
 		},
 		[setLogin]
+	);
+
+	const handleLoginClick = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			dispatch(LoginActions.tryLogin(login, pass));
+		},
+		[dispatch, login, pass]
 	);
 
 	const handleRegisterClick = useCallback(() => {
@@ -152,6 +162,7 @@ const Login = () => {
 					variant="contained"
 					color="primary"
 					type="submit"
+					onClick={handleLoginClick}
 				>
 					Login
 				</Button>

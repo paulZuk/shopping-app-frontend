@@ -14,4 +14,6 @@ export const tryLogin = (name: string, pass: string): ITryLogin => ({
 	pass,
 });
 
-export default tryLogin;
+export default {
+	tryLogin,
+};
