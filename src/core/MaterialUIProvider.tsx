@@ -21,8 +21,25 @@ const muiThemeOptions: ThemeOptions = {
 		fontFamily: 'arial',
 	},
 	overrides: {
+		MuiFormLabel: {
+			root: {
+				color: 'rgba(25, 150, 252, 1)',
+			},
+		},
+		MuiInputBase: {
+			input: {
+				color: 'white',
+			},
+		},
 		MuiOutlinedInput: {
-			root: {},
+			root: {
+				'&:hover .MuiOutlinedInput-notchedOutline': {
+					borderColor: 'rgba(25, 150, 252, 1)',
+				},
+			},
+			notchedOutline: {
+				borderColor: 'rgba(25, 150, 252, 0.5)',
+			},
 		},
 	},
 };
