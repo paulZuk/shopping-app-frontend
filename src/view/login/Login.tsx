@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Link, LinkProps, useHistory } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
 	makeStyles,
@@ -13,6 +13,7 @@ import {
 	Typography,
 } from '@material-ui/core';
 import LoginActions from './actions/LoginActions';
+import Register from '../register/Register';
 
 import logo from '../../images/Logo.png';
 
@@ -77,7 +78,7 @@ const Login = () => {
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
 	const [error, setError] = useState(false);
-	const history = useHistory();
+	const [view, setView] = useState('login');
 	const dispatch = useDispatch();
 
 	const handleChangeLogin = useCallback(
@@ -100,8 +101,8 @@ const Login = () => {
 	);
 
 	const handleRegisterClick = useCallback(() => {
-		history.push('/register');
-	}, [history]);
+		setView('register');
+	}, [setView]);
 
 	const handleChangePass = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,60 +128,66 @@ const Login = () => {
 	return (
 		<Container maxWidth={false} className={classes.root}>
 			<Box className={classes.logo} />
-			<Container maxWidth="xs" className={classes.form}>
-				<TextField
-					id="login"
-					label="Login"
-					variant="outlined"
-					autoComplete="off"
-					className={classes.textInput}
-					value={login}
-					onChange={handleChangeLogin}
-					helperText={getRequiredText(login)}
-					fullWidth
-					error={showError(login)}
-					required
-				/>
-				<TextField
-					id="pass"
-					label="Password"
-					variant="outlined"
-					type="password"
-					autoComplete="off"
-					className={classes.textInput}
-					value={pass}
-					error={showError(pass)}
-					onChange={handleChangePass}
-					helperText={getRequiredText(pass)}
-					fullWidth
-					required
-				/>
-				<Box className={classes.registerContainer}>
-					<MaterialUILink component={RouterLink} underline="none">
-						<Typography align="right">Forgot password?</Typography>
-					</MaterialUILink>
-				</Box>
-				<Button
-					className={classes.loginButton}
-					size="large"
-					fullWidth
-					variant="contained"
-					color="primary"
-					onClick={handleLoginClick}
-				>
-					Login
-				</Button>
-				<Typography color="primary">Not have account?</Typography>
-				<Button
-					className={classes.registerButton}
-					size="medium"
-					variant="outlined"
-					color="primary"
-					onClick={handleRegisterClick}
-				>
-					Register
-				</Button>
-			</Container>
+			{view === 'register' ? (
+				<Register />
+			) : (
+				<Container maxWidth="xs" className={classes.form}>
+					<TextField
+						id="login"
+						label="Login"
+						variant="outlined"
+						autoComplete="off"
+						className={classes.textInput}
+						value={login}
+						onChange={handleChangeLogin}
+						helperText={getRequiredText(login)}
+						fullWidth
+						error={showError(login)}
+						required
+					/>
+					<TextField
+						id="pass"
+						label="Password"
+						variant="outlined"
+						type="password"
+						autoComplete="off"
+						className={classes.textInput}
+						value={pass}
+						error={showError(pass)}
+						onChange={handleChangePass}
+						helperText={getRequiredText(pass)}
+						fullWidth
+						required
+					/>
+					<Box className={classes.registerContainer}>
+						<MaterialUILink component={RouterLink} underline="none">
+							<Typography align="right">
+								Forgot password?
+							</Typography>
+						</MaterialUILink>
+					</Box>
+					<Button
+						className={classes.loginButton}
+						size="large"
+						fullWidth
+						variant="contained"
+						color="primary"
+						onClick={handleLoginClick}
+					>
+						Login
+					</Button>
+					<Typography color="primary">Not have account?</Typography>
+					<Button
+						className={classes.registerButton}
+						size="medium"
+						variant="outlined"
+						color="primary"
+						onClick={handleRegisterClick}
+					>
+						Register
+					</Button>
+				</Container>
+			)}
 		</Container>
 	);
 };
