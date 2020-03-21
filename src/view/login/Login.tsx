@@ -89,7 +89,12 @@ const Login = () => {
 
 	const handleLoginClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
+			if (!login || !pass) {
+				setError(true);
+				return;
+			}
 			dispatch(LoginActions.tryLogin(login, pass));
+			setError(false);
 		},
 		[dispatch, login, pass]
 	);
@@ -161,7 +166,6 @@ const Login = () => {
 					fullWidth
 					variant="contained"
 					color="primary"
-					type="submit"
 					onClick={handleLoginClick}
 				>
 					Login
@@ -172,7 +176,6 @@ const Login = () => {
 					size="medium"
 					variant="outlined"
 					color="primary"
-					type="submit"
 					onClick={handleRegisterClick}
 				>
 					Register
