@@ -12,6 +12,7 @@ import {
 	Link as MaterialUILink,
 	Typography,
 } from '@material-ui/core';
+import useError from '../../core/hooks/useError';
 import LoginActions from './actions/LoginActions';
 import Register from '../register/Register';
 
@@ -77,9 +78,10 @@ const Login = () => {
 	const classes = useStyles();
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
-	const [error, setError] = useState(false);
 	const [view, setView] = useState('login');
 	const dispatch = useDispatch();
+
+	const { showError, getRequiredText, setError } = useError();
 
 	const handleChangeLogin = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +99,7 @@ const Login = () => {
 			dispatch(LoginActions.tryLogin(login, pass));
 			setError(false);
 		},
-		[dispatch, login, pass]
+		[dispatch, login, pass, setError]
 	);
 
 	const handleRegisterClick = useCallback(() => {
@@ -111,25 +113,11 @@ const Login = () => {
 		[setPass]
 	);
 
-	const showError = useCallback(
-		(fieldValue: string) => {
-			return error && !fieldValue;
-		},
-		[error]
-	);
-
-	const getRequiredText = useCallback(
-		(fieldValue: string) => {
-			return showError(fieldValue) ? 'This field is required' : null;
-		},
-		[showError]
-	);
-
 	return (
 		<Container maxWidth={false} className={classes.root}>
 			<Box className={classes.logo} />
 			{view === 'register' ? (
-				<Register />
+				<Register setView={setView} />
 			) : (
 				<Container maxWidth="xs" className={classes.form}>
 					<TextField

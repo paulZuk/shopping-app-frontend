@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import useError from '../../core/hooks/useError';
 import {
 	makeStyles,
 	createStyles,
@@ -7,6 +8,7 @@ import {
 	TextField,
 	Button,
 	Box,
+	Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,20 +23,31 @@ const useStyles = makeStyles((theme: Theme) =>
 		signUpButton: {
 			padding: theme.spacing(2.5),
 			marginTop: theme.spacing(4),
+			marginBottom: theme.spacing(4),
 			textTransform: 'none',
 		},
 		textInput: {
 			margin: theme.spacing(1),
 		},
+		signInWrapper: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+		},
 	})
 );
 
-const Register = () => {
+interface IRegister {
+	setView: (view: string) => void;
+}
+
+const Register = ({ setView }: IRegister) => {
 	const classes = useStyles();
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
 	const [email, setEmail] = useState('');
-	const [error, setError] = useState(false);
+
+	const { showError, getRequiredText, setError } = useError();
 
 	const handleChangeLogin = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,20 +70,6 @@ const Register = () => {
 		[setEmail]
 	);
 
-	const showError = useCallback(
-		(fieldValue: string) => {
-			return error && !fieldValue;
-		},
-		[error]
-	);
-
-	const getRequiredText = useCallback(
-		(fieldValue: string) => {
-			return showError(fieldValue) ? 'This field is required' : null;
-		},
-		[showError]
-	);
-
 	const handleSignUpClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			if (!login || !pass || !email) {
@@ -79,7 +78,14 @@ const Register = () => {
 			}
 			setError(false);
 		},
-		[login, pass, email]
+		[login, pass, email, setError]
+	);
+
+	const handleSignInClick = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			setView('login');
+		},
+		[setView]
 	);
 
 	return (
@@ -134,6 +140,18 @@ const Register = () => {
 			>
 				Register
 			</Button>
+			<Box className={classes.signInWrapper}>
+				<Typography color="primary">
+					Already have an account?
+				</Typography>
+				<Button
+					color="primary"
+					variant="text"
+					onClick={handleSignInClick}
+				>
+					Sign in
+				</Button>
+			</Box>
 		</Container>
 	);
 };
