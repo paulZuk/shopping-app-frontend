@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import useError from '../../core/hooks/useError';
 import {
 	makeStyles,
@@ -10,6 +11,7 @@ import {
 	Box,
 	Typography,
 } from '@material-ui/core';
+import RegisterActions from './actions/RegisterActions';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -46,6 +48,7 @@ const Register = ({ setView }: IRegister) => {
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
 	const [email, setEmail] = useState('');
+	const dispatch = useDispatch();
 
 	const { showError, getRequiredText, setError } = useError();
 
@@ -76,9 +79,16 @@ const Register = ({ setView }: IRegister) => {
 				setError(true);
 				return;
 			}
+			dispatch(
+				RegisterActions.registerUser({
+					name: login,
+					password: pass,
+					email,
+				})
+			);
 			setError(false);
 		},
-		[login, pass, email, setError]
+		[login, pass, email, setError, dispatch]
 	);
 
 	const handleSignInClick = useCallback(
