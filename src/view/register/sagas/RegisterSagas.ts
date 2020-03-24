@@ -8,7 +8,7 @@ const regiserRequest: registerRequestType = userData => {
 	const { name, password, email } = userData;
 	return axios({
 		method: 'post',
-		url: '/register',
+		url: 'http://localhost:8080/user',
 		data: {
 			name,
 			password,
