@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import useError from '../../core/hooks/useError';
+import useError from '../../../core/hooks/useError';
 import {
 	makeStyles,
 	createStyles,
@@ -12,6 +12,7 @@ import {
 	Typography,
 } from '@material-ui/core';
 import RegisterActions from './actions/RegisterActions';
+import UserActions from '../actions/UserActions';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -39,11 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-interface IRegister {
-	setView: (view: string) => void;
-}
-
-const Register = ({ setView }: IRegister) => {
+const Register = () => {
 	const classes = useStyles();
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
@@ -93,9 +90,9 @@ const Register = ({ setView }: IRegister) => {
 
 	const handleSignInClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
-			setView('login');
+			dispatch(UserActions.setUserView('login'));
 		},
-		[setView]
+		[dispatch]
 	);
 
 	return (

@@ -1,5 +1,12 @@
-export interface IRootState {}
+import userReducer from '../view/user/reducer/userReducer';
+import { combineReducers } from 'redux';
+import { IUserState } from '../view/user/reducer/userReducer';
+export interface IRootState {
+	user: IUserState;
+}
 
-const reducer = (state: any) => state;
+const rootReducer = combineReducers({
+	user: userReducer,
+});
 
-export default reducer;
+export default rootReducer;
