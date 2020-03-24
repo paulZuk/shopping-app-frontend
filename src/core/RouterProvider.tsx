@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from '../view/login/Login';
+import User from '../view/user/User';
 
 const RouterProvider = () => {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path="/login" component={Login} exact />
+				<Route path="/login" component={User} exact />
 			</Switch>
 		</BrowserRouter>
 	);

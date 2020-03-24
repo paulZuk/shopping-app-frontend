@@ -7,7 +7,7 @@ type LoginRequestType = (...args: any[]) => any;
 const loginRequest: LoginRequestType = data =>
 	axios({
 		method: 'post',
-		url: '/login',
+		url: 'http://localhost:8080/login',
 		data: {
 			name: data.name,
 			pass: data.pass,
