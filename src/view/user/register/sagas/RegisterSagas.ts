@@ -30,10 +30,10 @@ export function* register(action: IRegisterUser) {
 		console.log(response);
 	} catch (err) {
 		const errors = err.response.data.errors;
-		const userExist = errors.find(
+		const userExistMsg = errors.find(
 			(error: any) => error.msg === 'User already exist'
 		);
-		if (err.response.status === 422 && userExist) {
+		if (err.response.status === 422 && userExistMsg) {
 			yield put(UserActions.showExistingUserMsg());
 		}
 	}

@@ -7,6 +7,7 @@ import {
 	createStyles,
 	Theme,
 } from '@material-ui/core';
+import useWindowSize from '../../core/hooks/useWindowSize';
 import Register from './register/Register';
 import Login from './login/Login';
 import { IRootState } from '../../reducer';
@@ -41,14 +42,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const User = () => {
 	const classes = useStyles();
+	const { windowHeight } = useWindowSize();
 	const activeView = useSelector((state: IRootState) =>
 		state.user.get('view')
 	);
 	return (
-		<Container maxWidth={false} className={classes.root}>
+		<Box height={windowHeight} width="100%" className={classes.root}>
 			<Box className={classes.logo} />
 			{activeView === 'login' ? <Login /> : <Register />}
-		</Container>
+		</Box>
 	);
 };
 
