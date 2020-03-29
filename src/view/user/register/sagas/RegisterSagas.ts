@@ -22,12 +22,20 @@ export function* register(action: IRegisterUser) {
 	const data = action.userData;
 	try {
 		const response = yield call(regiserRequest, { ...data });
+
 		if (response.status === 200) {
-			put(UserActions.setUserView('login'));
+			yield put(UserActions.setUserView('login'));
 		}
+
 		console.log(response);
-	} catch (e) {
-		console.log(e);
+	} catch (err) {
+		const errors = err.response.data.errors;
+		const userExist = errors.find(
+			(error: any) => error.msg === 'User already exist'
+		);
+		if (err.response.status === 422 && userExist) {
+			yield put(UserActions.showExistingUserMsg());
+		}
 	}
 }
 
