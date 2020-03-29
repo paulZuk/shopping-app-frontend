@@ -1,16 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-	Container,
-	Box,
-	makeStyles,
-	createStyles,
-	Theme,
-} from '@material-ui/core';
+import { Box, makeStyles, createStyles, Theme } from '@material-ui/core';
 import useWindowSize from '../../core/hooks/useWindowSize';
 import Register from './register/Register';
 import Login from './login/Login';
 import { IRootState } from '../../reducer';
+import Loader from '../../core/components/Loader';
 import logo from '../../images/Logo.png';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,11 +41,17 @@ const User = () => {
 	const activeView = useSelector((state: IRootState) =>
 		state.user.get('view')
 	);
+	const loading = useSelector((state: IRootState) =>
+		state.user.get('loading')
+	);
 	return (
-		<Box height={windowHeight} width="100%" className={classes.root}>
-			<Box className={classes.logo} />
-			{activeView === 'login' ? <Login /> : <Register />}
-		</Box>
+		<>
+			<Loader loading={loading} />
+			<Box height={windowHeight} width="100%" className={classes.root}>
+				<Box className={classes.logo} />
+				{activeView === 'login' ? <Login /> : <Register />}
+			</Box>
+		</>
 	);
 };
 

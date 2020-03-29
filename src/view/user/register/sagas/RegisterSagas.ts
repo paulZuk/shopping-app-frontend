@@ -21,13 +21,14 @@ const regiserRequest: registerRequestType = userData => {
 export function* register(action: IRegisterUser) {
 	const data = action.userData;
 	try {
+		yield put(UserActions.setUserLoading(true));
 		const response = yield call(regiserRequest, { ...data });
 
 		if (response.status === 200) {
 			yield put(UserActions.setUserView('login'));
 		}
 
-		console.log(response);
+		yield put(UserActions.setUserLoading(false));
 	} catch (err) {
 		const errors = err.response.data.errors;
 		const userExistMsg = errors.find(
@@ -36,6 +37,8 @@ export function* register(action: IRegisterUser) {
 		if (err.response.status === 422 && userExistMsg) {
 			yield put(UserActions.showExistingUserMsg());
 		}
+
+		yield put(UserActions.setUserLoading(false));
 	}
 }
 
