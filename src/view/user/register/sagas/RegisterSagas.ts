@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
+import ServerErrorActions from '../../../../core/serverError/actions/ServerErrorActions';
 import { IRegisterUser, RegisterActions } from '../actions/RegisterActions';
 import UserActions from '../../actions/UserActions';
 
@@ -31,11 +32,9 @@ export function* register(action: IRegisterUser) {
 		yield put(UserActions.setUserLoading(false));
 	} catch (err) {
 		const errors = err.response.data.errors;
-		const userExistMsg = errors.find(
-			(error: any) => error.msg === 'User already exist'
-		);
-		if (err.response.status === 422 && userExistMsg) {
-			yield put(UserActions.showExistingUserMsg());
+
+		if (err.response.status === 422) {
+			yield put(ServerErrorActions.showError(errors));
 		}
 
 		yield put(UserActions.setUserLoading(false));

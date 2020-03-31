@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import UserActions from '../../actions/UserActions';
-import { IRootState } from '../../../../reducer';
+import getErrorData from './selectors/getServerErrorData';
+import ServerErrorActions from './actions/ServerErrorActions';
 import {
 	Dialog,
 	DialogTitle,
@@ -12,26 +12,26 @@ import {
 	Typography,
 } from '@material-ui/core';
 
-const UserExist = () => {
+const ServerError = () => {
+	const { visible, errorData } = useSelector(getErrorData);
+	const data = errorData.pop() || {};
 	const dispatch = useDispatch();
-	const userExist = useSelector((state: IRootState) =>
-		state.user.get('userExist')
-	);
 
 	const handleClose = useCallback(() => {
-		dispatch(UserActions.hideExistingUserMsg());
+		dispatch(ServerErrorActions.hideError());
 	}, [dispatch]);
 
 	return (
-		<Dialog open={userExist} onClose={handleClose}>
+		<Dialog
+			transitionDuration={{ enter: 200, exit: 0 }}
+			open={visible}
+			onClose={handleClose}
+		>
 			<DialogTitle>
-				<Typography color="primary">User already exist</Typography>
+				<Typography color="primary">Server error</Typography>
 			</DialogTitle>
 			<DialogContent>
-				<DialogContentText>
-					Email that you have entered is existing in our database.
-					Please select diffrent and try again.
-				</DialogContentText>
+				<DialogContentText>{data.msg}</DialogContentText>
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={handleClose} color="primary" variant="text">
@@ -42,4 +42,4 @@ const UserExist = () => {
 	);
 };
 
-export default UserExist;
+export default ServerError;

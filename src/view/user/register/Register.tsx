@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import UserExistModal from './userExist/UserExist';
 import { useDispatch } from 'react-redux';
 import useError from '../../../core/hooks/useError';
 import {
@@ -98,7 +97,6 @@ const Register = () => {
 
 	return (
 		<>
-			<UserExistModal />
 			<Container maxWidth="xs" className={classes.form}>
 				<TextField
 					id="login"
