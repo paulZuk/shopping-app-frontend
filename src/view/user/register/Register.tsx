@@ -70,22 +70,26 @@ const Register = () => {
 		[setEmail]
 	);
 
+	const tryRegister = useCallback(() => {
+		dispatch(
+			RegisterActions.registerUser({
+				name: login,
+				password: pass,
+				email,
+			})
+		);
+		setError(false);
+	}, [login, pass, email, setError, dispatch]);
+
 	const handleSignUpClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			if (!login || !pass || !email) {
 				setError(true);
 				return;
 			}
-			dispatch(
-				RegisterActions.registerUser({
-					name: login,
-					password: pass,
-					email,
-				})
-			);
-			setError(false);
+			tryRegister();
 		},
-		[login, pass, email, setError, dispatch]
+		[login, pass, email, setError, tryRegister]
 	);
 
 	const handleSignInClick = useCallback(
@@ -94,6 +98,13 @@ const Register = () => {
 		},
 		[dispatch]
 	);
+
+	const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+		console.log(event.keyCode);
+		if (event.keyCode === 13) {
+			tryRegister();
+		}
+	}, [tryRegister]);
 
 	return (
 		<>
@@ -145,6 +156,7 @@ const Register = () => {
 					variant="contained"
 					color="primary"
 					onClick={handleSignUpClick}
+					onKeyDown={handleKeyDown}
 				>
 					Register
 				</Button>
