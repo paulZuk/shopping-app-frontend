@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import User from '../view/user/User';
+import User from 'view/user/User';
 
-interface IRouteProvider extends React.Props<{}> {}
+interface IRouteProvider extends React.Props<{}> { }
 
 const RouterProvider = ({ children }: IRouteProvider) => {
 	return (

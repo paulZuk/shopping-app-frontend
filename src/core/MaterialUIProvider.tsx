@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme, {
 	ThemeOptions,
@@ -46,7 +45,7 @@ const muiThemeOptions: ThemeOptions = {
 
 const muiTheme = createMuiTheme(muiThemeOptions);
 
-interface IMaterialUiProviderProps extends React.Props<{}> {}
+interface IMaterialUiProviderProps extends React.Props<{}> { }
 
 const MaterialUiProvider = ({ children }: IMaterialUiProviderProps) => (
 	<MuiThemeProvider theme={muiTheme}>

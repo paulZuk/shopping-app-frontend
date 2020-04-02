@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from '../reducer';
-import sagas from '../saga';
+import rootReducer from 'reducer';
+import sagas from 'saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,7 +18,7 @@ const store = createStore(
 
 sagaMiddleware.run(sagas);
 
-interface IStorageProviderProps extends React.Props<IStorageProviderProps> {}
+interface IStorageProviderProps extends React.Props<IStorageProviderProps> { }
 
 const StorageProvider = ({ children }: IStorageProviderProps) => (
 	<Provider store={store}>{React.Children.toArray(children)}</Provider>
