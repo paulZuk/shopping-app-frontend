@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import userReducer, { IUserState } from '../view/user/reducer/userReducer';
+import userReducer, { IUserState } from 'view/user/reducer/userReducer';
 import serverErrorReducer, {
 	IServerError,
-} from '../core/serverError/reducers/serverErrorReducer';
+} from 'core/serverError/reducers/serverErrorReducer';
 export interface IRootState {
 	user: IUserState;
 	serverError: IServerError;

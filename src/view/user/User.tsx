@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, makeStyles, createStyles, Theme } from '@material-ui/core';
-import useWindowSize from '../../core/hooks/useWindowSize';
+import useWindowSize from 'core/hooks/useWindowSize';
 import Register from './register/Register';
 import Login from './login/Login';
 import { IRootState } from '../../reducer';
-import Loader from '../../core/components/Loader';
-import logo from '../../images/Logo.png';
+import Loader from 'core/components/Loader';
+import logo from 'images/Logo.png';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

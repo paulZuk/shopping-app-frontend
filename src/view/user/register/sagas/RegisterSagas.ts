@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
-import ServerErrorActions from '../../../../core/serverError/actions/ServerErrorActions';
+import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import { IRegisterUser, RegisterActions } from '../actions/RegisterActions';
 import UserActions from '../../actions/UserActions';
 

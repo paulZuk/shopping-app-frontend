@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { IRootState } from '../../../reducer';
+import { IRootState } from 'reducer';
 
 const getServerErrorData = createSelector(
 	(state: IRootState) => state.serverError.get('visible'),

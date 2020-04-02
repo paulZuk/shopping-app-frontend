@@ -1,5 +1,3 @@
-import Immutable from 'immutable';
-
 export enum ServerErrorActions {
 	ERROR_SHOW = 'ERROR_SHOW',
 	ERROR_HIDE = 'ERROR_HIDE',

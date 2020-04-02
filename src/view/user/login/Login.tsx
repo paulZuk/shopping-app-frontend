@@ -12,7 +12,7 @@ import {
 	Link as MaterialUILink,
 	Typography,
 } from '@material-ui/core';
-import useError from '../../../core/hooks/useError';
+import useError from 'core/hooks/useError';
 import LoginActions from './actions/LoginActions';
 import UserActions from '../actions/UserActions';
 
