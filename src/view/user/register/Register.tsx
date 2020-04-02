@@ -96,70 +96,72 @@ const Register = () => {
 	);
 
 	return (
-		<Container maxWidth="xs" className={classes.form}>
-			<TextField
-				id="login"
-				label="Login"
-				variant="outlined"
-				autoComplete="off"
-				className={classes.textInput}
-				value={login}
-				onChange={handleChangeLogin}
-				helperText={getRequiredText(login)}
-				fullWidth
-				error={showError(login)}
-				required
-			/>
-			<TextField
-				id="pass"
-				label="Password"
-				variant="outlined"
-				type="password"
-				autoComplete="off"
-				className={classes.textInput}
-				value={pass}
-				error={showError(pass)}
-				onChange={handleChangePass}
-				helperText={getRequiredText(pass)}
-				fullWidth
-				required
-			/>
-			<TextField
-				id="email"
-				label="E-mail"
-				variant="outlined"
-				autoComplete="off"
-				className={classes.textInput}
-				value={email}
-				error={showError(email)}
-				onChange={handleChangeEmail}
-				helperText={getRequiredText(email)}
-				fullWidth
-				required
-			/>
-			<Button
-				className={classes.signUpButton}
-				size="large"
-				fullWidth
-				variant="contained"
-				color="primary"
-				onClick={handleSignUpClick}
-			>
-				Register
-			</Button>
-			<Box className={classes.signInWrapper}>
-				<Typography color="primary">
-					Already have an account?
-				</Typography>
+		<>
+			<Container maxWidth="xs" className={classes.form}>
+				<TextField
+					id="login"
+					label="Login"
+					variant="outlined"
+					autoComplete="off"
+					className={classes.textInput}
+					value={login}
+					onChange={handleChangeLogin}
+					helperText={getRequiredText(login)}
+					fullWidth
+					error={showError(login)}
+					required
+				/>
+				<TextField
+					id="pass"
+					label="Password"
+					variant="outlined"
+					type="password"
+					autoComplete="off"
+					className={classes.textInput}
+					value={pass}
+					error={showError(pass)}
+					onChange={handleChangePass}
+					helperText={getRequiredText(pass)}
+					fullWidth
+					required
+				/>
+				<TextField
+					id="email"
+					label="E-mail"
+					variant="outlined"
+					autoComplete="off"
+					className={classes.textInput}
+					value={email}
+					error={showError(email)}
+					onChange={handleChangeEmail}
+					helperText={getRequiredText(email)}
+					fullWidth
+					required
+				/>
 				<Button
+					className={classes.signUpButton}
+					size="large"
+					fullWidth
+					variant="contained"
 					color="primary"
-					variant="text"
-					onClick={handleSignInClick}
+					onClick={handleSignUpClick}
 				>
-					Sign in
+					Register
 				</Button>
-			</Box>
-		</Container>
+				<Box className={classes.signInWrapper}>
+					<Typography color="primary">
+						Already have an account?
+					</Typography>
+					<Button
+						color="primary"
+						variant="text"
+						onClick={handleSignInClick}
+					>
+						Sign in
+					</Button>
+				</Box>
+			</Container>
+		</>
 	);
 };
 

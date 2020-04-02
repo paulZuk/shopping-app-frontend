@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
+import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import { IRegisterUser, RegisterActions } from '../actions/RegisterActions';
 import UserActions from '../../actions/UserActions';
 
@@ -21,13 +22,22 @@ const regiserRequest: registerRequestType = userData => {
 export function* register(action: IRegisterUser) {
 	const data = action.userData;
 	try {
+		yield put(UserActions.setUserLoading(true));
 		const response = yield call(regiserRequest, { ...data });
+
 		if (response.status === 200) {
-			put(UserActions.setUserView('login'));
+			yield put(UserActions.setUserView('login'));
 		}
-		console.log(response);
-	} catch (e) {
-		console.log(e);
+
+		yield put(UserActions.setUserLoading(false));
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (err.response.status === 422) {
+			yield put(ServerErrorActions.showError(errors));
+		}
+
+		yield put(UserActions.setUserLoading(false));
 	}
 }
 

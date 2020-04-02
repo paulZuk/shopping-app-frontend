@@ -1,11 +1,14 @@
 import React from 'react';
-import RouterProvider from './core/RouterProvider';
-import MaterialUIProvider from './core/MaterialUIProvider';
+import ServerError from 'core/serverError/ServerError';
+import RouterProvider from 'core/RouterProvider';
+import MaterialUIProvider from 'core/MaterialUIProvider';
 
 function App() {
 	return (
 		<MaterialUIProvider>
-			<RouterProvider />
+			<RouterProvider>
+				<ServerError />
+			</RouterProvider>
 		</MaterialUIProvider>
 	);
 }
