@@ -68,7 +68,7 @@ const Login = () => {
 	const trylogin = useCallback(() => {
 		dispatch(LoginActions.tryLogin(login, pass));
 		setError(false);
-	}, [dispatch, login, pass, setError])
+	}, [dispatch, login, pass, setError]);
 
 	const handleLoginClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,11 +92,14 @@ const Login = () => {
 		[setPass]
 	);
 
-	const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-		if (event.keyCode === 13) {
-			trylogin();
-		}
-	}, [trylogin]);
+	const handleKeyDown = useCallback(
+		(event: React.KeyboardEvent) => {
+			if (event.keyCode === 13) {
+				trylogin();
+			}
+		},
+		[trylogin]
+	);
 
 	return (
 		<Container maxWidth="xs" className={classes.form}>
@@ -108,6 +111,7 @@ const Login = () => {
 				className={classes.textInput}
 				value={login}
 				onChange={handleChangeLogin}
+				onKeyDown={handleKeyDown}
 				helperText={getRequiredText(login)}
 				fullWidth
 				error={showError(login)}
@@ -123,6 +127,7 @@ const Login = () => {
 				value={pass}
 				error={showError(pass)}
 				onChange={handleChangePass}
+				onKeyDown={handleKeyDown}
 				helperText={getRequiredText(pass)}
 				fullWidth
 				required
@@ -149,7 +154,6 @@ const Login = () => {
 				variant="outlined"
 				color="primary"
 				onClick={handleRegisterClick}
-				onKeyDown={handleKeyDown}
 			>
 				Register
 			</Button>

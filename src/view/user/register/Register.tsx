@@ -99,12 +99,15 @@ const Register = () => {
 		[dispatch]
 	);
 
-	const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-		console.log(event.keyCode);
-		if (event.keyCode === 13) {
-			tryRegister();
-		}
-	}, [tryRegister]);
+	const handleKeyDown = useCallback(
+		(event: React.KeyboardEvent) => {
+			console.log(event.keyCode);
+			if (event.keyCode === 13) {
+				tryRegister();
+			}
+		},
+		[tryRegister]
+	);
 
 	return (
 		<>
@@ -117,6 +120,7 @@ const Register = () => {
 					className={classes.textInput}
 					value={login}
 					onChange={handleChangeLogin}
+					onKeyDown={handleKeyDown}
 					helperText={getRequiredText(login)}
 					fullWidth
 					error={showError(login)}
@@ -132,6 +136,7 @@ const Register = () => {
 					value={pass}
 					error={showError(pass)}
 					onChange={handleChangePass}
+					onKeyDown={handleKeyDown}
 					helperText={getRequiredText(pass)}
 					fullWidth
 					required
@@ -145,6 +150,7 @@ const Register = () => {
 					value={email}
 					error={showError(email)}
 					onChange={handleChangeEmail}
+					onKeyDown={handleKeyDown}
 					helperText={getRequiredText(email)}
 					fullWidth
 					required
@@ -156,7 +162,6 @@ const Register = () => {
 					variant="contained"
 					color="primary"
 					onClick={handleSignUpClick}
-					onKeyDown={handleKeyDown}
 				>
 					Register
 				</Button>
