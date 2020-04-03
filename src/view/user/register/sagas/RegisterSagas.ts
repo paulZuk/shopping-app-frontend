@@ -26,6 +26,7 @@ export function* register(action: IRegisterUser) {
 		const response = yield call(regiserRequest, { ...data });
 
 		if (response.status === 200) {
+			yield put(UserActions.toggleCreatedSnackBar(true));
 			yield put(UserActions.setUserView('login'));
 		}
 

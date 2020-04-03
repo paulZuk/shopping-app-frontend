@@ -4,8 +4,10 @@ import { Box, makeStyles, createStyles, Theme } from '@material-ui/core';
 import useWindowSize from 'core/hooks/useWindowSize';
 import Register from './register/Register';
 import Login from './login/Login';
-import { IRootState } from '../../reducer';
 import Loader from 'core/components/Loader';
+import SnackBar from 'core/components/SnackBar';
+import getUserData from './selectors/getUserData';
+import UserActions from './actions/UserActions';
 import logo from 'images/Logo.png';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,18 +40,19 @@ const useStyles = makeStyles((theme: Theme) =>
 const User = () => {
 	const classes = useStyles();
 	const { windowHeight } = useWindowSize();
-	const activeView = useSelector((state: IRootState) =>
-		state.user.get('view')
-	);
-	const loading = useSelector((state: IRootState) =>
-		state.user.get('loading')
-	);
+	const { loading, view, snackBarVisible } = useSelector(getUserData);
+
 	return (
 		<>
 			<Loader loading={loading} />
+			<SnackBar
+				open={snackBarVisible}
+				setOpen={UserActions.toggleCreatedSnackBar}
+				message="User succesfully created! Now you can login."
+			/>
 			<Box height={windowHeight} width="100%" className={classes.root}>
 				<Box className={classes.logo} />
-				{activeView === 'login' ? <Login /> : <Register />}
+				{view === 'login' ? <Login /> : <Register />}
 			</Box>
 		</>
 	);
