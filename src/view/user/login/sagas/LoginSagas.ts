@@ -9,8 +9,8 @@ const loginRequest: LoginRequestType = data =>
 		method: 'post',
 		url: 'http://localhost:8080/login',
 		data: {
-			name: data.name,
-			pass: data.pass,
+			login: data.name,
+			password: data.pass,
 		},
 	});
 
