@@ -1,26 +1,42 @@
 import { useState, useCallback } from 'react';
+import validateEmail from 'helper/validateEmail';
 
 export const useError = () => {
 	const [error, setError] = useState(false);
 
-	const showError = useCallback(
-		(fieldValue: string) => {
-			return error && !fieldValue;
-		},
-		[error]
-	);
+	const getRequiredText = useCallback((fieldValue: string, type?: string) => {
+		if (!fieldValue) {
+			return 'This field is required';
+		}
 
-	const getRequiredText = useCallback(
-		(fieldValue: string, reqAlert?: string) => {
-			const alert = reqAlert || 'This field is required';
-			return showError(fieldValue) ? alert : null;
+		switch (type) {
+			case 'email':
+				return 'Wrong email address!';
+			default:
+				return null;
+		}
+	}, []);
+
+	const showError = useCallback(
+		(fieldValue: string, type?: string) => {
+			if (!error) {
+				return null;
+			}
+
+			switch (type) {
+				case 'email':
+					return !validateEmail(fieldValue)
+						? getRequiredText(fieldValue, type)
+						: null;
+				default:
+					return getRequiredText(fieldValue, type);
+			}
 		},
-		[showError]
+		[getRequiredText, error]
 	);
 
 	return {
 		showError,
-		getRequiredText,
 		setError,
 	};
 };
