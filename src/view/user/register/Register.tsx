@@ -47,7 +47,7 @@ const Register = () => {
 	const [email, setEmail] = useState('');
 	const dispatch = useDispatch();
 
-	const { showError, getRequiredText, setError } = useError();
+	const { showError, setError } = useError();
 
 	const handleChangeLogin = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,9 +121,9 @@ const Register = () => {
 					value={login}
 					onChange={handleChangeLogin}
 					onKeyDown={handleKeyDown}
-					helperText={getRequiredText(login)}
+					helperText={showError(login)}
 					fullWidth
-					error={showError(login)}
+					error={!!showError(login)}
 					required
 				/>
 				<TextField
@@ -134,10 +134,10 @@ const Register = () => {
 					autoComplete="off"
 					className={classes.textInput}
 					value={pass}
-					error={showError(pass)}
+					error={!!showError(pass)}
 					onChange={handleChangePass}
 					onKeyDown={handleKeyDown}
-					helperText={getRequiredText(pass)}
+					helperText={showError(pass)}
 					fullWidth
 					required
 				/>
@@ -148,10 +148,10 @@ const Register = () => {
 					autoComplete="off"
 					className={classes.textInput}
 					value={email}
-					error={showError(email)}
+					error={!!showError(email, 'email')}
 					onChange={handleChangeEmail}
 					onKeyDown={handleKeyDown}
-					helperText={getRequiredText(email)}
+					helperText={showError(email, 'email')}
 					fullWidth
 					required
 				/>

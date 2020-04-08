@@ -56,7 +56,7 @@ const Login = () => {
 	const [pass, setPass] = useState('');
 	const dispatch = useDispatch();
 
-	const { showError, getRequiredText, setError } = useError();
+	const { showError, setError } = useError();
 
 	const handleChangeLogin = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,9 +112,9 @@ const Login = () => {
 				value={login}
 				onChange={handleChangeLogin}
 				onKeyDown={handleKeyDown}
-				helperText={getRequiredText(login)}
+				helperText={showError(login)}
 				fullWidth
-				error={showError(login)}
+				error={!!showError(login)}
 				required
 			/>
 			<TextField
@@ -125,10 +125,10 @@ const Login = () => {
 				autoComplete="off"
 				className={classes.textInput}
 				value={pass}
-				error={showError(pass)}
+				error={!!showError(pass)}
 				onChange={handleChangePass}
 				onKeyDown={handleKeyDown}
-				helperText={getRequiredText(pass)}
+				helperText={showError(pass)}
 				fullWidth
 				required
 			/>
