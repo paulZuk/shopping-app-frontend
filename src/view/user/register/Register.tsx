@@ -101,7 +101,6 @@ const Register = () => {
 
 	const handleKeyDown = useCallback(
 		(event: React.KeyboardEvent) => {
-			console.log(event.keyCode);
 			if (event.keyCode === 13) {
 				tryRegister();
 			}
