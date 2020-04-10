@@ -1,7 +1,8 @@
 export enum UserActions {
 	SET_USER_VIEW = 'SET_USER_VIEW',
 	USER_LOADING = 'USER_LOADING',
-	USER_SHOW_SUCCESS_SNACKBAR = 'USER_SHOW_SUCCESS_SNACKBAR',
+	USER_TOGGLE_CREATED_SNACKBAR = 'USER_TOGGLE_CREATED_SNACKBAR',
+	USER_TOGGLE_LOGIN_SNACKBAR = 'USER_TOGGLE_LOGIN_SNACKBAR',
 }
 
 export interface ISetUserView {
@@ -15,7 +16,12 @@ export interface ISetUserLoading {
 }
 
 export interface ItoggleCreatedSnackBar {
-	type: typeof UserActions.USER_SHOW_SUCCESS_SNACKBAR;
+	type: typeof UserActions.USER_TOGGLE_CREATED_SNACKBAR;
+	open: boolean;
+}
+
+export interface ItoggleLoginSnackBar {
+	type: typeof UserActions.USER_TOGGLE_LOGIN_SNACKBAR;
 	open: boolean;
 }
 
@@ -30,17 +36,24 @@ const setUserLoading = (loading: boolean) => ({
 });
 
 const toggleCreatedSnackBar = (open: boolean) => ({
-	type: UserActions.USER_SHOW_SUCCESS_SNACKBAR,
+	type: UserActions.USER_TOGGLE_CREATED_SNACKBAR,
+	open,
+});
+
+const toggleLoginSnackBar = (open: boolean) => ({
+	type: UserActions.USER_TOGGLE_LOGIN_SNACKBAR,
 	open,
 });
 
 export type UserActionsTypes =
 	| ISetUserView
 	| ISetUserLoading
-	| ItoggleCreatedSnackBar;
+	| ItoggleCreatedSnackBar
+	| ItoggleLoginSnackBar;
 
 export default {
 	setUserView,
 	setUserLoading,
 	toggleCreatedSnackBar,
+	toggleLoginSnackBar,
 };

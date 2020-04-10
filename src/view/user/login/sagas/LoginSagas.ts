@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { call, fork, takeEvery } from 'redux-saga/effects';
+import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import { ITryLogin, LoginActions } from '../actions/LoginActions';
+import UserActions from 'view/user/actions/UserActions';
 
 type LoginRequestType = (...args: any[]) => any;
 
@@ -9,18 +10,21 @@ const loginRequest: LoginRequestType = data =>
 		method: 'post',
 		url: 'http://localhost:8080/login',
 		data: {
-			name: data.name,
-			pass: data.pass,
+			login: data.name,
+			password: data.pass,
 		},
 	});
 
 export function* tryLogin(action: ITryLogin) {
 	const { name, pass } = action;
 	try {
+		yield put(UserActions.setUserLoading(true));
 		const response = yield call(loginRequest, { name, pass });
 		console.log(response);
+		yield put(UserActions.setUserLoading(false));
 	} catch (e) {
-		console.log(e);
+		yield put(UserActions.setUserLoading(false));
+		yield put(UserActions.toggleLoginSnackBar(true));
 	}
 }
 

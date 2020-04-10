@@ -40,15 +40,26 @@ const useStyles = makeStyles((theme: Theme) =>
 const User = () => {
 	const classes = useStyles();
 	const { windowHeight } = useWindowSize();
-	const { loading, view, snackBarVisible } = useSelector(getUserData);
+	const {
+		loading,
+		view,
+		createdSnackBarVisible,
+		loginSnackBarVisible,
+	} = useSelector(getUserData);
 
 	return (
 		<>
 			<Loader loading={loading} />
 			<SnackBar
-				open={snackBarVisible}
+				open={createdSnackBarVisible}
 				setOpen={UserActions.toggleCreatedSnackBar}
 				message="User succesfully created! Now you can login."
+			/>
+			<SnackBar
+				open={loginSnackBarVisible}
+				setOpen={UserActions.toggleLoginSnackBar}
+				type="error"
+				message="Login or password is incorrect!"
 			/>
 			<Box height={windowHeight} width="100%" className={classes.root}>
 				<Box className={classes.logo} />
