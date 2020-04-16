@@ -22,12 +22,23 @@ const muiThemeOptions: ThemeOptions = {
 	overrides: {
 		MuiFormLabel: {
 			root: {
-				color: 'rgba(25, 150, 252, 1)',
+				color: 'white',
+				'&.Mui-focused': {
+					color: 'white',
+				},
 			},
 		},
 		MuiInputBase: {
 			input: {
 				color: 'white',
+			},
+		},
+		MuiSwitch: {
+			switchBase: {
+				color: 'rgba(25, 150, 252, 1)',
+			},
+			track: {
+				backgroundColor: 'white',
 			},
 		},
 		MuiOutlinedInput: {
@@ -45,7 +56,7 @@ const muiThemeOptions: ThemeOptions = {
 
 const muiTheme = createMuiTheme(muiThemeOptions);
 
-interface IMaterialUiProviderProps extends React.Props<{}> { }
+interface IMaterialUiProviderProps extends React.Props<{}> {}
 
 const MaterialUiProvider = ({ children }: IMaterialUiProviderProps) => (
 	<MuiThemeProvider theme={muiTheme}>

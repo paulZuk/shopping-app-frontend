@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
+import { History } from 'history';
 import userReducer, { IUserState } from 'view/user/reducer/userReducer';
 import serverErrorReducer, {
 	IServerError,
@@ -8,9 +10,11 @@ export interface IRootState {
 	serverError: IServerError;
 }
 
-const rootReducer = combineReducers({
-	user: userReducer,
-	serverError: serverErrorReducer,
-});
+const createRootReducer = (history: History) =>
+	combineReducers({
+		router: connectRouter(history),
+		user: userReducer,
+		serverError: serverErrorReducer,
+	});
 
-export default rootReducer;
+export default createRootReducer;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import { ITryLogin, LoginActions } from '../actions/LoginActions';
 import UserActions from 'view/user/actions/UserActions';
@@ -21,6 +22,7 @@ export function* tryLogin(action: ITryLogin) {
 		yield put(UserActions.setUserLoading(true));
 		const response = yield call(loginRequest, { name, pass });
 		console.log(response);
+		yield put(push('/add'));
 		yield put(UserActions.setUserLoading(false));
 	} catch (e) {
 		yield put(UserActions.setUserLoading(false));

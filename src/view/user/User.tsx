@@ -13,7 +13,6 @@ import logo from 'images/Logo.png';
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			height: '100vh',
 			width: '100%',
 			background:
 				'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		logo: {
 			width: '100%',
-			height: '100px',
+			height: '80px',
 			backgroundImage: `url(${logo})`,
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 'contain',
@@ -48,7 +47,7 @@ const User = () => {
 	} = useSelector(getUserData);
 
 	return (
-		<>
+		<Box className={classes.root} height={windowHeight}>
 			<Loader loading={loading} />
 			<SnackBar
 				open={createdSnackBarVisible}
@@ -65,7 +64,7 @@ const User = () => {
 				<Box className={classes.logo} />
 				{view === 'login' ? <Login /> : <Register />}
 			</Box>
-		</>
+		</Box>
 	);
 };
 
