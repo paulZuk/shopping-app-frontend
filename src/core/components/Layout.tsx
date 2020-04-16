@@ -8,11 +8,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			background:
 				'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
+			position: 'relative',
 		},
 	})
 );
 
-const Layout = () => {
+interface ILayout extends React.Props<{}> {}
+
+const Layout = ({ children }: ILayout) => {
 	const { windowHeight } = useWindowSize();
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const classes = useStyles();
@@ -25,7 +28,9 @@ const Layout = () => {
 	return (
 		<>
 			<Navbar appBarRef={appBarRef} />
-			<Box className={classes.root} height={setContentHeight()}></Box>
+			<Box className={classes.root} height={setContentHeight()}>
+				{React.Children.toArray(children)}
+			</Box>
 		</>
 	);
 };
