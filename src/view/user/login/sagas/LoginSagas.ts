@@ -14,6 +14,7 @@ const loginRequest: LoginRequestType = data =>
 			login: data.name,
 			password: data.pass,
 		},
+		withCredentials: true,
 	});
 
 export function* tryLogin(action: ITryLogin) {

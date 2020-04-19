@@ -10,9 +10,15 @@ import {
 	FormGroup,
 	FormControlLabel,
 	Button,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
 } from '@material-ui/core';
+import AddListActions, { Priority } from './actions/AddListActions';
 import useError from 'core/hooks/useError';
 import Layout from 'core/components/Layout';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -46,10 +52,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const AddList = () => {
 	const classes = useStyles();
 	const [listName, setListName] = useState('');
-	const [priority, setPriority] = useState('');
+	const [priority, setPriority] = useState(Priority.Low);
 	const [sharedInput, setSharedInput] = useState('');
 	const [sharedChecked, setSharedChecked] = useState(false);
 	const { showError } = useError();
+	const dispatch = useDispatch();
 
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,8 +66,8 @@ const AddList = () => {
 	);
 
 	const handleChangePriority = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setPriority(event.target.value);
+		(event: React.ChangeEvent<{ value: unknown }>) => {
+			setPriority(event.target.value as Priority);
 		},
 		[setPriority]
 	);
@@ -81,10 +88,18 @@ const AddList = () => {
 
 	const handleAddList = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
-			console.log(event);
+			dispatch(
+				AddListActions.addList({
+					listName,
+					priority,
+					shared: sharedInput,
+				})
+			);
 		},
-		[]
+		[dispatch, listName, priority, sharedInput]
 	);
+
+	console.log(priority);
 
 	return (
 		<Layout>
@@ -109,7 +124,25 @@ const AddList = () => {
 					fullWidth
 					error={!!showError(listName)}
 				/>
-				<TextField
+				<FormControl
+					className={classes.textInput}
+					fullWidth
+					variant="outlined"
+				>
+					<InputLabel id="priorityInputLabel">Priority</InputLabel>
+					<Select
+						id="priorityInput"
+						label="Priority"
+						labelId="priorityInputLabel"
+						value={priority}
+						onChange={handleChangePriority}
+					>
+						<MenuItem value={Priority.High}>High</MenuItem>
+						<MenuItem value={Priority.Mid}>Mid</MenuItem>
+						<MenuItem value={Priority.Low}>Low</MenuItem>
+					</Select>
+				</FormControl>
+				{/* <TextField
 					id="priority"
 					label="Priority"
 					variant="outlined"
@@ -120,7 +153,7 @@ const AddList = () => {
 					onChange={handleChangePriority}
 					helperText={showError(priority)}
 					fullWidth
-				/>
+				/> */}
 				<FormGroup className={classes.sharedSwitchContainer}>
 					<FormControlLabel
 						control={
