@@ -15,6 +15,7 @@ const addListRequest: addListRequestType = addListData => {
 			priority,
 			shared,
 		},
+		withCredentials: true,
 	});
 };
 
