@@ -11,7 +11,7 @@ export enum Priority {
 interface IAddListData {
 	listName: string;
 	priority: Priority;
-	shared?: string | null | undefined;
+	shared?: Array<{}>;
 }
 
 export interface IAddList {

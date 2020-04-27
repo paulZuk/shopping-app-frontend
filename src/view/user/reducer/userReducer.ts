@@ -6,6 +6,7 @@ const initState = Immutable.Map({
 	loading: false,
 	createdSnackBarVisible: false,
 	loginSnackBarVisible: false,
+	users: Immutable.List(),
 });
 
 export interface IUserState extends Immutable.Map<string, any> {
@@ -13,6 +14,7 @@ export interface IUserState extends Immutable.Map<string, any> {
 	loading: boolean;
 	createdSnackBarVisible: boolean;
 	loginSnackBarVisible: boolean;
+	users: Immutable.List<{}>;
 }
 
 const userReducer = (state = initState, action: UserActionsTypes) => {
@@ -25,6 +27,8 @@ const userReducer = (state = initState, action: UserActionsTypes) => {
 			return state.set('createdSnackBarVisible', action.open);
 		case UserActions.USER_TOGGLE_LOGIN_SNACKBAR:
 			return state.set('loginSnackBarVisible', action.open);
+		case UserActions.SET_USERS:
+			return state.set('users', Immutable.List(action.users));
 		default:
 			return state;
 	}

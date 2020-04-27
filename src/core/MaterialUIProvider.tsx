@@ -20,6 +20,17 @@ const muiThemeOptions: ThemeOptions = {
 		fontFamily: 'arial',
 	},
 	overrides: {
+		MuiChip: {
+			root: {
+				backgroundColor: 'white',
+			},
+			label: {
+				color: 'rgba(25, 150, 252, 1)',
+			},
+			deleteIcon: {
+				color: 'rgba(25, 150, 252, 1)',
+			},
+		},
 		MuiFormLabel: {
 			root: {
 				color: 'white',
