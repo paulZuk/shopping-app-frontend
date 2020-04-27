@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Typography,
 	TextField,
@@ -14,11 +15,14 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
+	CircularProgress,
 } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import AddListActions, { Priority } from './actions/AddListActions';
 import useError from 'core/hooks/useError';
 import Layout from 'core/components/Layout';
-import { useDispatch } from 'react-redux';
+import UserActions from 'view/user/actions/UserActions';
+import getUsers from 'view/user/selectors/getUsers';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -26,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			padding: theme.spacing(4),
 		},
 		textInput: {
+			margin: theme.spacing(1),
+		},
+		sharedInput: {
+			width: '100%',
 			margin: theme.spacing(1),
 		},
 		form: {
@@ -53,10 +61,20 @@ const AddList = () => {
 	const classes = useStyles();
 	const [listName, setListName] = useState('');
 	const [priority, setPriority] = useState(Priority.Low);
-	const [sharedInput, setSharedInput] = useState('');
+	const [sharedInput, setSharedInput] = useState([]);
 	const [sharedChecked, setSharedChecked] = useState(false);
+	const [open, setOpen] = useState(false);
 	const { showError } = useError();
 	const dispatch = useDispatch();
+	const { loading, users: options } = useSelector(getUsers);
+
+	useEffect(() => {
+		dispatch(UserActions.getUsers());
+	}, [dispatch]);
+
+	useEffect(() => {
+		console.log(sharedInput);
+	});
 
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,8 +98,8 @@ const AddList = () => {
 	);
 
 	const handleChangeSharedInput = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setSharedInput(event.target.value);
+		(event: React.ChangeEvent<{}>, value: never[]) => {
+			setSharedInput(value);
 		},
 		[setSharedInput]
 	);
@@ -142,18 +160,6 @@ const AddList = () => {
 						<MenuItem value={Priority.Low}>Low</MenuItem>
 					</Select>
 				</FormControl>
-				{/* <TextField
-					id="priority"
-					label="Priority"
-					variant="outlined"
-					autoComplete="off"
-					className={classes.textInput}
-					value={priority}
-					error={!!showError(priority)}
-					onChange={handleChangePriority}
-					helperText={showError(priority)}
-					fullWidth
-				/> */}
 				<FormGroup className={classes.sharedSwitchContainer}>
 					<FormControlLabel
 						control={
@@ -168,17 +174,46 @@ const AddList = () => {
 					/>
 				</FormGroup>
 				{sharedChecked && (
-					<TextField
-						id="sharedInput"
-						label="User email or login"
-						variant="outlined"
-						autoComplete="off"
-						className={classes.textInput}
-						value={sharedInput}
-						error={!!showError(sharedInput)}
+					<Autocomplete
+						className={classes.sharedInput}
+						open={open}
+						onOpen={() => {
+							setOpen(true);
+						}}
+						onClose={() => {
+							setOpen(false);
+						}}
+						getOptionSelected={(option: any, value: any) =>
+							option.name === value.name
+						}
+						getOptionLabel={(option: any) => option.name}
+						options={options.toArray()}
+						disabled={loading}
+						loading={loading}
 						onChange={handleChangeSharedInput}
-						helperText={showError(sharedInput)}
-						fullWidth
+						value={sharedInput}
+						multiple
+						renderInput={params => (
+							<TextField
+								{...params}
+								label="E-mail or login"
+								variant="outlined"
+								InputProps={{
+									...params.InputProps,
+									endAdornment: (
+										<React.Fragment>
+											{loading ? (
+												<CircularProgress
+													color="inherit"
+													size={20}
+												/>
+											) : null}
+											{params.InputProps.endAdornment}
+										</React.Fragment>
+									),
+								}}
+							/>
+						)}
 					/>
 				)}
 				<Button
