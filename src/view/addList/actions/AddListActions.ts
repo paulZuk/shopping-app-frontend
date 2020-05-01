@@ -4,7 +4,6 @@ export enum AddListActions {
 
 export enum Priority {
 	High = 'HIGH',
-	Mid = 'MID',
 	Low = 'LOW',
 }
 

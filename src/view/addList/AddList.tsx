@@ -156,7 +156,6 @@ const AddList = () => {
 						onChange={handleChangePriority}
 					>
 						<MenuItem value={Priority.High}>High</MenuItem>
-						<MenuItem value={Priority.Mid}>Mid</MenuItem>
 						<MenuItem value={Priority.Low}>Low</MenuItem>
 					</Select>
 				</FormControl>
