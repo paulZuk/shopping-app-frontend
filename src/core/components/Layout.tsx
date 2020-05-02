@@ -6,9 +6,10 @@ import useWindowSize from '../hooks/useWindowSize';
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			background:
-				'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
+			// background:
+			// 	'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
 			position: 'relative',
+			backgroundColor: 'rgba(0, 228, 255, 0.5)',
 		},
 	})
 );

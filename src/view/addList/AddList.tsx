@@ -40,8 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
-			justifyContent: 'center',
 			width: '100%',
+			height: '100%',
+			background:
+				'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
 		},
 		sharedSwitchContainer: {
 			width: '100%',

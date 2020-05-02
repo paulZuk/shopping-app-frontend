@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
 import {
@@ -15,10 +15,11 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		listItem: {
-			border: '1px solid rgba(25, 150, 252, .5)',
-			borderLeft: '0',
-			borderRight: '0',
+			// borderBottom: '1px solid rgba(25, 150, 252, .5)',
+			// borderTop: '1px solid rgba(25, 150, 252, .5)',
+			marginBottom: theme.spacing(1),
 			flexDirection: 'column',
+			backgroundColor: 'rgba(0,228,255,1)',
 		},
 		wrapper: {
 			width: '100%',
@@ -58,8 +59,19 @@ interface IShoppingListElem {
 	data: IData;
 }
 
-const ShoppingListElem = ({ data }: IShoppingListElem) => {
-	const classes = useStyles();
+const ShoppingListElem = ({ data, idx }: any) => {
+	const classes = useStyles({ idx });
+
+	const getAvatars = useMemo(() => {
+		return data?.shared.map((user: any) => (
+			<Avatar
+				key={user._id}
+				alt={user.login}
+				src="/static/images/avatar/2.jpg"
+				className={classes.avatar}
+			/>
+		));
+	}, [data, classes]);
 
 	return (
 		<ListItem className={classes.listItem}>
@@ -83,27 +95,11 @@ const ShoppingListElem = ({ data }: IShoppingListElem) => {
 					className={classes.progress}
 					color="primary"
 					variant="determinate"
-					value={60}
+					value={Math.floor(Math.random() * (100 - 1) + 1)}
 				/>
 			</Box>
 			<Box className={classes.avatarWrapper}>
-				<AvatarGroup max={3}>
-					<Avatar
-						alt="Remy Sharp"
-						src="/static/images/avatar/1.jpg"
-						className={classes.avatar}
-					/>
-					<Avatar
-						alt="Travis Howard"
-						src="/static/images/avatar/2.jpg"
-						className={classes.avatar}
-					/>
-					<Avatar
-						alt="Cindy Baker"
-						src="/static/images/avatar/3.jpg"
-						className={classes.avatar}
-					/>
-				</AvatarGroup>
+				<AvatarGroup max={3}>{getAvatars}</AvatarGroup>
 			</Box>
 		</ListItem>
 	);

@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Layout from 'core/components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import ShoppingListActions from './actions/ShoppingListActions';
+import getShoppingList from './selectors/getShoppingList';
+import ShoppingListElem from './ShoppingListElem';
+
 import {
 	Container,
 	makeStyles,
@@ -26,11 +31,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ShoppingList = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const { listData } = useSelector(getShoppingList);
+
+	useEffect(() => {
+		dispatch(ShoppingListActions.getLists());
+	}, [dispatch]);
+
+	const getListItems = useMemo(() => {
+		return listData.map((elem: any, idx: number) => (
+			<ShoppingListElem key={elem._id} data={elem} idx={idx} />
+		));
+	}, [listData]);
 
 	return (
 		<Layout>
 			<Container maxWidth="xs" disableGutters className={classes.root}>
-				<List className={classes.list}></List>
+				<List className={classes.list}>{getListItems}</List>
 			</Container>
 		</Layout>
 	);
