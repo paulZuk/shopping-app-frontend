@@ -1,6 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import Layout from 'core/components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
+import { Fab } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import ShoppingListActions from './actions/ShoppingListActions';
 import getShoppingList from './selectors/getShoppingList';
 import ShoppingListElem from './ShoppingListElem';
@@ -26,12 +29,19 @@ const useStyles = makeStyles((theme: Theme) =>
 		list: {
 			width: '100%',
 		},
+		fabButton: {
+			position: 'fixed',
+			bottom: '10%',
+			right: '5%',
+			zIndex: 9999,
+		},
 	})
 );
 
 const ShoppingList = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { listData } = useSelector(getShoppingList);
 
 	useEffect(() => {
@@ -44,11 +54,22 @@ const ShoppingList = () => {
 		));
 	}, [listData]);
 
+	const handleAddClick = useCallback(() => {
+		history.push('/add');
+	}, [history]);
+
 	return (
 		<Layout>
 			<Container maxWidth="xs" disableGutters className={classes.root}>
 				<List className={classes.list}>{getListItems}</List>
 			</Container>
+			<Fab
+				onClick={handleAddClick}
+				className={classes.fabButton}
+				color="primary"
+			>
+				<AddIcon />
+			</Fab>
 		</Layout>
 	);
 };

@@ -1,15 +1,7 @@
 import React, { RefObject } from 'react';
-import {
-	AppBar,
-	Toolbar,
-	IconButton,
-	makeStyles,
-	createStyles,
-	Theme,
-	Box,
-} from '@material-ui/core';
-import { Menu as MenuIcon, PersonOutline } from '@material-ui/icons';
-import logo from 'images/Logo.png';
+import { AppBar, makeStyles, createStyles, Theme } from '@material-ui/core';
+import ChildNavbar from './ChildNavbar';
+import MainNavbar from './MainNavbar';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -18,45 +10,27 @@ const useStyles = makeStyles((theme: Theme) =>
 			backgroundColor: 'rgba(0,228,255,1)',
 			boxShadow: 'unset',
 		},
-		menuButton: {
-			marginRight: theme.spacing(2),
-		},
 		title: {
 			flexGrow: 1,
 		},
-		logo: {
+		childTitle: {
 			width: '100%',
-			height: '30px',
-			backgroundImage: `url(${logo})`,
-			backgroundRepeat: 'no-repeat',
-			backgroundSize: 'contain',
-			backgroundPosition: 'center',
+			marginRight: theme.spacing(6),
 		},
 	})
 );
 
 interface INavbar {
 	appBarRef: RefObject<HTMLDivElement>;
+	childView: boolean | undefined;
 }
 
-const Navbar = ({ appBarRef }: INavbar) => {
+const Navbar = ({ appBarRef, childView }: INavbar) => {
 	const classes = useStyles();
 
 	return (
 		<AppBar className={classes.root} ref={appBarRef} position="sticky">
-			<Toolbar>
-				<IconButton
-					edge="start"
-					className={classes.menuButton}
-					color="inherit"
-				>
-					<MenuIcon />
-				</IconButton>
-				<Box className={classes.logo}></Box>
-				<IconButton edge="start" color="inherit">
-					<PersonOutline />
-				</IconButton>
-			</Toolbar>
+			{childView ? <ChildNavbar /> : <MainNavbar />}
 		</AppBar>
 	);
 };

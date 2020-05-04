@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	Typography,
 	TextField,
 	makeStyles,
 	createStyles,
@@ -26,9 +25,6 @@ import getUsers from 'view/user/selectors/getUsers';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		header: {
-			padding: theme.spacing(4),
-		},
 		textInput: {
 			margin: theme.spacing(1),
 		},
@@ -42,8 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
 			alignItems: 'center',
 			width: '100%',
 			height: '100%',
-			background:
-				'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)',
 		},
 		sharedSwitchContainer: {
 			width: '100%',
@@ -73,10 +67,6 @@ const AddList = () => {
 	useEffect(() => {
 		dispatch(UserActions.getUsers());
 	}, [dispatch]);
-
-	useEffect(() => {
-		console.log(sharedInput);
-	});
 
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,19 +109,9 @@ const AddList = () => {
 		[dispatch, listName, priority, sharedInput]
 	);
 
-	console.log(priority);
-
 	return (
-		<Layout>
+		<Layout childView>
 			<Container maxWidth="xs" className={classes.form}>
-				<Typography
-					className={classes.header}
-					color="secondary"
-					variant="h4"
-					align="center"
-				>
-					Add list
-				</Typography>
 				<TextField
 					id="listName"
 					label="List name"

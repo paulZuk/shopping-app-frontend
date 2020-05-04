@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'connected-react-router';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import { IAddList, AddListActions } from '../actions/AddListActions';
@@ -25,6 +26,7 @@ export function* addList(action: IAddList) {
 		const response = yield call(addListRequest, { ...data });
 
 		if (response.status === 200) {
+			yield put(push('/list'));
 		}
 	} catch (err) {
 		const errors = err.response.data.errors;

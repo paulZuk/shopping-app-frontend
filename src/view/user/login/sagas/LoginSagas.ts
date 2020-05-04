@@ -22,9 +22,11 @@ export function* tryLogin(action: ITryLogin) {
 	try {
 		yield put(UserActions.setUserLoading(true));
 		const response = yield call(loginRequest, { name, pass });
-		console.log(response);
-		yield put(push('/add'));
-		yield put(UserActions.setUserLoading(false));
+
+		if (response.status === 200) {
+			yield put(push('/list'));
+			yield put(UserActions.setUserLoading(false));
+		}
 	} catch (e) {
 		yield put(UserActions.setUserLoading(false));
 		yield put(UserActions.toggleLoginSnackBar(true));

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			// borderTop: '1px solid rgba(25, 150, 252, .5)',
 			marginBottom: theme.spacing(1),
 			flexDirection: 'column',
-			backgroundColor: 'rgba(0,228,255,1)',
+			backgroundColor: 'rgb(100, 239, 255)',
 		},
 		wrapper: {
 			width: '100%',
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
 			backgroundColor: 'white',
 		},
 		icon: {
-			color: 'red',
 			paddingLeft: theme.spacing(1),
 		},
 		avatar: {
@@ -85,9 +84,9 @@ const ShoppingListElem = ({ data, idx }: any) => {
 					Priority
 				</Typography>
 				{data.priority === 'HIGH' ? (
-					<ArrowUpward className={classes.icon} />
+					<ArrowUpward color="error" className={classes.icon} />
 				) : (
-					<ArrowDownward className={classes.icon} />
+					<ArrowDownward color="action" className={classes.icon} />
 				)}
 			</Box>
 			<Box className={classes.wrapper}>
