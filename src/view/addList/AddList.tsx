@@ -15,6 +15,7 @@ import {
 	Select,
 	MenuItem,
 	CircularProgress,
+	Collapse,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import AddListActions, { Priority } from './actions/AddListActions';
@@ -160,9 +161,8 @@ const AddList = () => {
 						label="Shared List?"
 					/>
 				</FormGroup>
-				{sharedChecked && (
+				<Collapse className={classes.sharedInput} in={sharedChecked}>
 					<Autocomplete
-						className={classes.sharedInput}
 						open={open}
 						onOpen={() => {
 							setVisible(true);
@@ -202,7 +202,7 @@ const AddList = () => {
 							/>
 						)}
 					/>
-				)}
+				</Collapse>
 				<Button
 					className={classes.addListButton}
 					size="large"
