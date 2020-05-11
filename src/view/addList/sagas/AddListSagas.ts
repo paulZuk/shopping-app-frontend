@@ -32,7 +32,8 @@ export function* addList(action: IAddList) {
 		const errors = err.response.data.errors;
 
 		if (err.response.status === 422) {
-			yield put(ServerErrorActions.showError(errors));
+			yield put(ServerErrorActions.setError(errors));
+			yield put(ServerErrorActions.toggleError(true));
 		}
 	}
 }

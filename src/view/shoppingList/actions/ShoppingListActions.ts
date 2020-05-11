@@ -1,6 +1,7 @@
 export enum ShoppingListActionsEnum {
 	GET_LIST = 'GET_LIST',
 	SET_LIST = 'SET_LIST',
+	SET_LOADING = 'SET_LOADING',
 }
 
 export interface IShared {
@@ -23,6 +24,11 @@ export interface ISetShoppingList {
 	lists: Array<any>;
 }
 
+export interface ISetLoading {
+	type: typeof ShoppingListActionsEnum.SET_LOADING;
+	loading: boolean;
+}
+
 const getLists = () => ({
 	type: ShoppingListActionsEnum.GET_LIST,
 });
@@ -32,9 +38,18 @@ const setLists = (lists: Array<any>) => ({
 	lists,
 });
 
-export type ShoppingListActionsTypes = IGetShoppingList | ISetShoppingList;
+const setLoading = (loading: boolean) => ({
+	type: ShoppingListActionsEnum.SET_LOADING,
+	loading,
+});
+
+export type ShoppingListActionsTypes =
+	| IGetShoppingList
+	| ISetShoppingList
+	| ISetLoading;
 
 export default {
 	getLists,
 	setLists,
+	setLoading,
 };

@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			alignItems: 'center',
 			width: '100%',
 			height: '100%',
+			paddingTop: theme.spacing(5),
 		},
 		sharedSwitchContainer: {
 			width: '100%',
@@ -59,8 +60,8 @@ const AddList = () => {
 	const [priority, setPriority] = useState(Priority.Low);
 	const [sharedInput, setSharedInput] = useState([]);
 	const [sharedChecked, setSharedChecked] = useState(false);
-	const [open, setOpen] = useState(false);
-	const { showError } = useError();
+	const [open, setVisible] = useState(false);
+	const { showError, setError } = useError();
 	const dispatch = useDispatch();
 	const { loading, users: options } = useSelector(getUsers);
 
@@ -98,6 +99,11 @@ const AddList = () => {
 
 	const handleAddList = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
+			if (!listName) {
+				setError(true);
+				return;
+			}
+
 			dispatch(
 				AddListActions.addList({
 					listName,
@@ -106,11 +112,11 @@ const AddList = () => {
 				})
 			);
 		},
-		[dispatch, listName, priority, sharedInput]
+		[dispatch, listName, priority, sharedInput, setError]
 	);
 
 	return (
-		<Layout childView>
+		<Layout path="/list" childView>
 			<Container maxWidth="xs" className={classes.form}>
 				<TextField
 					id="listName"
@@ -159,10 +165,10 @@ const AddList = () => {
 						className={classes.sharedInput}
 						open={open}
 						onOpen={() => {
-							setOpen(true);
+							setVisible(true);
 						}}
 						onClose={() => {
-							setOpen(false);
+							setVisible(false);
 						}}
 						getOptionSelected={(option: any, value: any) =>
 							option.name === value.name

@@ -23,14 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
 interface INavbar {
 	appBarRef: RefObject<HTMLDivElement>;
 	childView: boolean | undefined;
+	path?: string;
 }
 
-const Navbar = ({ appBarRef, childView }: INavbar) => {
+const Navbar = ({ appBarRef, childView, path }: INavbar) => {
 	const classes = useStyles();
 
 	return (
 		<AppBar className={classes.root} ref={appBarRef} position="sticky">
-			{childView ? <ChildNavbar /> : <MainNavbar />}
+			{childView ? <ChildNavbar path={path} /> : <MainNavbar />}
 		</AppBar>
 	);
 };

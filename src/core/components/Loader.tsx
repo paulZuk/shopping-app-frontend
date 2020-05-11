@@ -8,6 +8,7 @@ import {
 
 interface ILoader {
 	loading: boolean;
+	invisible?: boolean | undefined;
 }
 
 const useStyles = makeStyles(() =>
@@ -18,10 +19,14 @@ const useStyles = makeStyles(() =>
 	})
 );
 
-const Loader = ({ loading }: ILoader) => {
+const Loader = ({ loading, invisible }: ILoader) => {
 	const classes = useStyles();
 	return (
-		<Backdrop className={classes.loader} open={loading}>
+		<Backdrop
+			invisible={invisible}
+			className={classes.loader}
+			open={loading}
+		>
 			<CircularProgress color="primary" />
 		</Backdrop>
 	);

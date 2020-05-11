@@ -1,29 +1,31 @@
 export enum ServerErrorActions {
-	ERROR_SHOW = 'ERROR_SHOW',
-	ERROR_HIDE = 'ERROR_HIDE',
+	TOGGLE_ERROR = 'TOGGLE_ERROR',
+	SET_ERROR = 'SET_ERROR',
 }
 
-interface IShowError {
-	type: typeof ServerErrorActions.ERROR_SHOW;
-	errorData: Array<any>;
+interface IToggleError {
+	type: typeof ServerErrorActions.TOGGLE_ERROR;
+	visible: boolean;
 }
 
-interface IHideError {
-	type: typeof ServerErrorActions.ERROR_HIDE;
+interface ISetError {
+	type: typeof ServerErrorActions.SET_ERROR;
+	data: Array<any>;
 }
 
-const showError = (errorData: Array<any>) => ({
-	type: ServerErrorActions.ERROR_SHOW,
-	errorData,
+const setError = (data: Array<any>) => ({
+	type: ServerErrorActions.SET_ERROR,
+	data,
 });
 
-const hideError = () => ({
-	type: ServerErrorActions.ERROR_HIDE,
+const toggleError = (visible: boolean) => ({
+	type: ServerErrorActions.TOGGLE_ERROR,
+	visible,
 });
 
-export type ServerErrorTypes = IShowError | IHideError;
+export type ServerErrorTypes = IToggleError | ISetError;
 
 export default {
-	showError,
-	hideError,
+	toggleError,
+	setError,
 };

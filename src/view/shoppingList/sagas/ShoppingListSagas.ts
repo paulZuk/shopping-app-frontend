@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import ShoppingListActions, {
 	ShoppingListActionsEnum,
@@ -17,18 +18,25 @@ const getShoppingListRequest: commonRequestType = addListData => {
 
 export function* getShoppingList() {
 	try {
+		yield put(ShoppingListActions.setLoading(true));
 		const response = yield call(getShoppingListRequest);
 
 		if (response.status === 200) {
-			console.log(response.data);
 			yield put(ShoppingListActions.setLists(response.data.shoppingList));
 		}
+
+		yield put(ShoppingListActions.setLoading(false));
 	} catch (err) {
 		const errors = err.response.data.errors;
 
-		if (err.response.status === 422) {
-			yield put(ServerErrorActions.showError(errors));
+		yield put(ShoppingListActions.setLoading(false));
+
+		if (err.response.status === 401) {
+			yield put(push('/'));
 		}
+
+		yield put(ServerErrorActions.setError(errors));
+		yield put(ServerErrorActions.toggleError(true));
 	}
 }
 

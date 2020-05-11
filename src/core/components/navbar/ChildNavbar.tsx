@@ -9,6 +9,7 @@ import {
 	Typography,
 } from '@material-ui/core';
 import { NavigateBefore } from '@material-ui/icons';
+import { routes } from 'core/RouterProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -30,10 +31,16 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-const ChildNavbar = () => {
+interface IChildNavbar {
+	path?: string;
+}
+
+const ChildNavbar = ({ path }: IChildNavbar) => {
 	const classes = useStyles();
 	const location = useLocation();
 	const history = useHistory();
+
+	const currentScreen = routes.indexOf(location.pathname);
 
 	const getViewName = useMemo(() => {
 		switch (location.pathname) {
@@ -45,8 +52,11 @@ const ChildNavbar = () => {
 	}, [location.pathname]);
 
 	const handleGoBack = useCallback(() => {
-		history.goBack();
-	}, [history]);
+		history.push({
+			pathname: path,
+			state: { from: currentScreen },
+		});
+	}, [history, currentScreen, path]);
 
 	return (
 		<Toolbar>

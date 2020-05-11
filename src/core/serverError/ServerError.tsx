@@ -1,44 +1,20 @@
-import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import getErrorData from './selectors/getServerErrorData';
 import ServerErrorActions from './actions/ServerErrorActions';
-import {
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	DialogActions,
-	Button,
-	Typography,
-} from '@material-ui/core';
+import SnackBar from 'core/components/SnackBar';
 
 const ServerError = () => {
 	const { visible, errorData } = useSelector(getErrorData);
-	const data = errorData.pop() || {};
-	const dispatch = useDispatch();
-
-	const handleClose = useCallback(() => {
-		dispatch(ServerErrorActions.hideError());
-	}, [dispatch]);
+	const data = errorData[0] || {};
 
 	return (
-		<Dialog
-			transitionDuration={{ enter: 200, exit: 0 }}
+		<SnackBar
 			open={visible}
-			onClose={handleClose}
-		>
-			<DialogTitle>
-				<Typography color="primary">Server error</Typography>
-			</DialogTitle>
-			<DialogContent>
-				<DialogContentText>{data.msg}</DialogContentText>
-			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleClose} color="primary" variant="text">
-					Close
-				</Button>
-			</DialogActions>
-		</Dialog>
+			setVisible={ServerErrorActions.toggleError}
+			type="error"
+			message={data.msg}
+		/>
 	);
 };
 
