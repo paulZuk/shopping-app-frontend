@@ -11,18 +11,15 @@ export interface IServerError extends Immutable.Map<string, any> {
 
 const initState = Immutable.Map({
 	visible: false,
-	errorData: [],
+	errorData: [] as Array<any>,
 });
 
 const serverErrorReducer = (state = initState, action: ServerErrorTypes) => {
 	switch (action.type) {
-		case ServerErrorActions.ERROR_SHOW:
-			return state.merge({
-				visible: true,
-				errorData: action.errorData,
-			});
-		case ServerErrorActions.ERROR_HIDE:
-			return state.merge(initState);
+		case ServerErrorActions.TOGGLE_ERROR:
+			return state.set('visible', action.visible);
+		case ServerErrorActions.SET_ERROR:
+			return state.set('errorData', action.data);
 		default:
 			return state;
 	}

@@ -51,12 +51,12 @@ const User = () => {
 			<Loader loading={loading} />
 			<SnackBar
 				open={createdSnackBarVisible}
-				setOpen={UserActions.toggleCreatedSnackBar}
+				setVisible={UserActions.toggleCreatedSnackBar}
 				message="User succesfully created! Now you can login."
 			/>
 			<SnackBar
 				open={loginSnackBarVisible}
-				setOpen={UserActions.toggleLoginSnackBar}
+				setVisible={UserActions.toggleLoginSnackBar}
 				type="error"
 				message="Login or password is incorrect!"
 			/>

@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	Typography,
 	TextField,
 	makeStyles,
 	createStyles,
@@ -16,6 +15,7 @@ import {
 	Select,
 	MenuItem,
 	CircularProgress,
+	Collapse,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import AddListActions, { Priority } from './actions/AddListActions';
@@ -26,9 +26,6 @@ import getUsers from 'view/user/selectors/getUsers';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		header: {
-			padding: theme.spacing(4),
-		},
 		textInput: {
 			margin: theme.spacing(1),
 		},
@@ -40,8 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
-			justifyContent: 'center',
 			width: '100%',
+			height: '100%',
+			paddingTop: theme.spacing(5),
 		},
 		sharedSwitchContainer: {
 			width: '100%',
@@ -63,18 +61,14 @@ const AddList = () => {
 	const [priority, setPriority] = useState(Priority.Low);
 	const [sharedInput, setSharedInput] = useState([]);
 	const [sharedChecked, setSharedChecked] = useState(false);
-	const [open, setOpen] = useState(false);
-	const { showError } = useError();
+	const [open, setVisible] = useState(false);
+	const { showError, setError } = useError();
 	const dispatch = useDispatch();
 	const { loading, users: options } = useSelector(getUsers);
 
 	useEffect(() => {
 		dispatch(UserActions.getUsers());
 	}, [dispatch]);
-
-	useEffect(() => {
-		console.log(sharedInput);
-	});
 
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +100,11 @@ const AddList = () => {
 
 	const handleAddList = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
+			if (!listName) {
+				setError(true);
+				return;
+			}
+
 			dispatch(
 				AddListActions.addList({
 					listName,
@@ -114,22 +113,12 @@ const AddList = () => {
 				})
 			);
 		},
-		[dispatch, listName, priority, sharedInput]
+		[dispatch, listName, priority, sharedInput, setError]
 	);
 
-	console.log(priority);
-
 	return (
-		<Layout>
+		<Layout path="/list" childView>
 			<Container maxWidth="xs" className={classes.form}>
-				<Typography
-					className={classes.header}
-					color="secondary"
-					variant="h4"
-					align="center"
-				>
-					Add list
-				</Typography>
 				<TextField
 					id="listName"
 					label="List name"
@@ -156,7 +145,6 @@ const AddList = () => {
 						onChange={handleChangePriority}
 					>
 						<MenuItem value={Priority.High}>High</MenuItem>
-						<MenuItem value={Priority.Mid}>Mid</MenuItem>
 						<MenuItem value={Priority.Low}>Low</MenuItem>
 					</Select>
 				</FormControl>
@@ -173,15 +161,14 @@ const AddList = () => {
 						label="Shared List?"
 					/>
 				</FormGroup>
-				{sharedChecked && (
+				<Collapse className={classes.sharedInput} in={sharedChecked}>
 					<Autocomplete
-						className={classes.sharedInput}
 						open={open}
 						onOpen={() => {
-							setOpen(true);
+							setVisible(true);
 						}}
 						onClose={() => {
-							setOpen(false);
+							setVisible(false);
 						}}
 						getOptionSelected={(option: any, value: any) =>
 							option.name === value.name
@@ -215,7 +202,7 @@ const AddList = () => {
 							/>
 						)}
 					/>
-				)}
+				</Collapse>
 				<Button
 					className={classes.addListButton}
 					size="large"

@@ -5,19 +5,19 @@ import { Alert } from '@material-ui/lab';
 
 interface ISnackBar {
 	open: boolean;
-	setOpen: (open: boolean) => void;
+	setVisible: (open: boolean) => void;
 	type?: 'success' | 'info' | 'warning' | 'error' | undefined;
 	message: string;
 }
 
-const SnackBar = ({ open, setOpen, type, message }: ISnackBar) => {
+const SnackBar = ({ open, setVisible, type, message }: ISnackBar) => {
 	const dispatch = useDispatch();
 	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 		if (reason === 'clickaway') {
 			return;
 		}
 
-		dispatch(setOpen(false));
+		dispatch(setVisible(false));
 	};
 	return (
 		<MaterialUISnackBar
