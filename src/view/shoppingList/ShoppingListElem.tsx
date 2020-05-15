@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
 import { AvatarGroup } from '@material-ui/lab';
 import {
 	ListItem,
@@ -11,6 +10,15 @@ import {
 	Theme,
 	createStyles,
 } from '@material-ui/core';
+
+interface IData {
+	priority: string;
+	listName: string;
+}
+
+interface IShoppingListElem {
+	data: IData;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -29,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			width: '100%',
 			padding: `${theme.spacing(0.5)}px 0`,
 			display: 'flex',
+			alignItems: 'center',
 		},
 		progress: {
 			backgroundColor: 'white',
@@ -46,20 +55,19 @@ const useStyles = makeStyles((theme: Theme) =>
 			right: theme.spacing(2),
 			top: theme.spacing(3),
 		},
+		statusDot: {
+			width: '10px',
+			height: '10px',
+			borderRadius: '50%',
+			backgroundColor: ({ data }: IShoppingListElem) =>
+				data.priority === 'HIGH' ? '#ff5722' : '#4caf50',
+			margin: `0 ${theme.spacing(1)}px`,
+		},
 	})
 );
 
-interface IData {
-	priority: string;
-	listName: string;
-}
-
-interface IShoppingListElem {
-	data: IData;
-}
-
-const ShoppingListElem = ({ data, idx }: any) => {
-	const classes = useStyles({ idx });
+const ShoppingListElem = ({ data }: any) => {
+	const classes = useStyles({ data });
 
 	const getAvatars = useMemo(() => {
 		return data?.shared.map((user: any) => (
@@ -83,11 +91,7 @@ const ShoppingListElem = ({ data, idx }: any) => {
 				<Typography display="block" color="secondary">
 					Priority
 				</Typography>
-				{data.priority === 'HIGH' ? (
-					<ArrowUpward color="error" className={classes.icon} />
-				) : (
-					<ArrowDownward color="action" className={classes.icon} />
-				)}
+				<div className={classes.statusDot}></div>
 			</Box>
 			<Box className={classes.wrapper}>
 				<LinearProgress

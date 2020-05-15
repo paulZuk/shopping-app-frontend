@@ -31,6 +31,11 @@ const muiThemeOptions: ThemeOptions = {
 				color: 'rgba(25, 150, 252, 1)',
 			},
 		},
+		MuiLinearProgress: {
+			root: {
+				borderRadius: '2px',
+			},
+		},
 		MuiFormLabel: {
 			root: {
 				color: 'white',
