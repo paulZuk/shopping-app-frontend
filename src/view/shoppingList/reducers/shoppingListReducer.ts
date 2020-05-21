@@ -23,6 +23,18 @@ const shoppingListReducer = (
 			return state.set('listData', action.lists);
 		case ShoppingListActionsEnum.SET_LOADING:
 			return state.set('loading', action.loading);
+		case ShoppingListActionsEnum.DELETE_LIST:
+			const listData = state.get('listData');
+
+			if (!Array.isArray(listData)) {
+				return state;
+			}
+
+			const list = listData.filter(item => {
+				return item._id !== action.id;
+			});
+
+			return state.set('listData', list);
 		default:
 			return state;
 	}

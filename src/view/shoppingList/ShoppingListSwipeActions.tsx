@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import ShoppingListActions from './actions/ShoppingListActions';
 import {
 	makeStyles,
 	createStyles,
@@ -6,6 +7,7 @@ import {
 	Typography,
 	Box,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 const swipeContainer = {
 	width: '50%',
@@ -46,8 +48,18 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-const SwipedButtons = () => {
+interface SwipedButtons {
+	id: string;
+}
+
+const SwipedButtons = ({ id }: SwipedButtons) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	const handleDeleteClick = useCallback(() => {
+		dispatch(ShoppingListActions.deleteList(id));
+	}, [dispatch, id]);
+
 	return (
 		<Box className={classes.swipeContainer}>
 			<Box className={classes.swipeLeftContainer}>
@@ -56,7 +68,10 @@ const SwipedButtons = () => {
 				</Box>
 			</Box>
 			<Box className={classes.swipeRightContainer}>
-				<Box className={classes.deleteButton}>
+				<Box
+					onClick={handleDeleteClick}
+					className={classes.deleteButton}
+				>
 					<Typography variant="h6">Delete</Typography>
 				</Box>
 			</Box>

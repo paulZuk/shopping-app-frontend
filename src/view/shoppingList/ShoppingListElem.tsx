@@ -104,8 +104,6 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 	const { data, swiped, setSwiped } = props;
 	const classes = useStyles(props);
 
-	console.log(swiped);
-
 	const handleSwipe = useCallback(
 		e => {
 			if (swiped.dir && swiped.id === data._id) {
@@ -136,7 +134,7 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 
 	return (
 		<Box className={classes.mainWrapper}>
-			<SwipedButtons />
+			<SwipedButtons id={data._id} />
 			<Box className={classes.itemWrapper} {...swipeHandlers}>
 				<ListItem className={classes.listItem}>
 					<Box className={classes.wrapper}>

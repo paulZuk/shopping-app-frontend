@@ -1,7 +1,25 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Snackbar as MaterialUISnackBar } from '@material-ui/core';
+import {
+	Snackbar as MaterialUISnackBar,
+	createStyles,
+	Theme,
+	makeStyles,
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			position: 'absolute',
+			display: 'block',
+			left: '50%',
+			right: 'unset',
+			width: '80%',
+			transform: 'translateX(-50%)',
+		},
+	})
+);
 
 interface ISnackBar {
 	open: boolean;
@@ -12,6 +30,8 @@ interface ISnackBar {
 
 const SnackBar = ({ open, setVisible, type, message }: ISnackBar) => {
 	const dispatch = useDispatch();
+	const classes = useStyles();
+
 	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 		if (reason === 'clickaway') {
 			return;
@@ -22,8 +42,9 @@ const SnackBar = ({ open, setVisible, type, message }: ISnackBar) => {
 	return (
 		<MaterialUISnackBar
 			open={open}
-			autoHideDuration={6000}
+			autoHideDuration={4000}
 			onClose={handleClose}
+			className={classes.root}
 			anchorOrigin={{
 				vertical: 'top',
 				horizontal: 'center',

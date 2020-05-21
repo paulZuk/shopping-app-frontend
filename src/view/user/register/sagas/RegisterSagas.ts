@@ -32,9 +32,9 @@ export function* register(action: IRegisterUser) {
 
 		yield put(UserActions.setUserLoading(false));
 	} catch (err) {
-		const errors = err.response.data.errors;
+		const errors = err.response?.data.errors;
 
-		if (err.response.status === 422) {
+		if (err.response?.status === 422) {
 			yield put(ServerErrorActions.setError(errors));
 			yield put(ServerErrorActions.toggleError(true));
 		}
