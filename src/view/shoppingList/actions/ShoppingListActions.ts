@@ -1,6 +1,7 @@
 export enum ShoppingListActionsEnum {
 	GET_LIST = 'GET_LIST',
 	SET_LIST = 'SET_LIST',
+	DELETE_LIST = 'DELETE_LIST',
 	SET_LOADING = 'SET_LOADING',
 }
 
@@ -29,8 +30,18 @@ export interface ISetLoading {
 	loading: boolean;
 }
 
+export interface IDeleteList {
+	type: typeof ShoppingListActionsEnum.DELETE_LIST;
+	id: string;
+}
+
 const getLists = () => ({
 	type: ShoppingListActionsEnum.GET_LIST,
+});
+
+const deleteList = (id: string) => ({
+	type: ShoppingListActionsEnum.DELETE_LIST,
+	id,
 });
 
 const setLists = (lists: Array<any>) => ({
@@ -46,10 +57,12 @@ const setLoading = (loading: boolean) => ({
 export type ShoppingListActionsTypes =
 	| IGetShoppingList
 	| ISetShoppingList
+	| IDeleteList
 	| ISetLoading;
 
 export default {
 	getLists,
+	deleteList,
 	setLists,
 	setLoading,
 };
