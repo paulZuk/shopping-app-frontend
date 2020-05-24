@@ -50,6 +50,7 @@ const RouterProvider = ({ children }: IRouteProvider) => {
 							exact
 						/>
 						<Route path="/add" component={AddList} exact />
+						<Route path="/add/:id" component={AddList} exact />
 					</Switch>
 				</CSSTransition>
 			</TransitionGroup>

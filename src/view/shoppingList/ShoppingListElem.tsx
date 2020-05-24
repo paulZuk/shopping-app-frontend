@@ -24,7 +24,8 @@ interface IData {
 interface IShoppingListElem {
 	data: IData;
 	swiped: ISwipeState;
-	setSwiped: (siwped: ISwipeState) => void;
+	setSwiped: (swiped: ISwipeState) => void;
+	setDialogVisible: (dialogVisible: boolean) => void;
 	idx: number;
 }
 
@@ -101,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ShoppingListElem = (props: IShoppingListElem) => {
-	const { data, swiped, setSwiped } = props;
+	const { data, swiped, setSwiped, setDialogVisible } = props;
 	const classes = useStyles(props);
 
 	const handleSwipe = useCallback(
@@ -134,7 +135,7 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 
 	return (
 		<Box className={classes.mainWrapper}>
-			<SwipedButtons id={data._id} />
+			<SwipedButtons setDialogVisible={setDialogVisible} id={data._id} />
 			<Box className={classes.itemWrapper} {...swipeHandlers}>
 				<ListItem className={classes.listItem}>
 					<Box className={classes.wrapper}>
@@ -157,7 +158,7 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 							className={classes.progress}
 							color="primary"
 							variant="determinate"
-							value={Math.floor(Math.random() * (100 - 1) + 1)}
+							value={50}
 						/>
 					</Box>
 					<Box className={classes.avatarWrapper}>

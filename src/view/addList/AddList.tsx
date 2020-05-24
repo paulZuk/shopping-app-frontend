@@ -23,6 +23,8 @@ import useError from 'core/hooks/useError';
 import Layout from 'core/components/Layout';
 import UserActions from 'view/user/actions/UserActions';
 import getUsers from 'view/user/selectors/getUsers';
+import { useParams } from 'react-router-dom';
+import getFormData from './selectors/getFormData';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -55,47 +57,63 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
+interface IParams {
+	id: string;
+}
+
 const AddList = () => {
 	const classes = useStyles();
-	const [listName, setListName] = useState('');
-	const [priority, setPriority] = useState(Priority.Low);
-	const [sharedInput, setSharedInput] = useState([]);
-	const [sharedChecked, setSharedChecked] = useState(false);
 	const [open, setVisible] = useState(false);
 	const { showError, setError } = useError();
+	const params = useParams<IParams>();
 	const dispatch = useDispatch();
 	const { loading, users: options } = useSelector(getUsers);
+	const { listName, priority, sharedChecked, sharedInput } = useSelector(
+		getFormData
+	);
 
 	useEffect(() => {
 		dispatch(UserActions.getUsers());
 	}, [dispatch]);
 
+	useEffect(() => {
+		if (params.id) {
+			dispatch(AddListActions.getListData(params.id));
+		}
+
+		return () => {
+			dispatch(AddListActions.resetData());
+		};
+	}, [params.id, dispatch]);
+
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setListName(event.target.value);
+			dispatch(AddListActions.setValue('listName', event.target.value));
 		},
-		[setListName]
+		[dispatch]
 	);
 
 	const handleChangePriority = useCallback(
 		(event: React.ChangeEvent<{ value: unknown }>) => {
-			setPriority(event.target.value as Priority);
+			dispatch(AddListActions.setValue('priority', event.target.value));
 		},
-		[setPriority]
+		[dispatch]
 	);
 
 	const handleChangeShared = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setSharedChecked(event.target.checked);
+			dispatch(
+				AddListActions.setValue('sharedChecked', event.target.checked)
+			);
 		},
-		[setSharedChecked]
+		[dispatch]
 	);
 
 	const handleChangeSharedInput = useCallback(
 		(event: React.ChangeEvent<{}>, value: never[]) => {
-			setSharedInput(value);
+			dispatch(AddListActions.setValue('sharedInput', value));
 		},
-		[setSharedInput]
+		[dispatch]
 	);
 
 	const handleAddList = useCallback(
@@ -211,7 +229,7 @@ const AddList = () => {
 					color="primary"
 					onClick={handleAddList}
 				>
-					Add list
+					{params.id ? 'Edit list' : 'Add list'}
 				</Button>
 			</Container>
 		</Layout>

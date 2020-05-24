@@ -2,7 +2,9 @@ export enum ShoppingListActionsEnum {
 	GET_LIST = 'GET_LIST',
 	SET_LIST = 'SET_LIST',
 	DELETE_LIST = 'DELETE_LIST',
+	LOAD_LIST_DATA = 'LOAD_LIST_DATA',
 	SET_LOADING = 'SET_LOADING',
+	SET_DELETE_ID = 'SET_DELETE_ID',
 }
 
 export interface IShared {
@@ -32,6 +34,10 @@ export interface ISetLoading {
 
 export interface IDeleteList {
 	type: typeof ShoppingListActionsEnum.DELETE_LIST;
+}
+
+export interface IDeleteId {
+	type: typeof ShoppingListActionsEnum.SET_DELETE_ID;
 	id: string;
 }
 
@@ -39,9 +45,8 @@ const getLists = () => ({
 	type: ShoppingListActionsEnum.GET_LIST,
 });
 
-const deleteList = (id: string) => ({
+const deleteList = () => ({
 	type: ShoppingListActionsEnum.DELETE_LIST,
-	id,
 });
 
 const setLists = (lists: Array<any>) => ({
@@ -54,10 +59,16 @@ const setLoading = (loading: boolean) => ({
 	loading,
 });
 
+const setDeleteId = (id: string) => ({
+	type: ShoppingListActionsEnum.SET_DELETE_ID,
+	id,
+});
+
 export type ShoppingListActionsTypes =
 	| IGetShoppingList
 	| ISetShoppingList
 	| IDeleteList
+	| IDeleteId
 	| ISetLoading;
 
 export default {
@@ -65,4 +76,5 @@ export default {
 	deleteList,
 	setLists,
 	setLoading,
+	setDeleteId,
 };

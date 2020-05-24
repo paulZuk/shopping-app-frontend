@@ -8,6 +8,7 @@ import {
 	Box,
 } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const swipeContainer = {
 	width: '50%',
@@ -50,20 +51,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SwipedButtons {
 	id: string;
+	setDialogVisible: (id: boolean) => void;
 }
 
-const SwipedButtons = ({ id }: SwipedButtons) => {
+const SwipedButtons = ({ id, setDialogVisible }: SwipedButtons) => {
 	const classes = useStyles();
+	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const handleDeleteClick = useCallback(() => {
-		dispatch(ShoppingListActions.deleteList(id));
-	}, [dispatch, id]);
+		setDialogVisible(true);
+		dispatch(ShoppingListActions.setDeleteId(id));
+	}, [setDialogVisible, dispatch, id]);
+
+	const handleEditClick = useCallback(() => {
+		history.push(`/add/${id}`);
+	}, [id, history]);
 
 	return (
 		<Box className={classes.swipeContainer}>
 			<Box className={classes.swipeLeftContainer}>
-				<Box className={classes.editButton}>
+				<Box onClick={handleEditClick} className={classes.editButton}>
 					<Typography variant="h6">Edit</Typography>
 				</Box>
 			</Box>
