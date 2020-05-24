@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import {
 	Toolbar,
 	IconButton,
@@ -40,16 +40,16 @@ const ChildNavbar = ({ path }: IChildNavbar) => {
 	const location = useLocation();
 	const history = useHistory();
 
+	const isEditForm = useRouteMatch('/add/:id');
+
 	const currentScreen = routes.indexOf(location.pathname);
 
 	const getViewName = useMemo(() => {
-		switch (location.pathname) {
-			case '/add':
-				return 'Add list';
-			default:
-				return '';
+		if (isEditForm) {
+			return 'Edit list';
 		}
-	}, [location.pathname]);
+		return 'Add list';
+	}, [isEditForm]);
 
 	const handleGoBack = useCallback(() => {
 		history.push({

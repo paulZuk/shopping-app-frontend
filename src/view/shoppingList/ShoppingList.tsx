@@ -17,6 +17,7 @@ import ShoppingListElem from './ShoppingListElem';
 import Zoom from '@material-ui/core/Zoom';
 import Loader from 'core/components/Loader';
 import { routes } from 'core/RouterProvider';
+import DeleteConfirmation from './components/DeleteConfirmation';
 
 import {
 	Container,
@@ -68,6 +69,7 @@ const ShoppingList = () => {
 	const history = useHistory();
 	const location = useLocation();
 	const [addButtonVisible, setAddButtonVisible] = useState(true);
+	const [dialogVisible, setDialogVisible] = useState(false);
 	const [swiped, setSwiped] = useState<ISwipeState>(emptySwipeState);
 	let scrollPosition = useRef(0);
 	const { listData, loading } = useSelector(getShoppingList);
@@ -85,6 +87,7 @@ const ShoppingList = () => {
 				data={elem}
 				swiped={swiped}
 				setSwiped={setSwiped}
+				setDialogVisible={setDialogVisible}
 				idx={idx}
 			/>
 		));
@@ -123,8 +126,18 @@ const ShoppingList = () => {
 		[throttledScroll]
 	);
 
+	const handleConfirmDelete = useCallback(() => {
+		dispatch(ShoppingListActions.deleteList());
+		setDialogVisible(false);
+	}, [dispatch]);
+
 	return (
 		<Layout onScroll={handleScroll}>
+			<DeleteConfirmation
+				dialogVisible={dialogVisible}
+				setDialogVisible={setDialogVisible}
+				handleConfirm={handleConfirmDelete}
+			/>
 			<Container maxWidth="xs" disableGutters className={classes.root}>
 				<Loader invisible loading={loading} />
 				<List dense className={classes.list}>
