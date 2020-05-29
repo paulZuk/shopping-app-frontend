@@ -125,8 +125,8 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 	const getAvatars = useMemo(() => {
 		return data?.shared.map((user: any) => (
 			<Avatar
-				key={user._id}
-				alt={user.login}
+				key={user.id}
+				alt={user.name}
 				src="/static/images/avatar/2.jpg"
 				className={classes.avatar}
 			/>

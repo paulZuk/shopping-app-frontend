@@ -1,5 +1,6 @@
 export enum AddListActions {
 	ADD_LIST = 'ADD_LIST',
+	EDIT_LIST = 'EDIT_LIST',
 	LOAD_ADD_FORM = 'LOAD_ADD_FORM',
 	LOAD_LIST_DATA = 'LOAD_LIST_DATA',
 	SET_ADD_LIST_LOADING = 'SET_ADD_LIST_LOADING',
@@ -42,6 +43,11 @@ export interface ILoadForm {
 	data: any;
 }
 
+export interface IEditList {
+	type: typeof AddListActions.EDIT_LIST;
+	id: string;
+}
+
 const loadForm = (data: any) => ({
 	type: AddListActions.LOAD_ADD_FORM,
 	data,
@@ -64,6 +70,11 @@ const addList = (addListData: IAddListData): IAddList => {
 	};
 };
 
+const editList = (id: string) => ({
+	type: AddListActions.EDIT_LIST,
+	id,
+});
+
 const setValue = (field: string, value: any) => ({
 	type: AddListActions.SET_VALUE_ADD_LIST,
 	field,
@@ -79,7 +90,8 @@ export type AddListActionsTypes =
 	| IAddList
 	| ISetValue
 	| ILoadForm
-	| IResetData;
+	| IResetData
+	| IEditList;
 
 export default {
 	addList,
@@ -88,4 +100,5 @@ export default {
 	setValue,
 	resetData,
 	loadForm,
+	editList,
 };

@@ -116,10 +116,15 @@ const AddList = () => {
 		[dispatch]
 	);
 
-	const handleAddList = useCallback(
+	const handleSendButton = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			if (!listName) {
 				setError(true);
+				return;
+			}
+
+			if (params.id) {
+				dispatch(AddListActions.editList(params.id));
 				return;
 			}
 
@@ -131,7 +136,7 @@ const AddList = () => {
 				})
 			);
 		},
-		[dispatch, listName, priority, sharedInput, setError]
+		[dispatch, listName, priority, sharedInput, setError, params.id]
 	);
 
 	return (
@@ -227,7 +232,7 @@ const AddList = () => {
 					fullWidth
 					variant="contained"
 					color="primary"
-					onClick={handleAddList}
+					onClick={handleSendButton}
 				>
 					{params.id ? 'Edit list' : 'Add list'}
 				</Button>

@@ -4,15 +4,17 @@ import { push } from 'connected-react-router';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import ShoppingListActions, {
 	ShoppingListActionsEnum,
-	IDeleteList,
 } from '../actions/ShoppingListActions';
 import getDeleteId from '../selectors/getDeleteId';
 
 type commonRequestType = (...args: any[]) => any;
 
-export const getShoppingListRequest: commonRequestType = (id?: string) => {
+export const shoppingListRequest: commonRequestType = (
+	type: 'get' | 'delete',
+	id?: string
+) => {
 	return axios({
-		method: 'get',
+		method: type,
 		url: 'http://localhost:8080/list',
 		withCredentials: true,
 		params: {
@@ -21,21 +23,10 @@ export const getShoppingListRequest: commonRequestType = (id?: string) => {
 	});
 };
 
-const deleteShoppingListRequest: commonRequestType = id => {
-	return axios({
-		method: 'delete',
-		url: 'http://localhost:8080/list',
-		withCredentials: true,
-		data: {
-			id,
-		},
-	});
-};
-
 export function* getShoppingList() {
 	try {
 		yield put(ShoppingListActions.setLoading(true));
-		const response = yield call(getShoppingListRequest);
+		const response = yield call(shoppingListRequest, 'get');
 
 		if (response.status === 200) {
 			yield put(ShoppingListActions.setLists(response.data.shoppingList));
@@ -56,11 +47,11 @@ export function* getShoppingList() {
 	}
 }
 
-export function* deleteShoppingList(action: IDeleteList) {
+export function* deleteShoppingList() {
 	const deleteId = yield select(getDeleteId);
 	try {
 		yield put(ShoppingListActions.setLoading(true));
-		const response = yield call(deleteShoppingListRequest, deleteId);
+		const response = yield call(shoppingListRequest, 'delete', deleteId);
 
 		if (response.status === 200) {
 		}

@@ -30,10 +30,7 @@ const addListReducer = (state = initState, action: AddListActionsTypes) => {
 				Immutable.Map({
 					listName,
 					priority,
-					sharedInput: shared.map((elem: any) => ({
-						id: elem._id,
-						name: elem.login,
-					})),
+					sharedInput: shared,
 					sharedChecked: shared && !!shared.length,
 				})
 			);
