@@ -8,7 +8,7 @@ import AddListActions, {
 	ILoadListData,
 	IEditList,
 } from '../actions/AddListActions';
-import { shoppingListRequest } from 'view/shoppingList/sagas/ShoppingListSagas';
+import { getShoppingListRequest } from 'view/shoppingList/sagas/ShoppingListSagas';
 import getFormData from '../selectors/getFormData';
 
 type addListRequestType = (...args: any[]) => any;
@@ -83,7 +83,7 @@ export function* loadListData(action: ILoadListData) {
 	const id = action.id;
 	try {
 		yield put(AddListActions.setLoading(true));
-		const response = yield call(shoppingListRequest, 'get', id);
+		const response = yield call(getShoppingListRequest, id);
 
 		if (response.status === 200) {
 			yield put(AddListActions.loadForm(response.data[0]));

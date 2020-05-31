@@ -46,3 +46,18 @@
 .slide-backward-exit-active {
 	transform: translateX(100%);
 }
+
+.flick-enter {
+	opacity: 0;
+}
+.flick-enter-active {
+	opacity: 1;
+	transition: opacity 300ms ease-in;
+}
+.flick-exit {
+	opacity: 1;
+}
+.flick-exit-active {
+	opacity: 0;
+	transition: opacity 300ms ease-in;
+}
