@@ -11,6 +11,7 @@ import Layout from 'core/components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fab } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import ShoppingListActions from './actions/ShoppingListActions';
 import getShoppingList from './selectors/getShoppingList';
 import ShoppingListElem from './ShoppingListElem';
@@ -73,6 +74,7 @@ const ShoppingList = () => {
 	const [swiped, setSwiped] = useState<ISwipeState>(emptySwipeState);
 	let scrollPosition = useRef(0);
 	const { listData, loading } = useSelector(getShoppingList);
+	const [dataLoaded, setDataLoaded] = useState(false);
 
 	const currentScreen = routes.indexOf(location.pathname);
 
@@ -80,16 +82,23 @@ const ShoppingList = () => {
 		dispatch(ShoppingListActions.getLists());
 	}, [dispatch]);
 
+	useEffect(() => {
+		if (!!listData.length) {
+			setDataLoaded(true);
+		}
+	}, [listData.length]);
+
 	const getListItems = useMemo(() => {
 		return listData.map((elem: any, idx: number) => (
-			<ShoppingListElem
-				key={elem._id}
-				data={elem}
-				swiped={swiped}
-				setSwiped={setSwiped}
-				setDialogVisible={setDialogVisible}
-				idx={idx}
-			/>
+			<CSSTransition key={elem._id} timeout={300} classNames="flick">
+				<ShoppingListElem
+					data={elem}
+					swiped={swiped}
+					setSwiped={setSwiped}
+					setDialogVisible={setDialogVisible}
+					idx={idx}
+				/>
+			</CSSTransition>
 		));
 	}, [listData, swiped]);
 
@@ -141,7 +150,13 @@ const ShoppingList = () => {
 			<Container maxWidth="xs" disableGutters className={classes.root}>
 				<Loader invisible loading={loading} />
 				<List dense className={classes.list}>
-					{getListItems}
+					<TransitionGroup
+						enter={dataLoaded}
+						className="shopping-list"
+						component={null}
+					>
+						{getListItems}
+					</TransitionGroup>
 				</List>
 			</Container>
 			<Zoom in={addButtonVisible}>
