@@ -24,14 +24,19 @@ interface INavbar {
 	appBarRef: RefObject<HTMLDivElement>;
 	childView: boolean | undefined;
 	path?: string;
+	detailListName?: string;
 }
 
-const Navbar = ({ appBarRef, childView, path }: INavbar) => {
+const Navbar = ({ appBarRef, childView, path, detailListName }: INavbar) => {
 	const classes = useStyles();
 
 	return (
 		<AppBar className={classes.root} ref={appBarRef} position="sticky">
-			{childView ? <ChildNavbar path={path} /> : <MainNavbar />}
+			{childView ? (
+				<ChildNavbar detailListName={detailListName} path={path} />
+			) : (
+				<MainNavbar />
+			)}
 		</AppBar>
 	);
 };

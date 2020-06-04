@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import SwipedButtons from './ShoppingListSwipeActions';
 import { emptySwipeState, ISwipeState } from './ShoppingList';
+import { useHistory, useLocation, matchPath } from 'react-router-dom';
+import { routes } from 'core/RouterProvider';
 
 interface IData {
 	_id: 'string';
@@ -104,6 +106,12 @@ const useStyles = makeStyles((theme: Theme) =>
 const ShoppingListElem = (props: IShoppingListElem) => {
 	const { data, swiped, setSwiped, setDialogVisible } = props;
 	const classes = useStyles(props);
+	const history = useHistory();
+	const location = useLocation();
+
+	const currentScreen = routes.findIndex(route =>
+		matchPath(location.pathname, { path: route, exact: true })
+	);
 
 	const handleSwipe = useCallback(
 		e => {
@@ -115,6 +123,13 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 		},
 		[data._id, swiped, setSwiped]
 	);
+
+	const handleClick = useCallback(() => {
+		history.push({
+			pathname: `/list-detail/${data._id}`,
+			state: { from: currentScreen },
+		});
+	}, [history, data._id, currentScreen]);
 
 	const swipeHandlers = useSwipeable({
 		onSwipedLeft: handleSwipe,
@@ -136,7 +151,11 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 	return (
 		<Box className={classes.mainWrapper}>
 			<SwipedButtons setDialogVisible={setDialogVisible} id={data._id} />
-			<Box className={classes.itemWrapper} {...swipeHandlers}>
+			<Box
+				onClick={handleClick}
+				className={classes.itemWrapper}
+				{...swipeHandlers}
+			>
 				<ListItem className={classes.listItem}>
 					<Box className={classes.wrapper}>
 						<Typography

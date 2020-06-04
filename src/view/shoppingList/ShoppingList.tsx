@@ -43,9 +43,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		fabButton: {
 			position: 'fixed',
-			bottom: '10%',
+			bottom: '5%',
 			right: '5%',
-			zIndex: 9999,
+			zIndex: 1,
 		},
 	})
 );

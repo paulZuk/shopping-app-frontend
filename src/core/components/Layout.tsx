@@ -24,9 +24,16 @@ interface ILayout extends React.Props<{}> {
 	childView?: boolean;
 	onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 	path?: string;
+	detailListName?: string;
 }
 
-const Layout = ({ children, childView, onScroll, path }: ILayout) => {
+const Layout = ({
+	children,
+	childView,
+	onScroll,
+	path,
+	detailListName,
+}: ILayout) => {
 	const { windowHeight } = useWindowSize();
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const classes = useStyles({ childView });
@@ -38,7 +45,12 @@ const Layout = ({ children, childView, onScroll, path }: ILayout) => {
 
 	return (
 		<Box>
-			<Navbar appBarRef={appBarRef} path={path} childView={childView} />
+			<Navbar
+				appBarRef={appBarRef}
+				detailListName={detailListName}
+				path={path}
+				childView={childView}
+			/>
 			<Box
 				onScroll={onScroll}
 				className={classes.root}
