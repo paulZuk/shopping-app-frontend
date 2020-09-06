@@ -8,12 +8,16 @@ import serverErrorReducer, {
 import shoppingListReducer, {
 	IShoppingListState,
 } from 'view/shoppingList/reducers/shoppingListReducer';
+import shoppingListDetailReducer, {
+	IShoppingListDetailtState,
+} from 'view/shoppingListDetail/reducers/shoppingListDetailReducer';
 import addListReducer, { IAddList } from 'view/addList/reducers/addListReducer';
 
 export interface IRootState {
 	user: IUserState;
 	serverError: IServerError;
 	shoppingList: IShoppingListState;
+	shoppingListDetail: IShoppingListDetailtState;
 	addList: IAddList;
 }
 
@@ -23,6 +27,7 @@ const createRootReducer = (history: History) =>
 		user: userReducer,
 		serverError: serverErrorReducer,
 		shoppingList: shoppingListReducer,
+		shoppingListDetail: shoppingListDetailReducer,
 		addList: addListReducer,
 	});
 

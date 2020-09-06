@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		list: {
 			width: '100%',
+			overflow: 'auto',
 		},
 		fabButton: {
 			position: 'fixed',
