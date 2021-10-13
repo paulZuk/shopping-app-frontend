@@ -57,6 +57,11 @@ const muiThemeOptions: ThemeOptions = {
 				backgroundColor: 'white',
 			},
 		},
+		MuiSvgIcon: {
+			root: {
+				fill: 'white',
+			},
+		},
 		MuiOutlinedInput: {
 			root: {
 				'&:hover .MuiOutlinedInput-notchedOutline': {

@@ -1,29 +1,12 @@
 import Immutable from 'immutable';
-import { ShoppingListDetailActions } from '../actions/ShoppingListDetailActions';
+import { ShoppingListDetailEnum } from '../actions/ShoppingListDetailActions';
 
 const initState = Immutable.Map({
-	detailData: [
-		{ id: 'sdfsdf', type: 'Nabiał', checked: false, name: 'Mleko' },
-		{ id: 'etbe', type: 'Pieczywo', checked: false, name: 'Bułki' },
-		{
-			id: 'fsdmow',
-			type: 'Nabiał',
-			checked: true,
-			name: 'Jogurt naturalny',
-		},
-		{ id: 'vswri', type: 'Kuchnia', checked: false, name: 'Domestos' },
-		{
-			id: 'sffsf',
-			type: 'Art. spozywcze',
-			checked: false,
-			name: 'Woda mineralna',
-		},
-		{ id: 'fssfss', type: 'Pieczywo', checked: true, name: 'Chleb' },
-	],
+	detailData: [] as Array<any>,
 });
 
 export interface IDetail {
-	id: string;
+	_id: string;
 	type: string;
 	checked: boolean;
 	name: string;
@@ -35,10 +18,10 @@ export interface IShoppingListDetailtState extends Immutable.Map<string, any> {
 
 const shoppingListDetailReducer = (state = initState, action: any) => {
 	switch (action.type) {
-		case ShoppingListDetailActions.DETAIL_TOGGLE_CHECKED:
+		case ShoppingListDetailEnum.DETAIL_TOGGLE_CHECKED:
 			const data = state.get('detailData') || [];
 			const newData = data?.map(data => {
-				if (data.id === action.id) {
+				if (data._id === action.id) {
 					return {
 						...data,
 						checked: !data.checked,
@@ -47,6 +30,23 @@ const shoppingListDetailReducer = (state = initState, action: any) => {
 				return data;
 			});
 			return state.set('detailData', newData);
+		case ShoppingListDetailEnum.SET_LOADING:
+			return state.set('loading', action.loading);
+		case ShoppingListDetailEnum.ADD_TO_LIST:
+			const newState = [...state.get('detailData'), action.item];
+
+			return state.set(
+				'detailData',
+				newState.filter((item, pos) => newState.indexOf(item) === pos)
+			);
+		case ShoppingListDetailEnum.REMOVE_FROM_LIST:
+			const filteredArray =
+				state
+					.get('detailData')
+					?.filter(elem => elem._id !== action.id) || [];
+			return state.set('detailData', filteredArray);
+		case ShoppingListDetailEnum.SET_DETAIL_DATA:
+			return state.set('detailData', action.data);
 		default:
 			return state;
 	}

@@ -65,7 +65,7 @@ const Login = () => {
 		[setLogin]
 	);
 
-	const trylogin = useCallback(() => {
+	const tryLogin = useCallback(() => {
 		dispatch(LoginActions.tryLogin(login, pass));
 		setError(false);
 	}, [dispatch, login, pass, setError]);
@@ -76,9 +76,9 @@ const Login = () => {
 				setError(true);
 				return;
 			}
-			trylogin();
+			tryLogin();
 		},
-		[login, pass, setError, trylogin]
+		[login, pass, setError, tryLogin]
 	);
 
 	const handleRegisterClick = useCallback(() => {
@@ -95,10 +95,10 @@ const Login = () => {
 	const handleKeyDown = useCallback(
 		(event: React.KeyboardEvent) => {
 			if (event.keyCode === 13) {
-				trylogin();
+				tryLogin();
 			}
 		},
-		[trylogin]
+		[tryLogin]
 	);
 
 	return (

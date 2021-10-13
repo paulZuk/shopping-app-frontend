@@ -12,6 +12,9 @@ import shoppingListDetailReducer, {
 	IShoppingListDetailtState,
 } from 'view/shoppingListDetail/reducers/shoppingListDetailReducer';
 import addListReducer, { IAddList } from 'view/addList/reducers/addListReducer';
+import productReducer, {
+	IProductState,
+} from 'view/product/reducers/ProductReducer';
 
 export interface IRootState {
 	user: IUserState;
@@ -19,6 +22,7 @@ export interface IRootState {
 	shoppingList: IShoppingListState;
 	shoppingListDetail: IShoppingListDetailtState;
 	addList: IAddList;
+	product: IProductState;
 }
 
 const createRootReducer = (history: History) =>
@@ -29,6 +33,7 @@ const createRootReducer = (history: History) =>
 		shoppingList: shoppingListReducer,
 		shoppingListDetail: shoppingListDetailReducer,
 		addList: addListReducer,
+		product: productReducer,
 	});
 
 export default createRootReducer;

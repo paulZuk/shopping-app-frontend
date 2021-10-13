@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import Layout from 'core/components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fab } from '@material-ui/core';
@@ -82,6 +83,19 @@ const ShoppingList = () => {
 	useEffect(() => {
 		dispatch(ShoppingListActions.getLists());
 	}, [dispatch]);
+
+	// useEffect(() => {
+	// 	const socket = io('http://localhost:8080');
+	// 	console.log(socket);
+
+	// 	socket.on('connect', () => {
+	// 		console.log(socket.connected);
+	// 	});
+
+	// 	return () => {
+	// 		socket.disconnect();
+	// 	};
+	// }, []);
 
 	useEffect(() => {
 		if (!!listData.length) {
