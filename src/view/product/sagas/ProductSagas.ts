@@ -19,7 +19,10 @@ export const getProductRequest: commonRequestType = () => {
 export function* getProductList() {
 	try {
 		yield put(ProductActions.setLoading(true));
-		const response = yield call(getProductRequest);
+		const response: {
+			status: number;
+			data: { productList: any[] };
+		} = yield call(getProductRequest);
 
 		if (response.status === 200) {
 			yield put(ProductActions.setProductList(response.data.productList));

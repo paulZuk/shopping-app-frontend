@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import { ShoppingListDetailEnum } from '../actions/ShoppingListDetailActions';
 
 const initState = Immutable.Map({
-	detailData: [] as Array<any>,
+	detailData: [] as Array<IDetail>,
 });
 
 export interface IDetail {
@@ -12,8 +12,9 @@ export interface IDetail {
 	name: string;
 }
 
-export interface IShoppingListDetailtState extends Immutable.Map<string, any> {
-	detailData: Array<any>;
+export interface IShoppingListDetailtState
+	extends Immutable.Map<string, IDetail[]> {
+	detailData: IDetail[];
 }
 
 const shoppingListDetailReducer = (state = initState, action: any) => {
@@ -33,7 +34,10 @@ const shoppingListDetailReducer = (state = initState, action: any) => {
 		case ShoppingListDetailEnum.SET_LOADING:
 			return state.set('loading', action.loading);
 		case ShoppingListDetailEnum.ADD_TO_LIST:
-			const newState = [...state.get('detailData'), action.item];
+			const newState = [
+				...(state.get('detailData') as any[]),
+				action.item,
+			];
 
 			return state.set(
 				'detailData',

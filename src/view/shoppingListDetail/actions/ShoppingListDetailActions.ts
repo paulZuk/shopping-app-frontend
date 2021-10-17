@@ -30,10 +30,12 @@ const removeFromList = (id: string) => ({
 	id,
 });
 
-export default {
+const shoppingListDetailActions = {
 	toggleDetailChecked,
 	setLoading,
 	addToList,
 	removeFromList,
 	setDetailData,
 };
+
+export default shoppingListDetailActions;

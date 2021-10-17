@@ -2,9 +2,7 @@ import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
-import ShoppingListDetailActions, {
-	ShoppingListDetailEnum,
-} from '../actions/ShoppingListDetailActions';
+import { ShoppingListDetailEnum } from '../actions/ShoppingListDetailActions';
 
 type commonRequestType = (...args: any[]) => any;
 
@@ -21,7 +19,7 @@ export function* addProductToList(action: any) {
 	try {
 		// yield put(ProductActions.setLoading(true));
 		console.log(action.item);
-		const response = yield call(addProductReq, action.item) as any;
+		const response: {} = yield call(addProductReq, action.item);
 		console.log(response);
 		// if (response.status === 200) {
 		// 	yield put(ProductActions.setProductList(response.data.productList));

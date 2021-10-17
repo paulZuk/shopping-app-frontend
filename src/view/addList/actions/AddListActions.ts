@@ -93,7 +93,7 @@ export type AddListActionsTypes =
 	| IResetData
 	| IEditList;
 
-export default {
+const addListActions = {
 	addList,
 	getListData,
 	setLoading,
@@ -102,3 +102,5 @@ export default {
 	loadForm,
 	editList,
 };
+
+export default addListActions;

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';
-import { io } from 'socket.io-client';
+//import { io } from 'socket.io-client';
 import Layout from 'core/components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fab } from '@material-ui/core';
@@ -124,6 +124,7 @@ const ShoppingList = () => {
 		});
 	}, [history, currentScreen]);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const throttledScroll = useCallback(
 		_.throttle((e: IHandleScroll) => {
 			const element = e.target;

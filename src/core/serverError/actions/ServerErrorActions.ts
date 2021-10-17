@@ -25,7 +25,9 @@ const toggleError = (visible: boolean) => ({
 
 export type ServerErrorTypes = IToggleError | ISetError;
 
-export default {
+const serverErrorActions = {
 	toggleError,
 	setError,
 };
+
+export default serverErrorActions;

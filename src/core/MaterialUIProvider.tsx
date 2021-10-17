@@ -1,8 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme, {
-	ThemeOptions,
-} from '@material-ui/core/styles/createMuiTheme';
+import { ThemeOptions, createMuiTheme } from '@material-ui/core';
 
 const muiThemeOptions: ThemeOptions = {
 	palette: {

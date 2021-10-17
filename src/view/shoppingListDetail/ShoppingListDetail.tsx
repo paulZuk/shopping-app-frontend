@@ -121,6 +121,7 @@ const ShoppingListDetail = () => {
 		[]
 	);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const throttledScroll = useCallback(
 		_.throttle((e: React.UIEvent<HTMLUListElement>) => {
 			const target = e.target as HTMLUListElement;

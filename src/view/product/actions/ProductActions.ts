@@ -20,8 +20,10 @@ const setProductList = (productList: Array<any>) => ({
 
 const setLoading = createLoadingActions(Prefix.PRODUCT);
 
-export default {
+const productActions = {
 	getProduct,
 	setProductList,
 	setLoading,
 };
+
+export default productActions;

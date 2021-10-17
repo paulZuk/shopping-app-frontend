@@ -22,7 +22,10 @@ export function* tryLogin(action: ITryLogin) {
 	const { name, pass } = action;
 	try {
 		yield put(UserActions.setUserLoading(true));
-		const response = yield call(loginRequest, { name, pass });
+		const response: { status: number } = yield call(loginRequest, {
+			name,
+			pass,
+		});
 
 		if (response.status === 200) {
 			yield put(push('/list'));

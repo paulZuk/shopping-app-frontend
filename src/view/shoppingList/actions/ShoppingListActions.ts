@@ -71,10 +71,12 @@ export type ShoppingListActionsTypes =
 	| IDeleteId
 	| ISetLoading;
 
-export default {
+const shoppingListActions = {
 	getLists,
 	deleteList,
 	setLists,
 	setLoading,
 	setDeleteId,
 };
+
+export default shoppingListActions;
