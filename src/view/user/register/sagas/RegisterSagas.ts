@@ -6,7 +6,7 @@ import UserActions from '../../actions/UserActions';
 
 type registerRequestType = (...args: any[]) => any;
 
-const regiserRequest: registerRequestType = userData => {
+const registerRequest: registerRequestType = userData => {
 	const { name, password, email } = userData;
 	return axios({
 		method: 'post',
@@ -23,7 +23,9 @@ export function* register(action: IRegisterUser) {
 	const data = action.userData;
 	try {
 		yield put(UserActions.setUserLoading(true));
-		const response = yield call(regiserRequest, { ...data });
+		const response: { status: number } = yield call(registerRequest, {
+			...data,
+		});
 
 		if (response.status === 200) {
 			yield put(UserActions.toggleCreatedSnackBar(true));

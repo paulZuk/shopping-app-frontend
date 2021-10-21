@@ -110,7 +110,7 @@ const AddList = () => {
 	);
 
 	const handleChangeSharedInput = useCallback(
-		(event: React.ChangeEvent<{}>, value: never[]) => {
+		(event: React.ChangeEvent<{}>, value: any[]) => {
 			dispatch(AddListActions.setValue('sharedInput', value));
 		},
 		[dispatch]

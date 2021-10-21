@@ -11,10 +11,18 @@ import User from 'view/user/User';
 import AddList from 'view/addList/AddList';
 import ShoppingList from 'view/shoppingList/ShoppingList';
 import '../animations/animations.css';
+import ShoppingListDetail from 'view/shoppingListDetail/ShoppingListDetail';
 
 interface IRouteProvider extends React.Props<{}> {}
 
-export const routes = ['/', '/login', '/list', '/list/:id', '/add'];
+export const routes = [
+	'/',
+	'/login',
+	'/list',
+	'/list/:id',
+	'/add',
+	'/list-detail/:id',
+];
 
 const RouterProvider = ({ children }: IRouteProvider) => {
 	const location = useLocation();
@@ -49,6 +57,12 @@ const RouterProvider = ({ children }: IRouteProvider) => {
 							component={ShoppingList}
 							exact
 						/>
+						<Redirect from="/list-detail" to="/list" exact />
+						<Route
+							path="/list-detail/:id"
+							component={ShoppingListDetail}
+							exact
+						></Route>
 						<Route path="/add" component={AddList} exact />
 						<Route path="/add/:id" component={AddList} exact />
 					</Switch>

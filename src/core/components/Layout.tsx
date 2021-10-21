@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import { Box, makeStyles, createStyles } from '@material-ui/core';
-import Navbar from './navbar/Navbar';
+import Navbar from './Navbar';
 import useWindowSize from '../hooks/useWindowSize';
 
 interface IPropsStyles {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
 					? 'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)'
 					: 'rgba(0, 228, 255, 1)',
 			position: 'relative',
-			overflow: 'auto',
+			overflow: 'hidden',
 		},
 	})
 );
@@ -24,9 +24,16 @@ interface ILayout extends React.Props<{}> {
 	childView?: boolean;
 	onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 	path?: string;
+	detailListName?: string;
 }
 
-const Layout = ({ children, childView, onScroll, path }: ILayout) => {
+const Layout = ({
+	children,
+	childView,
+	onScroll,
+	path,
+	detailListName,
+}: ILayout) => {
 	const { windowHeight } = useWindowSize();
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const classes = useStyles({ childView });
@@ -38,7 +45,12 @@ const Layout = ({ children, childView, onScroll, path }: ILayout) => {
 
 	return (
 		<Box>
-			<Navbar appBarRef={appBarRef} path={path} childView={childView} />
+			<Navbar
+				appBarRef={appBarRef}
+				detailListName={detailListName}
+				path={path}
+				childView={childView}
+			/>
 			<Box
 				onScroll={onScroll}
 				className={classes.root}

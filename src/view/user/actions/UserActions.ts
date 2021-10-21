@@ -73,7 +73,7 @@ export type UserActionsTypes =
 	| IGetUsers
 	| ISetUsers;
 
-export default {
+const userActions = {
 	setUserView,
 	setUserLoading,
 	toggleCreatedSnackBar,
@@ -81,3 +81,5 @@ export default {
 	getUsers,
 	setUsers,
 };
+
+export default userActions;

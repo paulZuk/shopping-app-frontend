@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';
+//import { io } from 'socket.io-client';
 import Layout from 'core/components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fab } from '@material-ui/core';
@@ -40,12 +41,13 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		list: {
 			width: '100%',
+			overflow: 'auto',
 		},
 		fabButton: {
 			position: 'fixed',
-			bottom: '10%',
+			bottom: '5%',
 			right: '5%',
-			zIndex: 9999,
+			zIndex: 1,
 		},
 	})
 );
@@ -82,6 +84,19 @@ const ShoppingList = () => {
 		dispatch(ShoppingListActions.getLists());
 	}, [dispatch]);
 
+	// useEffect(() => {
+	// 	const socket = io('http://localhost:8080');
+	// 	console.log(socket);
+
+	// 	socket.on('connect', () => {
+	// 		console.log(socket.connected);
+	// 	});
+
+	// 	return () => {
+	// 		socket.disconnect();
+	// 	};
+	// }, []);
+
 	useEffect(() => {
 		if (!!listData.length) {
 			setDataLoaded(true);
@@ -109,6 +124,7 @@ const ShoppingList = () => {
 		});
 	}, [history, currentScreen]);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const throttledScroll = useCallback(
 		_.throttle((e: IHandleScroll) => {
 			const element = e.target;

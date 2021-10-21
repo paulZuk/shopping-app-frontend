@@ -1,7 +1,7 @@
-import React, { RefObject } from 'react';
+import { RefObject } from 'react';
 import { AppBar, makeStyles, createStyles, Theme } from '@material-ui/core';
-import ChildNavbar from './ChildNavbar';
-import MainNavbar from './MainNavbar';
+import ChildNavbar from './components/ChildNavbar';
+import MainNavbar from './components/MainNavbar';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -24,14 +24,19 @@ interface INavbar {
 	appBarRef: RefObject<HTMLDivElement>;
 	childView: boolean | undefined;
 	path?: string;
+	detailListName?: string;
 }
 
-const Navbar = ({ appBarRef, childView, path }: INavbar) => {
+const Navbar = ({ appBarRef, childView, path, detailListName }: INavbar) => {
 	const classes = useStyles();
 
 	return (
 		<AppBar className={classes.root} ref={appBarRef} position="sticky">
-			{childView ? <ChildNavbar path={path} /> : <MainNavbar />}
+			{childView ? (
+				<ChildNavbar detailListName={detailListName} path={path} />
+			) : (
+				<MainNavbar />
+			)}
 		</AppBar>
 	);
 };

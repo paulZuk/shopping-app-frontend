@@ -35,7 +35,10 @@ const deleteShoppingListRequest: commonRequestType = id => {
 export function* getShoppingList() {
 	try {
 		yield put(ShoppingListActions.setLoading(true));
-		const response = yield call(getShoppingListRequest);
+		const response: {
+			status: number;
+			data: { shoppingList: any };
+		} = yield call(getShoppingListRequest);
 
 		if (response.status === 200) {
 			yield put(ShoppingListActions.setLists(response.data.shoppingList));
@@ -57,10 +60,13 @@ export function* getShoppingList() {
 }
 
 export function* deleteShoppingList(action: IDeleteList) {
-	const deleteId = yield select(getDeleteId);
+	const deleteId: number = yield select(getDeleteId);
 	try {
 		yield put(ShoppingListActions.setLoading(true));
-		const response = yield call(deleteShoppingListRequest, deleteId);
+		const response: { status: number } = yield call(
+			deleteShoppingListRequest,
+			deleteId
+		);
 
 		if (response.status === 200) {
 		}

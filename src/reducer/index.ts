@@ -8,13 +8,21 @@ import serverErrorReducer, {
 import shoppingListReducer, {
 	IShoppingListState,
 } from 'view/shoppingList/reducers/shoppingListReducer';
+import shoppingListDetailReducer, {
+	IShoppingListDetailtState,
+} from 'view/shoppingListDetail/reducers/shoppingListDetailReducer';
 import addListReducer, { IAddList } from 'view/addList/reducers/addListReducer';
+import productReducer, {
+	IProductState,
+} from 'view/product/reducers/ProductReducer';
 
 export interface IRootState {
 	user: IUserState;
 	serverError: IServerError;
 	shoppingList: IShoppingListState;
+	shoppingListDetail: IShoppingListDetailtState;
 	addList: IAddList;
+	product: IProductState;
 }
 
 const createRootReducer = (history: History) =>
@@ -23,7 +31,9 @@ const createRootReducer = (history: History) =>
 		user: userReducer,
 		serverError: serverErrorReducer,
 		shoppingList: shoppingListReducer,
+		shoppingListDetail: shoppingListDetailReducer,
 		addList: addListReducer,
+		product: productReducer,
 	});
 
 export default createRootReducer;

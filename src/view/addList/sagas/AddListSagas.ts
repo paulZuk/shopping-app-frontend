@@ -36,7 +36,9 @@ const addListRequest: addListRequestType = addListData => {
 export function* addList(action: IAddList) {
 	const data = action.addListData;
 	try {
-		const response = yield call(addListRequest, { ...data });
+		const response: { status: number } = yield call(addListRequest, {
+			...data,
+		});
 
 		if (response.status === 200) {
 			yield put(push('/list'));
@@ -57,7 +59,7 @@ export function* editList(action: IEditList) {
 		getFormData
 	);
 
-	const response = yield call(addListRequest, {
+	const response: { status: number } = yield call(addListRequest, {
 		id,
 		listName,
 		priority,
@@ -83,7 +85,10 @@ export function* loadListData(action: ILoadListData) {
 	const id = action.id;
 	try {
 		yield put(AddListActions.setLoading(true));
-		const response = yield call(getShoppingListRequest, id);
+		const response: { status: number; data: number[] } = yield call(
+			getShoppingListRequest,
+			id
+		);
 
 		if (response.status === 200) {
 			yield put(AddListActions.loadForm(response.data[0]));

@@ -3,6 +3,7 @@ import { push } from 'connected-react-router';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import { ITryLogin, LoginActions } from '../actions/LoginActions';
 import UserActions from 'view/user/actions/UserActions';
+import { io } from 'socket.io-client';
 
 type LoginRequestType = (...args: any[]) => any;
 
@@ -21,11 +22,19 @@ export function* tryLogin(action: ITryLogin) {
 	const { name, pass } = action;
 	try {
 		yield put(UserActions.setUserLoading(true));
-		const response = yield call(loginRequest, { name, pass });
+		const response: { status: number } = yield call(loginRequest, {
+			name,
+			pass,
+		});
 
 		if (response.status === 200) {
 			yield put(push('/list'));
 			yield put(UserActions.setUserLoading(false));
+			const socket = io('http://localhost:8080');
+
+			socket.on('connect', () => {
+				console.log(socket.connected);
+			});
 		}
 	} catch (e) {
 		yield put(UserActions.setUserLoading(false));

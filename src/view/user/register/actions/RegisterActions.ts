@@ -20,6 +20,8 @@ const registerUser = (userData: IUserData): IRegisterUser => ({
 	userData,
 });
 
-export default {
+const registerActions = {
 	registerUser,
 };
+
+export default registerActions;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme, {
-	ThemeOptions,
-} from '@material-ui/core/styles/createMuiTheme';
+import { ThemeOptions, createMuiTheme } from '@material-ui/core';
 
 const muiThemeOptions: ThemeOptions = {
 	palette: {
@@ -57,6 +55,11 @@ const muiThemeOptions: ThemeOptions = {
 				backgroundColor: 'white',
 			},
 		},
+		MuiSvgIcon: {
+			root: {
+				fill: 'white',
+			},
+		},
 		MuiOutlinedInput: {
 			root: {
 				'&:hover .MuiOutlinedInput-notchedOutline': {
@@ -65,6 +68,38 @@ const muiThemeOptions: ThemeOptions = {
 			},
 			notchedOutline: {
 				borderColor: 'rgba(25, 150, 252, 0.5)',
+			},
+		},
+		MuiExpansionPanel: {
+			root: {
+				backgroundColor: 'rgb(100, 239, 255)',
+			},
+			rounded: {
+				'&:first-child': {
+					borderTopLeftRadius: 0,
+					borderTopRightRadius: 0,
+				},
+				'&:last-child': {
+					borderBottomLeftRadius: 0,
+					borderBottomRightRadius: 0,
+				},
+			},
+		},
+		MuiExpansionPanelSummary: {
+			root: {
+				color: 'white',
+				backgroundColor: 'rgba(0, 228, 255, 1)',
+				borderBottom: '1px solid rgba(25, 150, 252, 0.5)',
+			},
+		},
+		MuiPaper: {
+			elevation1: {
+				boxShadow: 'unset',
+			},
+		},
+		MuiCheckbox: {
+			root: {
+				color: 'white',
 			},
 		},
 	},

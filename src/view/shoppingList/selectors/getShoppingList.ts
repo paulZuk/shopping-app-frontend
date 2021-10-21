@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { IRootState } from 'reducer';
 
-const getUserData = createSelector(
+const getShoppingList = createSelector(
 	(state: IRootState) => state.shoppingList.get('listData'),
 	(state: IRootState) => state.shoppingList.get('loading'),
 	(listData, loading) => ({
@@ -10,4 +10,4 @@ const getUserData = createSelector(
 	})
 );
 
-export default getUserData;
+export default getShoppingList;

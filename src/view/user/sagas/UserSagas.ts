@@ -21,7 +21,9 @@ const getUsersRequest: requestType = () => {
 export function* getUsers() {
 	try {
 		yield put(UserActions.setUserLoading(true));
-		const response = yield call(getUsersRequest);
+		const response: { status: number; data: any } = yield call(
+			getUsersRequest
+		);
 
 		if (response.status === 200) {
 			yield put(UserActions.setUsers(response.data.users));

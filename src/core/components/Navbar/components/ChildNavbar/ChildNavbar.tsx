@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
+import { matchPath } from 'react-router-dom';
 import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import {
 	Toolbar,
@@ -33,23 +34,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IChildNavbar {
 	path?: string;
+	detailListName?: string;
 }
 
-const ChildNavbar = ({ path }: IChildNavbar) => {
+const ChildNavbar = ({ path, detailListName }: IChildNavbar) => {
 	const classes = useStyles();
 	const location = useLocation();
 	const history = useHistory();
 
 	const isEditForm = useRouteMatch('/add/:id');
+	const isDetailList = useRouteMatch('/list-detail/:id');
 
-	const currentScreen = routes.indexOf(location.pathname);
+	const currentScreen = routes.findIndex(route =>
+		matchPath(location.pathname, { path: route, exact: true })
+	);
 
 	const getViewName = useMemo(() => {
 		if (isEditForm) {
 			return 'Edit list';
 		}
+		if (isDetailList) {
+			return detailListName || 'Detail list';
+		}
 		return 'Add list';
-	}, [isEditForm]);
+	}, [isEditForm, isDetailList, detailListName]);
 
 	const handleGoBack = useCallback(() => {
 		history.push({
