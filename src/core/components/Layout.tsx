@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import { Box, makeStyles, createStyles } from '@material-ui/core';
-import Navbar from './navbar/Navbar';
+import Navbar from './Navbar';
 import useWindowSize from '../hooks/useWindowSize';
 
 interface IPropsStyles {

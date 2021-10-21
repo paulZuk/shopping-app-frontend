@@ -1,7 +1,7 @@
-import React, { RefObject } from 'react';
+import { RefObject } from 'react';
 import { AppBar, makeStyles, createStyles, Theme } from '@material-ui/core';
-import ChildNavbar from './ChildNavbar';
-import MainNavbar from './MainNavbar';
+import ChildNavbar from './components/ChildNavbar';
+import MainNavbar from './components/MainNavbar';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
