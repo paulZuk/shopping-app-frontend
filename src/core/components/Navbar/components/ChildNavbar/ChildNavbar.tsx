@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-interface IChildNavbar {
+export type ChildNavbarProps = {
 	path?: string;
 	detailListName?: string;
 }
 
-const ChildNavbar = ({ path, detailListName }: IChildNavbar) => {
+const ChildNavbar = ({ path, detailListName }: ChildNavbarProps) => {
 	const classes = useStyles();
 	const location = useLocation();
 	const history = useHistory();

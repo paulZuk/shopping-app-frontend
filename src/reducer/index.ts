@@ -1,28 +1,30 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
-import userReducer, { IUserState } from 'view/user/reducer/userReducer';
+import userReducer, { UserStateType } from 'view/user/reducer/userReducer';
 import serverErrorReducer, {
-	IServerError,
+	ServerErrorStateType,
 } from 'core/serverError/reducers/serverErrorReducer';
 import shoppingListReducer, {
-	IShoppingListState,
+	ShoppingListStateType,
 } from 'view/shoppingList/reducers/shoppingListReducer';
 import shoppingListDetailReducer, {
-	IShoppingListDetailtState,
+	ShoppingListDetailStateType,
 } from 'view/shoppingListDetail/reducers/shoppingListDetailReducer';
-import addListReducer, { IAddList } from 'view/addList/reducers/addListReducer';
+import addListReducer, {
+	AddListStateType,
+} from 'view/addList/reducers/addListReducer';
 import productReducer, {
-	IProductState,
+	ProductStateType,
 } from 'view/product/reducers/ProductReducer';
 
 export interface IRootState {
-	user: IUserState;
-	serverError: IServerError;
-	shoppingList: IShoppingListState;
-	shoppingListDetail: IShoppingListDetailtState;
-	addList: IAddList;
-	product: IProductState;
+	user: UserStateType;
+	serverError: ServerErrorStateType;
+	shoppingList: ShoppingListStateType;
+	shoppingListDetail: ShoppingListDetailStateType;
+	addList: AddListStateType;
+	product: ProductStateType;
 }
 
 const createRootReducer = (history: History) =>

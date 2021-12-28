@@ -1,27 +1,27 @@
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { ProductActionsEnum, Prefix } from '../actions/ProductActions';
 import createLoadingReducer, {
-	ILoadingState,
+	LoadingStateType,
 } from 'core/reducers/loadingReducer';
 
-const initState = Immutable.Map({
+const initState = Map({
 	productList: [],
 });
 
-export interface IProduct {
+export type ProductType = {
 	id: string;
 	type: string;
 	name: string;
 }
 
-export interface IProductState extends Immutable.Map<string, any> {
-	list: IProductListState;
-	loading: ILoadingState;
+export type ProductStateType = Map<string, any> & {
+	list: ProductListStateType;
+	loading: LoadingStateType;
 }
 
-interface IProductListState extends Immutable.Map<string, any> {
-	productList: Array<IProduct | undefined>;
+export type ProductListStateType = Map<string, any> & {
+	productList: Array<ProductType | undefined>;
 }
 
 const loadingReducer = createLoadingReducer(Prefix.PRODUCT);
@@ -30,7 +30,7 @@ const productReducer = (state = initState, action: any) => {
 		case ProductActionsEnum.SET_PRODUCT:
 			return state.set(
 				'productList',
-				action.productList.map((elem: IProduct) => ({
+				action.productList.map((elem: ProductType) => ({
 					...elem,
 					checked: false,
 				}))

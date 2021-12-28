@@ -49,12 +49,12 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-interface ISwipedButtons {
+export type SwipedButtonsProps = {
 	id: string;
 	setDialogVisible: (id: boolean) => void;
-}
+};
 
-const SwipedButtons = ({ id, setDialogVisible }: ISwipedButtons) => {
+const SwipedButtons = ({ id, setDialogVisible }: SwipedButtonsProps) => {
 	const classes = useStyles();
 	const history = useHistory();
 	const dispatch = useDispatch();

@@ -7,34 +7,34 @@ export enum UserActions {
 	SET_USERS = 'SET_USERS',
 }
 
-export interface ISetUserView {
+export type SetUserViewActionType = {
 	type: typeof UserActions.SET_USER_VIEW;
 	view: string;
-}
+};
 
-export interface ISetUserLoading {
+export type SetUserLoadingActionType = {
 	type: typeof UserActions.USER_LOADING;
 	loading: boolean;
-}
+};
 
-export interface ItoggleCreatedSnackBar {
+export type ToggleCreatedSnackBarActionType = {
 	type: typeof UserActions.USER_TOGGLE_CREATED_SNACKBAR;
 	open: boolean;
-}
+};
 
-export interface ItoggleLoginSnackBar {
+export type ToggleLoginSnackBarActionType = {
 	type: typeof UserActions.USER_TOGGLE_LOGIN_SNACKBAR;
 	open: boolean;
-}
+};
 
-export interface IGetUsers {
+export type GetUsersActionType = {
 	type: typeof UserActions.GET_USERS;
-}
+};
 
-export interface ISetUsers {
+export type SetUsersActionType = {
 	type: typeof UserActions.SET_USERS;
 	users: Array<{}>;
-}
+};
 
 const setUserView = (view: string) => ({
 	type: UserActions.SET_USER_VIEW,
@@ -66,12 +66,12 @@ const setUsers = (users: Array<{}>) => ({
 });
 
 export type UserActionsTypes =
-	| ISetUserView
-	| ISetUserLoading
-	| ItoggleCreatedSnackBar
-	| ItoggleLoginSnackBar
-	| IGetUsers
-	| ISetUsers;
+	| SetUserViewActionType
+	| SetUserLoadingActionType
+	| ToggleCreatedSnackBarActionType
+	| ToggleLoginSnackBarActionType
+	| GetUsersActionType
+	| SetUsersActionType;
 
 const userActions = {
 	setUserView,

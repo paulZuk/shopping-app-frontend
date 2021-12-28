@@ -1,21 +1,20 @@
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 import { ShoppingListDetailEnum } from '../actions/ShoppingListDetailActions';
 
-const initState = Immutable.Map({
-	detailData: [] as Array<IDetail>,
+const initState = Map({
+	detailData: [] as Array<DetailType>,
 });
 
-export interface IDetail {
+export type DetailType = {
 	_id: string;
 	type: string;
 	checked: boolean;
 	name: string;
-}
+};
 
-export interface IShoppingListDetailtState
-	extends Immutable.Map<string, IDetail[]> {
-	detailData: IDetail[];
-}
+export type ShoppingListDetailStateType = Map<string, DetailType[]> & {
+	detailData: DetailType[];
+};
 
 const shoppingListDetailReducer = (state = initState, action: any) => {
 	switch (action.type) {

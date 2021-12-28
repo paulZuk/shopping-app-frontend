@@ -6,7 +6,7 @@ import {
 	makeStyles,
 } from '@material-ui/core';
 
-interface ILoader {
+export type LoaderProps = {
 	loading: boolean;
 	invisible?: boolean | undefined;
 }
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() =>
 	})
 );
 
-const Loader = ({ loading, invisible }: ILoader) => {
+const Loader = ({ loading, invisible }: LoaderProps) => {
 	const classes = useStyles();
 	return (
 		<Backdrop

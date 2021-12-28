@@ -9,13 +9,13 @@ const initState = Immutable.Map({
 	users: Immutable.List(),
 });
 
-export interface IUserState extends Immutable.Map<string, any> {
+export type UserStateType = Immutable.Map<string, any> & {
 	view: string;
 	loading: boolean;
 	createdSnackBarVisible: boolean;
 	loginSnackBarVisible: boolean;
 	users: Immutable.List<{}>;
-}
+};
 
 const userReducer = (state = initState, action: UserActionsTypes) => {
 	switch (action.type) {

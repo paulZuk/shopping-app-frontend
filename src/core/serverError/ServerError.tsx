@@ -6,14 +6,17 @@ import SnackBar from 'core/components/SnackBar';
 
 const ServerError = () => {
 	const { visible, errorData } = useSelector(getErrorData);
-	const data = errorData[0] || {};
+
+	// MYTODO: to remove after check
+	console.log(errorData);
+	//const data = errorData[0] || {};
 
 	return (
 		<SnackBar
 			open={visible}
 			setVisible={ServerErrorActions.toggleError}
 			type="error"
-			message={data.msg}
+			message={'test'}
 		/>
 	);
 };

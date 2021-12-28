@@ -12,7 +12,7 @@ import {
 	createStyles,
 } from '@material-ui/core';
 import SwipedButtons from './ShoppingListSwipeActions';
-import { emptySwipeState, ISwipeState } from './ShoppingList';
+import { emptySwipeState, SwipeStateType } from './ShoppingList';
 import { useHistory, useLocation, matchPath } from 'react-router-dom';
 import { routes } from 'core/RouterProvider';
 
@@ -25,8 +25,8 @@ interface IData {
 
 interface IShoppingListElem {
 	data: IData;
-	swiped: ISwipeState;
-	setSwiped: (swiped: ISwipeState) => void;
+	swiped: SwipeStateType;
+	setSwiped: (swiped: SwipeStateType) => void;
 	setDialogVisible: (dialogVisible: boolean) => void;
 	idx: number;
 }
@@ -170,7 +170,7 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 						<Typography display="block" color="secondary">
 							Priority
 						</Typography>
-						<div className={classes.statusDot}></div>
+						<div className={classes.statusDot} />
 					</Box>
 					<Box className={classes.wrapper}>
 						<LinearProgress

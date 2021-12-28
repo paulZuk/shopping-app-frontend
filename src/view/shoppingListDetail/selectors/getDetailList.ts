@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 import { IRootState } from 'reducer';
-import { IDetail } from '../reducers/shoppingListDetailReducer';
+import { DetailType } from '../reducers/shoppingListDetailReducer';
 
 const getDetailList = createSelector(
 	(state: IRootState) => state.shoppingListDetail.get('detailData'),
 	detailData => ({
-		detailData: detailData as Array<IDetail>,
+		detailData: detailData as Array<DetailType>,
 		types: detailData
-			? [...new Set(detailData.map((obj: IDetail) => obj.type))]
+			? [...new Set(detailData.map((obj: DetailType) => obj.type))]
 			: [],
 	})
 );

@@ -17,6 +17,7 @@ export const addProductReq: commonRequestType = addListData => {
 
 export function* addProductToList(action: any) {
 	try {
+		// MYTODO 28 Dec 2021 at 22:58:30 : commented block
 		// yield put(ProductActions.setLoading(true));
 		console.log(action.item);
 		const response: {} = yield call(addProductReq, action.item);

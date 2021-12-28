@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import {
 	Switch,
@@ -13,8 +13,6 @@ import ShoppingList from 'view/shoppingList/ShoppingList';
 import '../animations/animations.css';
 import ShoppingListDetail from 'view/shoppingListDetail/ShoppingListDetail';
 
-interface IRouteProvider extends React.Props<{}> {}
-
 export const routes = [
 	'/',
 	'/login',
@@ -24,7 +22,7 @@ export const routes = [
 	'/list-detail/:id',
 ];
 
-const RouterProvider = ({ children }: IRouteProvider) => {
+const RouterProvider = ({ children }: PropsWithChildren<unknown>) => {
 	const location = useLocation();
 	const currentScreen = routes.findIndex(route =>
 		matchPath(location.pathname, { path: route, exact: true })
@@ -62,7 +60,7 @@ const RouterProvider = ({ children }: IRouteProvider) => {
 							path="/list-detail/:id"
 							component={ShoppingListDetail}
 							exact
-						></Route>
+						/>
 						<Route path="/add" component={AddList} exact />
 						<Route path="/add/:id" component={AddList} exact />
 					</Switch>

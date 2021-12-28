@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ThemeOptions, createMuiTheme } from '@material-ui/core';
+import { createTheme, ThemeOptions } from '@material-ui/core';
 
 const muiThemeOptions: ThemeOptions = {
 	palette: {
@@ -105,11 +105,9 @@ const muiThemeOptions: ThemeOptions = {
 	},
 };
 
-const muiTheme = createMuiTheme(muiThemeOptions);
+const muiTheme = createTheme(muiThemeOptions);
 
-interface IMaterialUiProviderProps extends React.Props<{}> {}
-
-const MaterialUiProvider = ({ children }: IMaterialUiProviderProps) => (
+const MaterialUiProvider = ({ children }: PropsWithChildren<unknown>) => (
 	<MuiThemeProvider theme={muiTheme}>
 		{React.Children.toArray(children)}
 	</MuiThemeProvider>
