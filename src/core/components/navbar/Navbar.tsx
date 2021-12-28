@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-interface INavbar {
+export type NavbarProps = {
 	appBarRef: RefObject<HTMLDivElement>;
 	childView: boolean | undefined;
 	path?: string;
 	detailListName?: string;
 }
 
-const Navbar = ({ appBarRef, childView, path, detailListName }: INavbar) => {
+const Navbar = ({ appBarRef, childView, path, detailListName }: NavbarProps) => {
 	const classes = useStyles();
 
 	return (

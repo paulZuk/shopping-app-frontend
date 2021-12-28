@@ -1,16 +1,19 @@
-import React, { useRef, useCallback } from 'react';
+import React, {useRef, useCallback, PropsWithChildren} from 'react';
 import { Box, makeStyles, createStyles } from '@material-ui/core';
 import Navbar from './Navbar';
 import useWindowSize from '../hooks/useWindowSize';
 
-interface IPropsStyles {
-	childView: boolean | undefined;
+export type LayoutProps = {
+	childView?: boolean;
+	onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
+	path?: string;
+	detailListName?: string;
 }
 
 const useStyles = makeStyles(() =>
 	createStyles({
 		root: {
-			background: ({ childView }: IPropsStyles) =>
+			background: ({ childView }: LayoutProps) =>
 				childView
 					? 'linear-gradient(180deg, rgba(0,228,255,1) 0%, rgba(255,255,255,1) 100%)'
 					: 'rgba(0, 228, 255, 1)',
@@ -20,20 +23,13 @@ const useStyles = makeStyles(() =>
 	})
 );
 
-interface ILayout extends React.Props<{}> {
-	childView?: boolean;
-	onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
-	path?: string;
-	detailListName?: string;
-}
-
 const Layout = ({
 	children,
 	childView,
 	onScroll,
 	path,
 	detailListName,
-}: ILayout) => {
+}: PropsWithChildren<LayoutProps>) => {
 	const { windowHeight } = useWindowSize();
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const classes = useStyles({ childView });

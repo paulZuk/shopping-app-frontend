@@ -46,7 +46,7 @@ const SnackBar = ({ open, setVisible, type, message }: ISnackBar) => {
 			onClose={handleClose}
 			className={classes.root}
 			anchorOrigin={{
-				vertical: 'top',
+				vertical: 'bottom',
 				horizontal: 'center',
 			}}
 		>

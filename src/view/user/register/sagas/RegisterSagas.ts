@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { call, fork, takeEvery, put } from 'redux-saga/effects';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
-import { IRegisterUser, RegisterActions } from '../actions/RegisterActions';
+import {
+	RegisterUserActionType,
+	RegisterActions,
+} from '../actions/RegisterActions';
 import UserActions from '../../actions/UserActions';
 
 type registerRequestType = (...args: any[]) => any;
@@ -19,7 +22,7 @@ const registerRequest: registerRequestType = userData => {
 	});
 };
 
-export function* register(action: IRegisterUser) {
+export function* register(action: RegisterUserActionType) {
 	const data = action.userData;
 	try {
 		yield put(UserActions.setUserLoading(true));

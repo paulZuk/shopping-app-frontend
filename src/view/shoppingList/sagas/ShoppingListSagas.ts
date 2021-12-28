@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import ShoppingListActions, {
 	ShoppingListActionsEnum,
-	IDeleteList,
+	DeleteListActionType,
 } from '../actions/ShoppingListActions';
 import getDeleteId from '../selectors/getDeleteId';
 
@@ -59,7 +59,7 @@ export function* getShoppingList() {
 	}
 }
 
-export function* deleteShoppingList(action: IDeleteList) {
+export function* deleteShoppingList(action: DeleteListActionType) {
 	const deleteId: number = yield select(getDeleteId);
 	try {
 		yield put(ShoppingListActions.setLoading(true));

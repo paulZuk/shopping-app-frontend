@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
 import createRootReducer from 'reducer';

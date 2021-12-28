@@ -8,17 +8,17 @@ import {
 	Button,
 } from '@material-ui/core';
 
-interface IDeleteConfirmation {
+export type DeleteConfirmationProps = {
 	dialogVisible: boolean;
 	setDialogVisible: (dialogVisible: boolean) => void;
 	handleConfirm: () => void;
-}
+};
 
 const DeleteConfirmation = ({
 	dialogVisible,
 	setDialogVisible,
 	handleConfirm,
-}: IDeleteConfirmation) => {
+}: DeleteConfirmationProps) => {
 	const handleClose = useCallback(() => {
 		setDialogVisible(false);
 	}, [setDialogVisible]);

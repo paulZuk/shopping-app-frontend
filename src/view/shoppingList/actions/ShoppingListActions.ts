@@ -18,28 +18,28 @@ export interface IShoppingList {
 	shared: Array<IShared>;
 }
 
-export interface IGetShoppingList {
+export type GetShoppingListActionType = {
 	type: typeof ShoppingListActionsEnum.GET_LIST;
-}
+};
 
-export interface ISetShoppingList {
+export type SetShoppingListActionType = {
 	type: typeof ShoppingListActionsEnum.SET_LIST;
 	lists: Array<any>;
-}
+};
 
-export interface ISetLoading {
+export type SetLoadingActionType = {
 	type: typeof ShoppingListActionsEnum.SET_LOADING;
 	loading: boolean;
-}
+};
 
-export interface IDeleteList {
+export type DeleteListActionType = {
 	type: typeof ShoppingListActionsEnum.DELETE_LIST;
-}
+};
 
-export interface IDeleteId {
+export type DeleteIdActionType = {
 	type: typeof ShoppingListActionsEnum.SET_DELETE_ID;
 	id: string;
-}
+};
 
 const getLists = () => ({
 	type: ShoppingListActionsEnum.GET_LIST,
@@ -65,11 +65,11 @@ const setDeleteId = (id: string) => ({
 });
 
 export type ShoppingListActionsTypes =
-	| IGetShoppingList
-	| ISetShoppingList
-	| IDeleteList
-	| IDeleteId
-	| ISetLoading;
+	| GetShoppingListActionType
+	| SetShoppingListActionType
+	| DeleteListActionType
+	| DeleteIdActionType
+	| SetLoadingActionType;
 
 const shoppingListActions = {
 	getLists,

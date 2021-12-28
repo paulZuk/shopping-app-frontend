@@ -3,17 +3,17 @@ export enum ServerErrorActions {
 	SET_ERROR = 'SET_ERROR',
 }
 
-interface IToggleError {
+export type ToggleErrorActionType = {
 	type: typeof ServerErrorActions.TOGGLE_ERROR;
 	visible: boolean;
 }
 
-interface ISetError {
+export type SetErrorActionType = {
 	type: typeof ServerErrorActions.SET_ERROR;
 	data: Array<any>;
 }
 
-const setError = (data: Array<any>) => ({
+const setError = (data: never[]) => ({
 	type: ServerErrorActions.SET_ERROR,
 	data,
 });
@@ -23,7 +23,7 @@ const toggleError = (visible: boolean) => ({
 	visible,
 });
 
-export type ServerErrorTypes = IToggleError | ISetError;
+export type ServerErrorActionTypes = ToggleErrorActionType | SetErrorActionType;
 
 const serverErrorActions = {
 	toggleError,

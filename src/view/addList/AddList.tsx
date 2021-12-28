@@ -57,15 +57,15 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-interface IParams {
+export type ParamsType = {
 	id: string;
-}
+};
 
 const AddList = () => {
 	const classes = useStyles();
 	const [open, setVisible] = useState(false);
 	const { showError, setError } = useError();
-	const params = useParams<IParams>();
+	const params = useParams<ParamsType>();
 	const dispatch = useDispatch();
 	const { loading, users: options } = useSelector(getUsers);
 	const { listName, priority, sharedChecked, sharedInput } = useSelector(

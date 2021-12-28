@@ -3,10 +3,10 @@ import { push } from 'connected-react-router';
 import { call, fork, takeEvery, put, select } from 'redux-saga/effects';
 import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
 import AddListActions, {
-	IAddList,
+	AddListType,
 	AddListActions as AddListActionsEnum,
-	ILoadListData,
-	IEditList,
+	LoadAddListDataType,
+	EditListType,
 } from '../actions/AddListActions';
 import { getShoppingListRequest } from 'view/shoppingList/sagas/ShoppingListSagas';
 import getFormData from '../selectors/getFormData';
@@ -33,7 +33,7 @@ const addListRequest: addListRequestType = addListData => {
 	});
 };
 
-export function* addList(action: IAddList) {
+export function* addList(action: AddListType) {
 	const data = action.addListData;
 	try {
 		const response: { status: number } = yield call(addListRequest, {
@@ -53,7 +53,7 @@ export function* addList(action: IAddList) {
 	}
 }
 
-export function* editList(action: IEditList) {
+export function* editList(action: EditListType) {
 	const id = action.id;
 	const { listName, priority, sharedInput: shared } = yield select(
 		getFormData
@@ -81,7 +81,7 @@ export function* editList(action: IEditList) {
 	}
 }
 
-export function* loadListData(action: ILoadListData) {
+export function* loadListData(action: LoadAddListDataType) {
 	const id = action.id;
 	try {
 		yield put(AddListActions.setLoading(true));

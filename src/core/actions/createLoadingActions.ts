@@ -1,11 +1,11 @@
-export interface ILoadingAction {
+export type LoadingActionType = {
 	type: string;
 	loading: boolean;
 }
 
 export const createLoadingActions = (prefix: string) => (
 	loading: boolean
-): ILoadingAction => ({
+): LoadingActionType => ({
 	type: `${prefix}_LOADING`,
 	loading,
 });

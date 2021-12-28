@@ -13,40 +13,40 @@ export enum Priority {
 	Low = 'LOW',
 }
 
-interface IAddListData {
+export type AddListDataType = {
 	listName: string;
 	priority: Priority;
 	shared?: Array<{}>;
 }
 
-export interface ILoadListData {
+export type LoadAddListDataType = {
 	type: typeof AddListActions.LOAD_LIST_DATA;
 	id: string;
-}
+};
 
-export interface IAddList {
+export type AddListType = {
 	type: typeof AddListActions.ADD_LIST;
-	addListData: IAddListData;
-}
+	addListData: AddListDataType;
+};
 
-export interface ISetValue {
+export type SetValueType = {
 	type: typeof AddListActions.SET_VALUE_ADD_LIST;
 	field: string;
 	value: any;
-}
+};
 
-export interface IResetData {
+export type ResetDataType = {
 	type: typeof AddListActions.RESET_ADD_LIST;
-}
-export interface ILoadForm {
+};
+export type LoadFormType = {
 	type: typeof AddListActions.LOAD_ADD_FORM;
 	data: any;
-}
+};
 
-export interface IEditList {
+export type EditListType = {
 	type: typeof AddListActions.EDIT_LIST;
 	id: string;
-}
+};
 
 const loadForm = (data: any) => ({
 	type: AddListActions.LOAD_ADD_FORM,
@@ -63,7 +63,7 @@ const getListData = (id: string) => ({
 	id,
 });
 
-const addList = (addListData: IAddListData): IAddList => {
+const addList = (addListData: AddListDataType): AddListType => {
 	return {
 		type: AddListActions.ADD_LIST,
 		addListData,
@@ -86,12 +86,12 @@ const resetData = () => ({
 });
 
 export type AddListActionsTypes =
-	| ILoadListData
-	| IAddList
-	| ISetValue
-	| ILoadForm
-	| IResetData
-	| IEditList;
+	| LoadAddListDataType
+	| AddListType
+	| SetValueType
+	| LoadFormType
+	| ResetDataType
+	| EditListType;
 
 const addListActions = {
 	addList,

@@ -51,15 +51,15 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 	})
 );
-interface IHandleScroll {
+export type HandleScrollType = {
 	target: HTMLElement;
-}
+};
 
 type SwipeDirection = 'Left' | 'Right' | null;
-export interface ISwipeState {
+export type SwipeStateType = {
 	id: number | string | null;
 	dir: SwipeDirection;
-}
+};
 
 export const emptySwipeState = Object.freeze({
 	id: null,
@@ -73,7 +73,7 @@ const ShoppingList = () => {
 	const location = useLocation();
 	const [addButtonVisible, setAddButtonVisible] = useState(true);
 	const [dialogVisible, setDialogVisible] = useState(false);
-	const [swiped, setSwiped] = useState<ISwipeState>(emptySwipeState);
+	const [swiped, setSwiped] = useState<SwipeStateType>(emptySwipeState);
 	let scrollPosition = useRef(0);
 	const { listData, loading } = useSelector(getShoppingList);
 	const [dataLoaded, setDataLoaded] = useState(false);
@@ -126,7 +126,7 @@ const ShoppingList = () => {
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const throttledScroll = useCallback(
-		_.throttle((e: IHandleScroll) => {
+		_.throttle((e: HandleScrollType) => {
 			const element = e.target;
 
 			if (

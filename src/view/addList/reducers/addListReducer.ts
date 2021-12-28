@@ -14,9 +14,9 @@ const initState = Immutable.Map({
 	}),
 });
 
-export interface IAddList extends Immutable.Map<string, any> {
+export type AddListStateType = Immutable.Map<string, any> & {
 	data: Immutable.Map<string, any>;
-}
+};
 
 const addListReducer = (state = initState, action: AddListActionsTypes) => {
 	switch (action.type) {

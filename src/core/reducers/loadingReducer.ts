@@ -1,17 +1,17 @@
-import Immutable from 'immutable';
-import { ILoadingAction } from '../actions/createLoadingActions';
+import { Map } from 'immutable';
+import { LoadingActionType } from '../actions/createLoadingActions';
 
-const initState = Immutable.Map({
+const initState = Map({
 	loading: false,
 });
 
-export interface ILoadingState extends Immutable.Map<string, any> {
+export type LoadingStateType = Map<string, boolean> & {
 	loading: boolean;
 }
 
 const loadingReducer = (prefix: string) => (
 	state = initState,
-	action: ILoadingAction
+	action: LoadingActionType
 ) => {
 	switch (action.type) {
 		case `${prefix}_LOADING`:
