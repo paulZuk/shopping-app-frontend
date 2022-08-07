@@ -70,7 +70,7 @@ const muiThemeOptions: ThemeOptions = {
 				borderColor: 'rgba(25, 150, 252, 0.5)',
 			},
 		},
-		MuiExpansionPanel: {
+		MuiAccordion: {
 			root: {
 				backgroundColor: 'rgb(100, 239, 255)',
 			},
@@ -85,7 +85,7 @@ const muiThemeOptions: ThemeOptions = {
 				},
 			},
 		},
-		MuiExpansionPanelSummary: {
+		MuiAccordionSummary: {
 			root: {
 				color: 'white',
 				backgroundColor: 'rgba(0, 228, 255, 1)',

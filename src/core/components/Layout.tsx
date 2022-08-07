@@ -1,4 +1,4 @@
-import React, {useRef, useCallback, PropsWithChildren} from 'react';
+import React, { useRef, useCallback, PropsWithChildren } from 'react';
 import { Box, makeStyles, createStyles } from '@material-ui/core';
 import Navbar from './Navbar';
 import useWindowSize from '../hooks/useWindowSize';
@@ -8,7 +8,7 @@ export type LayoutProps = {
 	onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 	path?: string;
 	detailListName?: string;
-}
+};
 
 const useStyles = makeStyles(() =>
 	createStyles({

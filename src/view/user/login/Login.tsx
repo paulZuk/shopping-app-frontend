@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useState, useCallback, useEffect } from "react";
+import { Link, LinkProps } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
 	makeStyles,
 	createStyles,
@@ -11,19 +11,19 @@ import {
 	Box,
 	Link as MaterialUILink,
 	Typography,
-} from '@material-ui/core';
-import useError from 'core/hooks/useError';
-import LoginActions from './actions/LoginActions';
-import UserActions from '../actions/UserActions';
+} from "@material-ui/core";
+import useError from "core/hooks/useError";
+import LoginActions from "./actions/LoginActions";
+import UserActions from "../actions/UserActions";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		form: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			width: '100%',
+			display: "flex",
+			flexDirection: "column",
+			alignItems: "center",
+			justifyContent: "center",
+			width: "100%",
 		},
 		textInput: {
 			margin: theme.spacing(1),
@@ -31,29 +31,29 @@ const useStyles = makeStyles((theme: Theme) =>
 		loginButton: {
 			padding: theme.spacing(2.5),
 			marginBottom: theme.spacing(4),
-			textTransform: 'none',
+			textTransform: "none",
 		},
 		registerButton: {
 			margin: theme.spacing(1),
 			padding: `${theme.spacing(1.5)}px ${theme.spacing(5)}px`,
 			borderRadius: theme.spacing(5),
-			textTransform: 'none',
+			textTransform: "none",
 		},
 		registerContainer: {
-			width: '100%',
+			width: "100%",
 			marginBottom: theme.spacing(4),
 		},
 	})
 );
 
-const RouterLink = React.forwardRef<any, Omit<LinkProps, 'to'>>(
+const RouterLink = React.forwardRef<any, Omit<LinkProps, "to">>(
 	(props, ref) => <Link ref={ref} to="/remind" {...props} />
 );
 
 const Login = () => {
 	const classes = useStyles();
-	const [login, setLogin] = useState('');
-	const [pass, setPass] = useState('');
+	const [login, setLogin] = useState("");
+	const [pass, setPass] = useState("");
 	const dispatch = useDispatch();
 
 	const { showError, setError } = useError();
@@ -82,7 +82,7 @@ const Login = () => {
 	);
 
 	const handleRegisterClick = useCallback(() => {
-		dispatch(UserActions.setUserView('register'));
+		dispatch(UserActions.setUserView("register"));
 	}, [dispatch]);
 
 	const handleChangePass = useCallback(

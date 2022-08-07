@@ -4,10 +4,10 @@ import React, {
 	useCallback,
 	useEffect,
 	useRef,
-} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import _ from 'lodash';
+} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import _ from "lodash";
 import {
 	List,
 	makeStyles,
@@ -17,75 +17,84 @@ import {
 	CircularProgress,
 	Container,
 	Box,
-	ExpansionPanel,
-	ExpansionPanelSummary,
-	ExpansionPanelDetails,
+	Accordion,
+	AccordionSummary,
+	AccordionDetails,
 	Zoom,
 	Fab,
 	Collapse,
 	Typography,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
 	ExpandMore,
 	Add,
 	AddCircleOutlineOutlined,
 	Remove,
-} from '@material-ui/icons';
-import { Autocomplete } from '@material-ui/lab';
-import { ListItem, Checkbox, FormControlLabel } from '@material-ui/core';
-import Layout from 'core/components/Layout';
-import getShoppingList from '../shoppingList/selectors/getShoppingList';
-import getDetailList from './selectors/getDetailList';
-import ShoppingListDetailActions from './actions/ShoppingListDetailActions';
-import ProductActions from 'view/product/actions/ProductActions';
-import getProductList from 'view/product/selectors/getProductList';
+} from "@material-ui/icons";
+import { Autocomplete } from "@material-ui/lab";
+import { ListItem, Checkbox, FormControlLabel } from "@material-ui/core";
+import Layout from "core/components/Layout";
+import getShoppingList from "../shoppingList/selectors/getShoppingList";
+import getDetailList from "./selectors/getDetailList";
+import ShoppingListDetailActions from "./actions/ShoppingListDetailActions";
+import ProductActions from "view/product/actions/ProductActions";
+import getProductList from "view/product/selectors/getProductList";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		container: {
-			width: '100%',
-			height: '100%',
-			backgroundColor: 'rgb(0, 228, 255)',
+			width: "100%",
+			height: "100%",
+			backgroundColor: "rgb(0, 228, 255)",
 		},
 		list: {
-			width: '100%',
-			overflow: 'auto',
-			height: '100%',
-			borderTop: '1px solid rgba(25, 150, 252, 0.5)',
-			paddingTop: 0,
+			width: "100%",
+			overflow: "auto",
+			height: "100%",
+			borderTop: "1px solid rgba(25, 150, 252, 0.5)",
+			paddingTop: "88px",
 		},
 		autocompleteWrapper: {
 			padding: `${theme.spacing(2)}px 0`,
-			width: '100%',
-			backgroundColor: 'rgba(0, 228, 255, 1)',
-			display: 'flex',
-			justifyContent: 'space-around',
-			alignItems: 'center',
+			width: "100%",
+			backgroundColor: "rgba(0, 228, 255, 1)",
+			display: hideAutocomplete => (hideAutocomplete ? "none" : "flex"),
+			justifyContent: "space-around",
+			alignItems: "center",
+			position: "fixed",
+			zIndex: 1,
 		},
 		autocomplete: {
-			width: '80%',
+			width: "80%",
 		},
 		listWrapper: {
-			padding: '0',
-			backgroundColor: 'rgba(0, 228, 255, 1)',
+			padding: "0",
+			backgroundColor: "rgba(0, 228, 255, 1)",
 		},
 		fabButton: {
-			position: 'fixed',
-			bottom: '5%',
-			right: '5%',
+			position: "fixed",
+			bottom: "5%",
+			right: "5%",
 			zIndex: 1,
 		},
 		addButton: {
-			fontSize: '30px',
+			fontSize: "30px",
 		},
 		checkboxLabel: {},
 		detailList: {
-			width: '100%',
+			width: "100%",
 		},
 		detailListItem: {
-			justifyContent: 'space-between',
+			justifyContent: "space-between",
 			paddingLeft: 0,
 			paddingRight: 0,
+		},
+		itemActionWrapper: {
+			display: "flex",
+			justifyContent: "flex-end",
+		},
+		counter: {
+			margin: "0 10px",
 		},
 	})
 );
@@ -96,12 +105,10 @@ const ShoppingListDetail = () => {
 	const { productList, loading } = useSelector(getProductList);
 	const [open, setOpen] = useState(false);
 	const [hideAutocomplete, setHideAutocomplete] = useState(false);
-	const [product, setProduct] = useState<{ name: string | null }>({
-		name: null,
-	});
+	const [product, setProduct] = useState<{ name: string } | null>(null);
 	const listEl = useRef<HTMLUListElement>(null);
-	const classes = useStyles(detailData);
-	const params = useParams<{ id: 'string' }>();
+	const classes = useStyles(hideAutocomplete);
+	const params = useParams<{ id: "string" }>();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -150,14 +157,13 @@ const ShoppingListDetail = () => {
 	}, []);
 
 	const handleAddToListClick = useCallback(() => {
-		if (product.name === null) {
+		if (!product?.name) {
 			return;
 		}
 
 		const data = { ...product, listId: params.id };
 
 		dispatch(ShoppingListDetailActions.addToList(data));
-		setProduct({ name: null });
 	}, [params.id, product, dispatch]);
 
 	const handleCheckboxClick = (id: string) => (e: any, checked: boolean) =>
@@ -174,57 +180,55 @@ const ShoppingListDetail = () => {
 				maxWidth="xs"
 				className={classes.container}
 			>
-				<Collapse unmountOnExit in={!hideAutocomplete}>
-					<Box className={classes.autocompleteWrapper}>
-						<Autocomplete
-							open={open}
-							className={classes.autocomplete}
-							onOpen={() => {
-								setOpen(true);
-							}}
-							groupBy={(option: any) => option.type}
-							onClose={() => {
-								setOpen(false);
-							}}
-							getOptionSelected={(option: any, value: any) =>
-								option.name === value.name
-							}
-							getOptionLabel={(option: any) => option.name || ''}
-							options={productList.sort((a, b) =>
-								a.type.localeCompare(b.type)
-							)}
-							loading={loading}
-							onChange={handleChangeSharedInput}
-							value={product}
-							renderInput={params => (
-								<TextField
-									{...params}
-									label="Select product"
-									variant="outlined"
-									InputProps={{
-										...params.InputProps,
-										endAdornment: (
-											<React.Fragment>
-												{loading ? (
-													<CircularProgress
-														color="inherit"
-														size={20}
-													/>
-												) : null}
-												{params.InputProps.endAdornment}
-											</React.Fragment>
-										),
-									}}
-								/>
-							)}
-						/>
-						<AddCircleOutlineOutlined
-							className={classes.addButton}
-							color="secondary"
-							onClick={handleAddToListClick}
-						/>
-					</Box>
-				</Collapse>
+				<Box className={classes.autocompleteWrapper}>
+					<Autocomplete
+						open={open}
+						className={classes.autocomplete}
+						onOpen={() => {
+							setOpen(true);
+						}}
+						groupBy={(option: any) => option.type}
+						onClose={() => {
+							setOpen(false);
+						}}
+						getOptionSelected={(option: any, value: any) =>
+							option.name === value.name
+						}
+						getOptionLabel={(option: any) => option.name || ""}
+						options={productList.sort((a, b) =>
+							a.type.localeCompare(b.type)
+						)}
+						loading={loading}
+						onChange={handleChangeSharedInput}
+						value={product}
+						renderInput={params => (
+							<TextField
+								{...params}
+								label="Select product"
+								variant="outlined"
+								InputProps={{
+									...params.InputProps,
+									endAdornment: (
+										<React.Fragment>
+											{loading ? (
+												<CircularProgress
+													color="inherit"
+													size={20}
+												/>
+											) : null}
+											{params.InputProps.endAdornment}
+										</React.Fragment>
+									),
+								}}
+							/>
+						)}
+					/>
+					<AddCircleOutlineOutlined
+						className={classes.addButton}
+						color="secondary"
+						onClick={handleAddToListClick}
+					/>
+				</Box>
 				<List
 					ref={listEl}
 					onScroll={handleScroll}
@@ -233,14 +237,14 @@ const ShoppingListDetail = () => {
 				>
 					{types.map(sectionId => (
 						<li key={`section-${sectionId}`}>
-							<ExpansionPanel defaultExpanded>
-								<ExpansionPanelSummary
+							<Accordion defaultExpanded>
+								<AccordionSummary
 									expandIcon={<ExpandMore />}
 									id="panel1a-header"
 								>
 									<Box>{sectionId}</Box>
-								</ExpansionPanelSummary>
-								<ExpansionPanelDetails>
+								</AccordionSummary>
+								<AccordionDetails>
 									<List dense className={classes.detailList}>
 										{detailData
 											.filter(
@@ -270,17 +274,31 @@ const ShoppingListDetail = () => {
 															</Typography>
 														}
 													/>
-													<Remove
-														color="secondary"
-														onClick={handleDeleteClick(
-															item._id
-														)}
-													/>
+													<Box
+														className={
+															classes.itemActionWrapper
+														}
+													>
+														<Typography
+															className={
+																classes.counter
+															}
+															color="secondary"
+														>
+															{item.count}
+														</Typography>
+														<Remove
+															color="secondary"
+															onClick={handleDeleteClick(
+																item._id
+															)}
+														/>
+													</Box>
 												</ListItem>
 											))}
 									</List>
-								</ExpansionPanelDetails>
-							</ExpansionPanel>
+								</AccordionDetails>
+							</Accordion>
 						</li>
 					))}
 				</List>

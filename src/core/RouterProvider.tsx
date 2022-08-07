@@ -44,7 +44,7 @@ const RouterProvider = ({ children }: PropsWithChildren<unknown>) => {
 				<CSSTransition
 					key={location.key}
 					classNames={animationsClassNames}
-					timeout={1500}
+					timeout={200}
 				>
 					<Switch location={location}>
 						<Redirect from="/" to="/login" exact />

@@ -4,22 +4,22 @@ import React, {
 	useCallback,
 	useRef,
 	useState,
-} from 'react';
-import _ from 'lodash';
-import { useHistory, useLocation } from 'react-router-dom';
+} from "react";
+import _ from "lodash";
+import { useHistory, useLocation } from "react-router-dom";
 //import { io } from 'socket.io-client';
-import Layout from 'core/components/Layout';
-import { useDispatch, useSelector } from 'react-redux';
-import { Fab } from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import ShoppingListActions from './actions/ShoppingListActions';
-import getShoppingList from './selectors/getShoppingList';
-import ShoppingListElem from './ShoppingListElem';
-import Zoom from '@material-ui/core/Zoom';
-import Loader from 'core/components/Loader';
-import { routes } from 'core/RouterProvider';
-import DeleteConfirmation from './components/DeleteConfirmation';
+import Layout from "core/components/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { Fab } from "@material-ui/core";
+import { Add as AddIcon } from "@material-ui/icons";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import ShoppingListActions from "./actions/ShoppingListActions";
+import getShoppingList from "./selectors/getShoppingList";
+import ShoppingListElem from "./ShoppingListElem";
+import Zoom from "@material-ui/core/Zoom";
+import Loader from "core/components/Loader";
+import { routes } from "core/RouterProvider";
+import DeleteConfirmation from "./components/DeleteConfirmation";
 
 import {
 	Container,
@@ -27,26 +27,26 @@ import {
 	createStyles,
 	Theme,
 	List,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'flex-start',
-			width: '100%',
-			height: '100%',
+			display: "flex",
+			flexDirection: "column",
+			alignItems: "center",
+			justifyContent: "flex-start",
+			width: "100%",
+			height: "100%",
 		},
 		list: {
-			width: '100%',
-			overflow: 'auto',
+			width: "100%",
+			overflow: "auto",
 		},
 		fabButton: {
-			position: 'fixed',
-			bottom: '5%',
-			right: '5%',
+			position: "fixed",
+			bottom: "5%",
+			right: "5%",
 			zIndex: 1,
 		},
 	})
@@ -55,7 +55,7 @@ export type HandleScrollType = {
 	target: HTMLElement;
 };
 
-type SwipeDirection = 'Left' | 'Right' | null;
+type SwipeDirection = "Left" | "Right" | null;
 export type SwipeStateType = {
 	id: number | string | null;
 	dir: SwipeDirection;
@@ -119,7 +119,7 @@ const ShoppingList = () => {
 
 	const handleAddClick = useCallback(() => {
 		history.push({
-			pathname: '/add',
+			pathname: "/add",
 			state: { from: currentScreen },
 		});
 	}, [history, currentScreen]);
