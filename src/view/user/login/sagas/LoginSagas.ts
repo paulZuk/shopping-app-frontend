@@ -1,16 +1,16 @@
-import axios from 'axios';
-import { push } from 'connected-react-router';
-import { call, fork, takeEvery, put } from 'redux-saga/effects';
-import { ITryLogin, LoginActions } from '../actions/LoginActions';
-import UserActions from 'view/user/actions/UserActions';
+import axios from "axios";
+import { push } from "connected-react-router";
+import { call, fork, takeEvery, put } from "redux-saga/effects";
+import { ITryLogin, LoginActions } from "../actions/LoginActions";
+import UserActions from "view/user/actions/UserActions";
 // import { io } from 'socket.io-client';
 
 type LoginRequestType = (...args: any[]) => any;
 
 const loginRequest: LoginRequestType = data =>
 	axios({
-		method: 'post',
-		url: 'http://localhost:8080/login',
+		method: "post",
+		url: `${process.env.REACT_APP_ORIGIN}:8080/login`,
 		data: {
 			login: data.name,
 			password: data.pass,
@@ -28,7 +28,7 @@ export function* tryLogin(action: ITryLogin) {
 		});
 
 		if (response.status === 200) {
-			yield put(push('/list'));
+			yield put(push("/list"));
 			yield put(UserActions.setUserLoading(false));
 			// const socket = io('http://localhost:8080');
 

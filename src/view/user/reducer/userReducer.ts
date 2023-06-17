@@ -1,34 +1,33 @@
-import Immutable from 'immutable';
-import { UserActions, UserActionsTypes } from '../actions/UserActions';
+import { UserActions, UserActionsTypes } from "../actions/UserActions";
 
-const initState = Immutable.Map({
-	view: 'login',
+const initState = {
+	view: "login",
 	loading: false,
 	createdSnackBarVisible: false,
 	loginSnackBarVisible: false,
-	users: Immutable.List(),
-});
+	users: [],
+};
 
-export type UserStateType = Immutable.Map<string, any> & {
+export type UserStateType = {
 	view: string;
 	loading: boolean;
 	createdSnackBarVisible: boolean;
 	loginSnackBarVisible: boolean;
-	users: Immutable.List<{}>;
+	users: any[];
 };
 
 const userReducer = (state = initState, action: UserActionsTypes) => {
 	switch (action.type) {
 		case UserActions.SET_USER_VIEW:
-			return state.set('view', action.view);
+			return { ...state, view: action.view };
 		case UserActions.USER_LOADING:
-			return state.set('loading', action.loading);
+			return { ...state, loading: action.loading };
 		case UserActions.USER_TOGGLE_CREATED_SNACKBAR:
-			return state.set('createdSnackBarVisible', action.open);
+			return { ...state, createdSnackBarVisible: action.open };
 		case UserActions.USER_TOGGLE_LOGIN_SNACKBAR:
-			return state.set('loginSnackBarVisible', action.open);
+			return { ...state, loginSnackBarVisible: action.open };
 		case UserActions.SET_USERS:
-			return state.set('users', Immutable.List(action.users));
+			return { ...state, users: action.users };
 		default:
 			return state;
 	}

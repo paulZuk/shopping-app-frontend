@@ -1,25 +1,27 @@
-import { Map } from 'immutable';
 import {
 	ServerErrorActions,
 	ServerErrorActionTypes,
-} from '../actions/ServerErrorActions';
+} from "../actions/ServerErrorActions";
 
-export type ServerErrorStateType = Map<string, any> & {
+export type ServerErrorStateType = {
 	visible: boolean;
 	errorData: Array<any>;
-}
+};
 
-const initState = Map({
+const initState = {
 	visible: false,
 	errorData: [] as any[],
-});
+};
 
-const serverErrorReducer = (state = initState, action: ServerErrorActionTypes) => {
+const serverErrorReducer = (
+	state = initState,
+	action: ServerErrorActionTypes
+) => {
 	switch (action.type) {
 		case ServerErrorActions.TOGGLE_ERROR:
-			return state.set('visible', action.visible);
+			return { ...state, visible: action.visible };
 		case ServerErrorActions.SET_ERROR:
-			return state.set('errorData', action.data);
+			return { ...state, errorData: action.data };
 		default:
 			return state;
 	}

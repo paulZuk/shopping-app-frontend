@@ -1,5 +1,5 @@
 import axios from "axios";
-import { call, fork, takeEvery, put } from "redux-saga/effects";
+import { fork, takeEvery, put } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import ServerErrorActions from "core/serverError/actions/ServerErrorActions";
 import { ShoppingListDetailEnum } from "../actions/ShoppingListDetailActions";
@@ -9,7 +9,7 @@ type commonRequestType = (...args: any[]) => any;
 export const addProductReq: commonRequestType = addListData => {
 	return axios({
 		method: "post",
-		url: "http://localhost:8080/list-detail",
+		url: `${process.env.REACT_APP_ORIGIN}:8080/list-detail`,
 		withCredentials: true,
 		data: addListData,
 	});

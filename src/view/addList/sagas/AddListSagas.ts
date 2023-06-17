@@ -1,21 +1,21 @@
-import axios from 'axios';
-import { push } from 'connected-react-router';
-import { call, fork, takeEvery, put, select } from 'redux-saga/effects';
-import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
+import axios from "axios";
+import { push } from "connected-react-router";
+import { call, fork, takeEvery, put, select } from "redux-saga/effects";
+import ServerErrorActions from "core/serverError/actions/ServerErrorActions";
 import AddListActions, {
 	AddListType,
 	AddListActions as AddListActionsEnum,
 	LoadAddListDataType,
 	EditListType,
-} from '../actions/AddListActions';
-import { getShoppingListRequest } from 'view/shoppingList/sagas/ShoppingListSagas';
-import getFormData from '../selectors/getFormData';
+} from "../actions/AddListActions";
+import { getShoppingListRequest } from "view/shoppingList/sagas/ShoppingListSagas";
+import getFormData from "../selectors/getFormData";
 
 type addListRequestType = (...args: any[]) => any;
 
 const addListRequest: addListRequestType = addListData => {
 	const { listName, priority, shared, id } = addListData;
-	const type = id ? 'put' : 'post';
+	const type = id ? "put" : "post";
 
 	const commonData = {
 		listName,
@@ -27,7 +27,7 @@ const addListRequest: addListRequestType = addListData => {
 
 	return axios({
 		method: type,
-		url: 'http://localhost:8080/list',
+		url: `${process.env.REACT_APP_ORIGIN}:8080/list`,
 		data: requestData,
 		withCredentials: true,
 	});
@@ -41,7 +41,7 @@ export function* addList(action: AddListType) {
 		});
 
 		if (response.status === 200) {
-			yield put(push('/list'));
+			yield put(push("/list"));
 		}
 	} catch (err) {
 		const errors = err.response.data.errors;
@@ -67,7 +67,7 @@ export function* editList(action: EditListType) {
 	});
 
 	if (response.status === 200) {
-		yield put(push('/list'));
+		yield put(push("/list"));
 	}
 
 	try {
@@ -99,7 +99,7 @@ export function* loadListData(action: LoadAddListDataType) {
 		const errors = err.response.data.errors;
 		yield put(AddListActions.setLoading(false));
 		if (err.response.status === 401) {
-			yield put(push('/'));
+			yield put(push("/"));
 		}
 		yield put(ServerErrorActions.setError(errors));
 		yield put(ServerErrorActions.toggleError(true));

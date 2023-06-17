@@ -1,18 +1,18 @@
-import { Map } from 'immutable';
 import {
 	ShoppingListActionsEnum,
 	ShoppingListActionsTypes,
-} from '../actions/ShoppingListActions';
+} from "../actions/ShoppingListActions";
 
-const initState = Map({
+const initState = {
 	listData: [] as Array<any>,
 	loading: false,
-	deleteId: '',
-});
+	deleteId: "",
+};
 
-export type ShoppingListStateType = Map<string, any> & {
+export type ShoppingListStateType = {
 	listData: Array<any>;
 	loading: boolean;
+	deleteId: string;
 };
 
 const shoppingListReducer = (
@@ -21,14 +21,14 @@ const shoppingListReducer = (
 ) => {
 	switch (action.type) {
 		case ShoppingListActionsEnum.SET_LIST:
-			return state.set('listData', action.lists);
+			return { ...state, listData: action.lists };
 		case ShoppingListActionsEnum.SET_LOADING:
-			return state.set('loading', action.loading);
+			return { ...state, loading: action.loading };
 		case ShoppingListActionsEnum.SET_DELETE_ID:
-			return state.set('deleteId', action.id);
+			return { ...state, deleteId: action.id };
 		case ShoppingListActionsEnum.DELETE_LIST:
-			const listData = state.get('listData');
-			const deleteId = state.get('deleteId');
+			const listData = state.listData;
+			const deleteId = state.deleteId;
 
 			if (!Array.isArray(listData)) {
 				return state;
@@ -38,7 +38,7 @@ const shoppingListReducer = (
 				return item._id !== deleteId;
 			});
 
-			return state.set('listData', list);
+			return { ...state, listData: list };
 		default:
 			return state;
 	}

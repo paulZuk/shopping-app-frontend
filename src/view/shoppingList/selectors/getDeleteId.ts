@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect';
-import { IRootState } from 'reducer';
+import { createSelector } from "reselect";
+import { IRootState } from "reducer";
 
 const getDeleteId = createSelector(
-	(state: IRootState) => state.shoppingList.get('deleteId'),
+	(state: IRootState) => state.shoppingList.deleteId,
 	deleteId => deleteId
 );
 
