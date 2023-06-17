@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	TextField,
 	makeStyles,
@@ -16,15 +16,15 @@ import {
 	MenuItem,
 	CircularProgress,
 	Collapse,
-} from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
-import AddListActions, { Priority } from './actions/AddListActions';
-import useError from 'core/hooks/useError';
-import Layout from 'core/components/Layout';
-import UserActions from 'view/user/actions/UserActions';
-import getUsers from 'view/user/selectors/getUsers';
-import { useParams } from 'react-router-dom';
-import getFormData from './selectors/getFormData';
+} from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
+import AddListActions, { Priority } from "./actions/AddListActions";
+import useError from "core/hooks/useError";
+import Layout from "core/components/Layout";
+import UserActions from "view/user/actions/UserActions";
+import getUsers from "view/user/selectors/getUsers";
+import { useParams } from "react-router-dom";
+import getFormData from "./selectors/getFormData";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -32,27 +32,27 @@ const useStyles = makeStyles((theme: Theme) =>
 			margin: theme.spacing(1),
 		},
 		sharedInput: {
-			width: '100%',
+			width: "100%",
 			margin: theme.spacing(1),
 		},
 		form: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			width: '100%',
-			height: '100%',
+			display: "flex",
+			flexDirection: "column",
+			alignItems: "center",
+			width: "100%",
+			height: "100%",
 			paddingTop: theme.spacing(5),
 		},
 		sharedSwitchContainer: {
-			width: '100%',
-			color: 'white',
+			width: "100%",
+			color: "white",
 			marginLeft: theme.spacing(3),
 		},
 		addListButton: {
 			padding: theme.spacing(2.5),
 			marginBottom: theme.spacing(4),
 			marginTop: theme.spacing(2),
-			textTransform: 'none',
+			textTransform: "none",
 		},
 	})
 );
@@ -88,14 +88,14 @@ const AddList = () => {
 
 	const handleChangeListName = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
-			dispatch(AddListActions.setValue('listName', event.target.value));
+			dispatch(AddListActions.setValue("listName", event.target.value));
 		},
 		[dispatch]
 	);
 
 	const handleChangePriority = useCallback(
 		(event: React.ChangeEvent<{ value: unknown }>) => {
-			dispatch(AddListActions.setValue('priority', event.target.value));
+			dispatch(AddListActions.setValue("priority", event.target.value));
 		},
 		[dispatch]
 	);
@@ -103,7 +103,7 @@ const AddList = () => {
 	const handleChangeShared = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			dispatch(
-				AddListActions.setValue('sharedChecked', event.target.checked)
+				AddListActions.setValue("sharedChecked", event.target.checked)
 			);
 		},
 		[dispatch]
@@ -111,7 +111,7 @@ const AddList = () => {
 
 	const handleChangeSharedInput = useCallback(
 		(event: React.ChangeEvent<{}>, value: any[]) => {
-			dispatch(AddListActions.setValue('sharedInput', value));
+			dispatch(AddListActions.setValue("sharedInput", value));
 		},
 		[dispatch]
 	);
@@ -197,7 +197,7 @@ const AddList = () => {
 							option.name === value.name
 						}
 						getOptionLabel={(option: any) => option.name}
-						options={options.toArray()}
+						options={options}
 						disabled={loading}
 						loading={loading}
 						onChange={handleChangeSharedInput}
@@ -234,7 +234,7 @@ const AddList = () => {
 					color="primary"
 					onClick={handleSendButton}
 				>
-					{params.id ? 'Edit list' : 'Add list'}
+					{params.id ? "Edit list" : "Add list"}
 				</Button>
 			</Container>
 		</Layout>

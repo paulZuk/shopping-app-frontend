@@ -1,19 +1,19 @@
-import axios from 'axios';
-import { call, fork, takeEvery, put, select } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
-import ServerErrorActions from 'core/serverError/actions/ServerErrorActions';
+import axios from "axios";
+import { call, fork, takeEvery, put, select } from "redux-saga/effects";
+import { push } from "connected-react-router";
+import ServerErrorActions from "core/serverError/actions/ServerErrorActions";
 import ShoppingListActions, {
 	ShoppingListActionsEnum,
 	DeleteListActionType,
-} from '../actions/ShoppingListActions';
-import getDeleteId from '../selectors/getDeleteId';
+} from "../actions/ShoppingListActions";
+import getDeleteId from "../selectors/getDeleteId";
 
 type commonRequestType = (...args: any[]) => any;
 
 export const getShoppingListRequest: commonRequestType = (id?: string) => {
 	return axios({
-		method: 'get',
-		url: 'http://localhost:8080/list',
+		method: "get",
+		url: `${process.env.REACT_APP_ORIGIN}:8080/list`,
 		withCredentials: true,
 		params: {
 			id,
@@ -23,8 +23,8 @@ export const getShoppingListRequest: commonRequestType = (id?: string) => {
 
 const deleteShoppingListRequest: commonRequestType = id => {
 	return axios({
-		method: 'delete',
-		url: 'http://localhost:8080/list',
+		method: "delete",
+		url: `${process.env.REACT_APP_ORIGIN}:8080/list`,
 		withCredentials: true,
 		data: {
 			id,
@@ -51,7 +51,7 @@ export function* getShoppingList() {
 		yield put(ShoppingListActions.setLoading(false));
 
 		if (err.response.status === 401) {
-			yield put(push('/'));
+			yield put(push("/"));
 		}
 
 		yield put(ServerErrorActions.setError(errors));
@@ -78,7 +78,7 @@ export function* deleteShoppingList(action: DeleteListActionType) {
 		yield put(ShoppingListActions.setLoading(false));
 
 		if (err.response.status === 401) {
-			yield put(push('/'));
+			yield put(push("/"));
 		}
 
 		yield put(ServerErrorActions.setError(errors));

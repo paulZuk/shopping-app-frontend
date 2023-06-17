@@ -1,9 +1,8 @@
-import { Map } from "immutable";
 import { ShoppingListDetailEnum } from "../actions/ShoppingListDetailActions";
 
-const initState = Map({
+const initState = {
 	detailData: [] as Array<DetailType>,
-});
+};
 
 export type DetailType = {
 	_id: string;
@@ -13,14 +12,14 @@ export type DetailType = {
 	name: string;
 };
 
-export type ShoppingListDetailStateType = Map<string, DetailType[]> & {
+export type ShoppingListDetailStateType = {
 	detailData: DetailType[];
 };
 
 const shoppingListDetailReducer = (state = initState, action: any) => {
 	switch (action.type) {
 		case ShoppingListDetailEnum.DETAIL_TOGGLE_CHECKED:
-			const data = state.get("detailData") || [];
+			const data = state.detailData || [];
 			const newData = data?.map(data => {
 				if (data._id === action.id) {
 					return {
@@ -30,56 +29,50 @@ const shoppingListDetailReducer = (state = initState, action: any) => {
 				}
 				return data;
 			});
-			return state.set("detailData", newData);
+
+			return { ...state, detailData: newData };
 		case ShoppingListDetailEnum.SET_LOADING:
-			return state.set("loading", action.loading);
+			return { ...state, loading: action.loading };
 		case ShoppingListDetailEnum.ADD_TO_LIST:
-			const detailData = state.get("detailData");
+			const detailData = state.detailData;
 			const duplicatedProductIdx = detailData?.findIndex(
 				data => data._id === action.item._id
 			);
 
 			if (duplicatedProductIdx !== -1 && detailData) {
-				return state.set(
-					"detailData",
-					detailData.map((detail, idx) =>
+				return {
+					...state,
+					detailData: detailData.map((detail, idx) =>
 						idx === duplicatedProductIdx
 							? { ...detail, count: detail.count + 1 }
 							: detail
-					)
-				);
+					),
+				};
 			}
 
-			const newState = [
-				...(state.get("detailData") as any[]),
-				action.item,
-			];
+			const newState = [...state.detailData, action.item];
 
-			return state.set(
-				"detailData",
-				newState.filter((item, pos) => newState.indexOf(item) === pos)
-			);
+			return {
+				...state,
+				detailData: newState.filter(
+					(item, pos) => newState.indexOf(item) === pos
+				),
+			};
 		case ShoppingListDetailEnum.REMOVE_FROM_LIST:
-			const detail = state
-				.get("detailData")
-				?.find(elem => elem._id === action.id);
+			const detail = state.detailData?.find(
+				elem => elem._id === action.id
+			);
 
 			if (detail && detail?.count > 1) {
-				return state.set("detailData", [
-					...state.get("detailData"),
-					detail,
-				]);
+				return { ...state, detailData: [...state.detailData, detail] };
 			}
 
 			const filteredArray =
-				state
-					.get("detailData")
-					?.filter(elem => elem._id !== action.id) || [];
+				state.detailData?.filter(elem => elem._id !== action.id) || [];
 
-			console.log(state.get("detailData"));
-			return state.set("detailData", filteredArray);
+			return { ...state, detailData: filteredArray };
 		case ShoppingListDetailEnum.SET_DETAIL_DATA:
-			return state.set("detailData", action.data);
+			return { ...state, detailData: action.data };
 		default:
 			return state;
 	}

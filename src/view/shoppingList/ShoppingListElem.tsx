@@ -1,6 +1,6 @@
-import React, { useMemo, useCallback } from 'react';
-import { AvatarGroup } from '@material-ui/lab';
-import { useSwipeable } from 'react-swipeable';
+import React, { useMemo, useCallback } from "react";
+import { AvatarGroup } from "@material-ui/lab";
+import { useSwipeable } from "react-swipeable";
 import {
 	ListItem,
 	Typography,
@@ -10,14 +10,14 @@ import {
 	makeStyles,
 	Theme,
 	createStyles,
-} from '@material-ui/core';
-import SwipedButtons from './ShoppingListSwipeActions';
-import { emptySwipeState, SwipeStateType } from './ShoppingList';
-import { useHistory, useLocation, matchPath } from 'react-router-dom';
-import { routes } from 'core/RouterProvider';
+} from "@material-ui/core";
+import SwipedButtons from "./ShoppingListSwipeActions";
+import { emptySwipeState, SwipeStateType } from "./ShoppingList";
+import { useHistory, useLocation, matchPath } from "react-router-dom";
+import { routes } from "core/RouterProvider";
 
 interface IData {
-	_id: 'string';
+	_id: "string";
 	priority: string;
 	listName: string;
 	shared: Array<any>;
@@ -46,38 +46,38 @@ const getTranslateValue = (props: IShoppingListElem, range: number) => {
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		mainWrapper: {
-			position: 'relative',
-			width: '100%',
-			overflow: 'hidden',
-			marginBottom: '5px',
-			display: 'flex',
-			alignItems: 'center',
+			position: "relative",
+			width: "100%",
+			overflow: "hidden",
+			marginBottom: "5px",
+			display: "flex",
+			alignItems: "center",
 		},
 		listItem: {
-			flexDirection: 'column',
-			backgroundColor: 'rgb(100, 239, 255)',
-			position: 'relative',
+			flexDirection: "column",
+			backgroundColor: "rgb(100, 239, 255)",
+			position: "relative",
 		},
 		wrapper: {
-			width: '100%',
+			width: "100%",
 			padding: `${theme.spacing(1)}px 0`,
 		},
 		itemWrapper: {
-			position: 'relative',
-			width: '100%',
+			position: "relative",
+			width: "100%",
 			transform: props =>
 				`translateX(${getTranslateValue(props, 100)}px)`,
-			transition: '0.2s',
-			backgroundColor: 'rgb(100, 239, 255)',
+			transition: "0.2s",
+			backgroundColor: "rgb(100, 239, 255)",
 		},
 		priorityWrapper: {
-			width: '100%',
+			width: "100%",
 			padding: `${theme.spacing(0.5)}px 0`,
-			display: 'flex',
-			alignItems: 'center',
+			display: "flex",
+			alignItems: "center",
 		},
 		progress: {
-			backgroundColor: 'white',
+			backgroundColor: "white",
 		},
 		icon: {
 			paddingLeft: theme.spacing(1),
@@ -88,16 +88,16 @@ const useStyles = makeStyles((theme: Theme) =>
 			backgroundColor: theme.palette.primary.main,
 		},
 		avatarWrapper: {
-			position: 'absolute',
+			position: "absolute",
 			right: theme.spacing(2),
 			top: theme.spacing(3),
 		},
 		statusDot: {
-			width: '10px',
-			height: '10px',
-			borderRadius: '50%',
+			width: "10px",
+			height: "10px",
+			borderRadius: "50%",
 			backgroundColor: ({ data }: IShoppingListElem) =>
-				data.priority === 'HIGH' ? '#ff5722' : '#4caf50',
+				data.priority === "HIGH" ? "#ff5722" : "#4caf50",
 			margin: `0 ${theme.spacing(1)}px`,
 		},
 	})
@@ -125,11 +125,15 @@ const ShoppingListElem = (props: IShoppingListElem) => {
 	);
 
 	const handleClick = useCallback(() => {
+		if (swiped.dir !== null) {
+			return;
+		}
+
 		history.push({
 			pathname: `/list-detail/${data._id}`,
 			state: { from: currentScreen },
 		});
-	}, [history, data._id, currentScreen]);
+	}, [history, data._id, currentScreen, swiped.dir]);
 
 	const swipeHandlers = useSwipeable({
 		onSwipedLeft: handleSwipe,
